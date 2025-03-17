@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #map {
+            flex: 1;
+            width: 100%;
+        }
+        .search-bar {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            width: 80%;
+            max-width: 400px;
+        }
+        .search-bar input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 5px;
+            font-size: 16px;
+        }
+        .search-bar i {
+            margin-right: 10px;
+            color: #0A192F;
+        }
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background: #0A192F;
+            padding: 15px 0;
+            color: white;
+        }
+        .nav-item {
+            text-align: center;
+            flex: 1;
+            cursor: pointer;
+            padding: 10px 0;
+            transition: background 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .nav-item span {
+            margin-top: 5px;
+        }
+        .nav-item.active {
+            background: #B0C4DE;
+            color: #0A192F;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search pet hotels...">
+        </div>
+        <div id="map" style="height: 100%;"></div>
+        <div class="bottom-nav">
+            <div class="nav-item" id="home" onclick="navigateTo('home.html')">
+                <i class="fas fa-paw"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item" id="mapTab" onclick="navigateTo('maps.html')">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Map</span>
+            </div>
+            <div class="nav-item" id="chat" onclick="navigateTo('chat.html')">
+                <i class="fas fa-comment"></i>
+                <span>Chat</span>
+            </div>
+            <div class="nav-item" id="review" onclick="navigateTo('reviews.html')">
+                <i class="fas fa-bone"></i>
+                <span>Review</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([14.5547, 121.0244], 13);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var petHotels = [
+            { name: "Happy Paws Hotel", lat: 14.5525, lng: 121.0198 },
+            { name: "Paw Haven", lat: 14.5568, lng: 121.0235 },
+            { name: "Furry Friends Inn", lat: 14.5583, lng: 121.0291 },
+            { name: "Bark Park Hotel", lat: 14.5662, lng: 121.0367 },
+            { name: "Pet Loft Hotel", lat: 14.5794, lng: 121.0518 },
+            { name: "Dog Haven Suites", lat: 14.5721, lng: 121.0453 },
+            { name: "VIP Pet Hotel", lat: 14.5238, lng: 121.0023 },
+            { name: "Royal Paws Pet Hotel", lat: 14.5896, lng: 121.0678 },
+            { name: "Woof Lodge & Spa", lat: 14.5457, lng: 121.0359 },
+            { name: "Pet Paradise Hotel", lat: 14.5369, lng: 121.0284 }
+        ];
+
+        petHotels.forEach(hotel => {
+            L.marker([hotel.lat, hotel.lng]).addTo(map)
+                .bindPopup(`<b>${hotel.name}</b>`);
+        });
+
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+
+        function setActiveTab() {
+            const path = window.location.pathname.split('/').pop();
+            const tabs = {
+                "home.html": "home",
+                "maps.html": "mapTab",
+                "chat.html": "chat",
+                "review.html": "review"
+            };
+            
+            if (tabs[path]) {
+                document.getElementById(tabs[path]).classList.add('active');
+            }
+        }
+
+        setActiveTab();
+    </script>
+</body>
+</html>

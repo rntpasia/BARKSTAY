@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bark & Stay - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="paw.png" alt="Paw Print Logo">
+            <h1>Login</h1>
+        </div>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <!-- Change button type to hyperlink -->
+            <a href="home.html" class="button">Log In</a>
+            <p>Don't have an account? <a href="register.html" onclick="clearAllFormData()">Register</a></p>
+        </form>
+    </div>
+
+    <script>
+        function clearAllFormData() {
+            localStorage.removeItem("petFormData");
+            localStorage.removeItem("registerFormData");
+        }
+    </script>
+</body>
+</html>

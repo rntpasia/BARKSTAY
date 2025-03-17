@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dog Spa & Hotel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* Header Styles */
+        .header {
+            background-color: #002244;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        
+        .user-avatar img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .username {
+            font-size: 14px;
+            color: #cccccc;
+        }
+        
+        .manage-account {
+            font-size: 14px;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .icon-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        /* Banner Image */
+        .banner-img {
+            width: 100%;
+            height: 300px; /* Much larger banner */
+            object-fit: cover;
+}
+        
+        /* Hotel Title Section */
+        .hotel-title {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .hotel-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .hotel-address {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .chat-icon {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Date Selection */
+        .date-selection {
+    display: flex;
+    background-color: white;
+    padding: 20px;
+    gap: 15px;
+    border-bottom: 1px solid #eee;
+    justify-content: center;
+}
+
+.date-box, .room-count {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.date-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.date-input, .room-select {
+    padding: 12px;
+    width: 100%;
+    max-width: 200px;
+    font-size: 16px;
+    border: 2px solid #aaa;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+        
+        /* Facilities Section */
+        .section {
+            margin: 10px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .section-title {
+            padding: 10px 15px;
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+        }
+        
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 10px 15px;
+        }
+        
+        .facility-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        
+        .facility-item i {
+            color: #4CAF50;
+            margin-right: 5px;
+        }
+        
+        /* Reviews Section */
+        .review-summary {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .review-score {
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .review-stars {
+            color: #FFD700;
+        }
+        
+        .reviewer {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .reviewer-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+}
+
+        
+        .reviewer-name {
+            font-size: 14px;
+        }
+        
+        /* Location Section */
+        .location-map {
+            width: 100%;
+            height: 150px;
+            background-color: #eee;
+        }
+        
+        /* Rooms Section */
+        .rooms-title {
+            padding: 15px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: white;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .rooms-grid {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px;
+            gap: 10px;
+            background-color: white;
+        }
+        
+        .room-card {
+            min-width: 150px;
+            width: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .room-img {
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, #87CEEB, #4CAF50);
+        }
+        
+        .room-details {
+            padding: 10px;
+            background-color: #516d88;
+            color: white;
+        }
+        
+        .room-name {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        
+        .room-subtitle {
+            font-size: 12px;
+            color: #eee;
+        }
+        
+        /* Hotel Policies */
+        .policies-content {
+            padding: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            background-color: #002244;
+            color: white;
+        }
+        
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .nav-text {
+            font-size: 12px;
+        }
+        
+        /* Chat Button */
+        .chat-button {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #002244;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 2px solid white;
+            font-size: 24px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .facilities-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .room-card {
+                min-width: 130px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hotel-name {
+                font-size: 20px;
+            }
+            
+            .facilities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .date-selection {
+                flex-direction: column;
+            }
+            
+            .date-box {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="user-profile">
+            <div class="user-avatar">
+                <img src="/api/placeholder/40/40" alt="User">
+            </div>
+            <div class="user-info">
+                <span class="username">@username</span>
+                <a href="#" class="manage-account">Manage Account</a>
+            </div>
+        </div>
+        <div class="header-icons">
+            <button class="icon-button"><i class="fas fa-cog"></i></button>
+            <button class="icon-button"><i class="fas fa-question-circle"></i></button>
+        </div>
+    </div>
+    
+    <!-- Hotel Banner Image -->
+    <img src="images/a.jpg" alt="Hotel" class="banner-img">
+    
+    <!-- Hotel Title Section -->
+    <div class="hotel-title">
+        <div>
+            <h1 class="hotel-name">The Dog Spa & Hotel</h1>
+            <p class="hotel-address">Bel-Air, Makati</p>
+        </div>
+        <div class="chat-icon">
+            <i class="fas fa-comment"></i>
+        </div>
+    </div>
+    
+    <!-- Date Selection -->
+<div class="date-selection">
+    <div class="date-box">
+        <label class="date-label" for="check-in">Check In</label>
+        <input type="date" id="check-in" class="date-input">
+    </div>
+    <div class="date-box">
+        <label class="date-label" for="check-out">Check Out</label>
+        <input type="date" id="check-out" class="date-input">
+    </div>
+    <div class="room-count">
+        <label for="room-number"># of Rooms</label>
+        <select id="room-number" class="room-select">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+</div>
+    
+    <!-- Facilities Section -->
+    <div class="section">
+        <h2 class="section-title">Facilities Available</h2>
+        <div class="facilities-grid">
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Boarding Areas</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Outdoor Play Areas</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Training Areas</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Luxury Suites</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Pool</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Grooming Stations</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Indoor Play Areas</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Veterenary Care Areas</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Feeding Areas</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Services Section -->
+    <div class="section">
+        <h2 class="section-title">Services Offered</h2>
+        <div class="facilities-grid">
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Boarding</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Exercise and Playtime</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Grooming</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Feeding</span>
+            </div>
+            <div class="facility-item">
+                <i class="fas fa-check"></i>
+                <span>Supervision and Care</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reviews Section -->
+    <div class="section">
+        <h2 class="section-title">Reviews</h2>
+        <div class="review-summary">
+            <span class="review-score">4.6</span>
+            <div class="review-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="reviewer">
+                <img src="images/profilee.png" alt="Reviewer" class="reviewer-img">
+                <span class="reviewer-name">ihateriella</span>
+            </div>            
+        </div>
+    </div>
+    
+   <!-- Location Section -->
+<div class="section">
+    <h2 class="section-title">View Location</h2>
+    <div class="location-map">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.229095037266!2d121.07763527492375!3d14.586017585898626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c724a0115659%3A0x2777cdcdcec21d08!2sMr.%20Paws%20Pet%20Care%20Grooming%20%26%20Hotel!5e0!3m2!1sen!2sph!4v1742124284136!5m2!1sen!2sph" 
+            width="100%" 
+            height="450" 
+            style="border:0;" 
+            allowfullscreen 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</div>
+
+    
+    <!-- Rooms Section -->
+    <h2 class="rooms-title">Rooms</h2>
+    <div class="rooms-grid">
+        <div class="room-card">
+            <img src="images/c.jpg" alt="Room" class="room-img">
+            <div class="room-details">
+                <div class="room-name">The Bark Lounge</div>
+                <div class="room-subtitle">Deluxe</div>
+            </div>

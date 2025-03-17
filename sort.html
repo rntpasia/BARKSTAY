@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort & Filter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url(images/sortbg.png);
+            padding: 20px;
+        }
+        .filter-container {
+            background: white;
+            border-radius: 30px 30px 0 0;
+            padding: 20px;
+            position: relative;
+            margin-top: 50px;
+        }
+        .back-button {
+            position: absolute;
+            top: -30px;
+            left: 15px;
+            background: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .filter-header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .filter-section {
+            margin-top: 20px;
+        }
+        .filter-section h3 {
+            font-size: 16px; /* Increased for consistency */
+            font-weight: bold;
+            margin-bottom: 10px;
+        
+        label {
+            font-size: 16px; /* Uniform size for all labels */
+                }
+}
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .select-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #D0D0D0;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            color: black;
+        }
+        .price-range {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .price-range select {
+            background: #D0D0D0;
+            border: none;
+            border-radius: 15px;
+            padding: 10px;
+            width: 100px;
+            text-align: center;
+        }
+        .rating-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .rating-button {
+            background: #D0D0D0;
+            border-radius: 15px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .rating-button.active {
+            background: black;
+            color: white;
+        }
+        .filter-button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .filter-button {
+        background:black;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .filter-button:hover {
+        background: gray;
+    }
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .filter-container {
+                padding: 15px;
+            }
+            .price-range {
+                flex-direction: column;
+            }
+            .rating-group {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="filter-container">
+        <div class="back-button" onclick="goBack()">
+            <span class="material-icons">arrow_back</span>
+        </div>
+        
+        <div class="filter-header">Sort & Filter</div>
+        
+        <div class="filter-section">
+            <h3>AMENITIES</h3>
+            <div class="checkbox-group">
+                <label><input type="checkbox"> Pool</label>
+                <label><input type="checkbox"> Outdoor Space</label>
+            </div>
+        </div>
+        
+        <div class="filter-section">
+            <h3>PET ATTRIBUTES</h3>
+            <a href="" class="select-box">
+                Select Pet Attributes <span class="material-icons">arrow_forward</span>
+            </a>
+        </div>
+        
+        <div class="filter-section">
+            <h3>SERVICES</h3>
+            <div class="checkbox-group">
+                <label><input type="checkbox"> Grooming & Spa</label>
+                <label><input type="checkbox"> Walking & Playtime</label>
+                <label><input type="checkbox"> Boarding</label>
+                <label><input type="checkbox"> Vet Care</label>
+            </div>
+        </div>
+        
+        <div class="filter-section">
+            <h3>Price Per Night</h3>
+            <div class="price-range">
+                <div class="price-box">
+                    <label for="min-price">Min</label>
+                    <select id="min-price">
+                        <option>₱0.00</option>
+                        <option>₱500.00</option>
+                        <option>₱1000.00</option>
+                        <option>₱2000.00</option>
+                        <option>₱3000.00</option>
+                        <option>₱4000.00</option>
+                        <option>₱5000.00</option>
+                    </select>
+                </div>
+                -
+                <div class="price-box">
+                    <label for="max-price">Max</label>
+                    <select id="max-price">
+                        <option>₱0.00</option>
+                        <option>₱500.00</option>
+                        <option>₱1000.00</option>
+                        <option>₱2000.00</option>
+                        <option>₱3000.00</option>
+                        <option>₱4000.00</option>
+                        <option>₱5000.00</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h3>Rating</h3>
+            <div class="rating-group">
+                <div class="rating-button" onclick="toggleRating(1)">1/5</div>
+                <div class="rating-button" onclick="toggleRating(2)">2/5</div>
+                <div class="rating-button" onclick="toggleRating(3)">3/5</div>
+                <div class="rating-button" onclick="toggleRating(4)">4/5</div>
+                <div class="rating-button" onclick="toggleRating(5)">5/5</div>
+            </div>
+        </div>
+        <div class="filter-button-container">
+            <button class="filter-button" onclick="applyFilters()">Filter</button>
+        </div>
+    </div>
+    
+    <script>
+        function toggleRating(value) {
+            let buttons = document.querySelectorAll(".rating-button");
+    
+            // Remove active class from all buttons
+            buttons.forEach(button => button.classList.remove("active"));
+    
+            // Add active class to the clicked button
+            buttons[value - 1].classList.add("active");
+        }
+    
+        function goBack() {
+            window.history.back();
+        }
+        function applyFilters() {
+    let { selectedAmenities, selectedServices } = getSelectedCheckboxes();
+    let minPrice = document.getElementById("min-price").value;
+    let maxPrice = document.getElementById("max-price").value;
+    let filters = [];
+
+    if (selectedRating) filters.push(`Rating: ${selectedRating}/5`);
+    if (selectedAmenities.length > 0) filters.push(`Amenities: ${selectedAmenities.join(", ")}`);
+    if (selectedServices.length > 0) filters.push(`Services: ${selectedServices.join(", ")}`);
+    if (minPrice && maxPrice) filters.push(`Price Range: ${minPrice} - ${maxPrice}`);
+
+    alert(filters.length > 0 ? `Applying filters:\n${filters.join("\n")}` : "No filters selected.");
+}
+    </script>
+    
+</body>
+</html>

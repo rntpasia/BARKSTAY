@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bark & Stay</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="chatbotstyle.css">
+    <!-- Google Fonts Link For Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+
+    <script src="chatbotscript.js" defer></script>
+    
+    <style>
+        
+        div.ex1 {
+            overflow: auto;
+}
+        body { 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            overflow-y: auto; /* Ensure body can scroll */
+        }
+
+    
+        .manage-account { 
+            background: none; 
+            color: white; 
+            border: none; 
+            padding: 0; 
+            text-align: left;
+            cursor: pointer; 
+            font-size: 14px;
+        }
+        
+        .icon-button { 
+            background: none; 
+            border: none; 
+            color: white; 
+            font-size: 20px; 
+            cursor: pointer; 
+        }
+        .app-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 15px 0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .search-container { 
+            background: #002244; 
+            padding: 20px; 
+            color: white; 
+            width: 90%; 
+            margin: 10px auto; 
+            position: relative; 
+            border-radius: 10px;
+        }
+        .search-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .search-header h3 {
+            margin: 0;
+            flex-grow: 1;
+        }
+        .search-box-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .search-box { 
+            width: 100%; 
+            padding: 10px 30px 10px 10px; 
+            border-radius: 5px; 
+            border: 1px solid #ccc; 
+        }
+        .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .date-selector {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            background: white;
+            border-radius: 25px;
+            padding: 5px;
+        }
+        .date-field {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            padding: 5px 15px;
+        }
+        .date-field label {
+            margin-right: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+        .date-input {
+            border: none;
+            font-size: 14px;
+            width: 100%;
+            color: #333;
+            outline: none;
+        }
+        .date-input-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .date-icon {
+            margin-right: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+        .date-divider {
+            border-right: 1px solid #ccc;
+            height: 30px;
+            margin: 0 5px;
+        }
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        .filter-button {
+            flex: 1;
+            background: white;
+            border: none;
+            padding: 10px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .filter-button i {
+            font-size: 12px;
+        }
+        .search-btn {
+            background: #cce5ff;
+            color: #002244;
+            border: none;
+            padding: 8px 15px; /* Reduced padding to make it smaller */
+            border-radius: 5px;
+            width: auto; /* Change from 100% to auto so it doesn't stretch */
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto; /* Centering and adding padding */
+            font-size: 14px; /* Slightly smaller font */
+}
+        .suggestions { 
+            display: none; 
+            position: absolute; 
+            top: 100px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 85%; 
+            background: white; 
+            color: black; 
+            border-radius: 10px; 
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+            text-align: left; 
+            padding: 10px; 
+            z-index: 10; 
+        }
+        .suggestions-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+        }
+        .suggestion-card { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            padding: 8px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+        .suggestion-card img { 
+            width: 40px; 
+            height: 40px; 
+            border-radius: 5px; 
+            object-fit: cover;
+        }
+        .hotel-rating {
+            color: #ffcc00;
+            font-size: 14px;
+        }
+        .top-picks { 
+            padding: 0 20px; 
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .hotel-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 10px; 
+        }
+        .hotel-card { 
+            background: white; 
+            text-align: center; 
+            border-radius: 10px; 
+            overflow: hidden;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+        }
+        .hotel-card img { 
+            width: 100%; 
+            height: 80px;
+            object-fit: cover;
+        }
+        .hotel-name {
+            padding: 5px;
+            font-size: 14px;
+        }
+        .banner-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+        .search-input-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .search-label {
+        white-space: nowrap;
+        margin-right: 10px;
+        font-weight: 500;
+    }
+    
+    .input-with-icons {
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+    
+    .search-icon-left {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        z-index: 2;
+    }
+    
+    .clear-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        display: none; /* Will be shown when there's text */
+        z-index: 2;
+    }
+    
+    .search-box {
+        width: 100%;
+        padding: 10px 35px; /* Add padding on both sides for the icons */
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .hotel-card {
+    text-decoration: none;
+    color: inherit;
+}
+.suggestion-card {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+    
+    /* Remove the old search icon style */
+    .search-icon {
+        display: none;
+    }
+    .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem; /* Space between input boxes */
+  flex-wrap: wrap;
+  margin-top: 1.5rem; /* Adds space from the top */
+}
+
+/* Input Box */
+.inputBox {
+  flex: 1; /* Make them take equal width */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Input Box Labels */
+.inputBox h3 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* Input Fields */
+.inputBox input {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid rgba(0, 0, 0, .2);
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #0A192F;
+    padding: 15px 0;
+    color: white;
+    width: 100%;
+    position: fixed; /* Change from absolute to fixed */
+    bottom: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+
+/* Add padding-bottom to .container to avoid content getting hidden */
+.container {
+    padding-bottom: 80px; /* Adjust based on nav height */
+    overflow-y: auto;
+}
+
+        .nav-item {
+            text-align: center;
+            flex: 1;
+            cursor: pointer;
+            padding: 10px 0;
+            transition: background 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .nav-item.active {
+            background: #B0C4DE;
+            color: #0A192F;
+            border-radius: 5px;
+        }
+        .chat-header {
+            background: #0A192F;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header-content {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .user-info i {
+            font-size: 28px;
+            margin-right: 10px;
+        }
+        .user-avatar {
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    text-align: center;
+    position: relative;
+    top: -5px; /* Moves the icon slightly higher */
+}
+
+        .user-info .text {
+            display: flex;
+            flex-direction: column;
+        }
+        .user-info .text span {
+            font-size: 14px;
+        }
+        .user-info .text .bold {
+            font-weight: bold;
+            font-size: 16px;
+        }
+/* Responsive styles - add these to your existing CSS */
+
+/* Media query for tablets and smaller devices */
+@media (max-width: 700px) {
+    .hotel-grid {
+        grid-template-columns: repeat(2, 1fr); /* Change from 3 columns to 2 */
+    }
+    
+    .search-container {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .date-selector {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .date-divider {
+        display: none; /* Hide divider when stacked */
+    }
+    
+    .row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .inputBox {
+        width: 100%;
+    }
+    
+    .filters {
+        flex-wrap: wrap;
+    }
+    
+    .filter-button {
+        min-width: 45%;
+    }
+}
+
+/* Media query for mobile phones */
+@media (max-width: 480px) {
+    .hotel-grid {
+        grid-template-columns: 1fr; /* Single column for very small screens */
+    }
+    
+    .navbar {
+        padding: 10px;
+    }
+    
+    .user-info {
+        font-size: 12px;
+    }
+    
+    .user-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+    
+    .app-title {
+        font-size: 20px;
+        margin: 10px 0;
+    }
+    
+    .search-input-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .search-label {
+        margin-bottom: 5px;
+    }
+    
+    .suggestions-grid {
+        grid-template-columns: 1fr; /* Single column for suggestions */
+    }
+    
+    .banner-image {
+        height: 120px;
+    }
+}
+
+@media (max-width: 490px) {
+    .chatbot-toggler {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #08245c; /* Or any color you prefer */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000; /* Make sure it's above other elements */
+}
+}
+/* Fix user icon alignment in the header */
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.user-info .text {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info .text .bold {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.user-info .text span {
+    font-size: 14px;
+}
+
+/* Ensure the bottom nav stays in place */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #0A192F;
+    padding: 15px 0;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Ensure chatbot and bottom nav do not overlap */
+.container {
+    padding-bottom: 100px; /* Added more space to prevent overlap */
+    overflow-y: auto;
+}
+    </style>
+</head>
+<body onclick="hideSuggestions(event)">
+    <div class="container">
+    <div class="chat-header">
+        <div class="header-content">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user" style="font-size: 20px;"></i>
+                </div>
+                <div class="text">
+                    <span><div id="user_name"></div></span>
+                    <span class="bold" onclick="navigateTo('manage.html')">Manage Account</span>
+                </div>
+            </div>
+            <a href="sort.html">
+                <i class='fas fa-filter' style='font-size:24px; color: white;'></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="app-title">BARK & STAY</div>
+
+    <div class="search-container" onclick="event.stopPropagation()">
+        <div class="search-box-container">
+            <div class="search-input-group">
+                <label for="property-search" class="search-label">Search Property:</label>
+                <div class="input-with-icons">
+                    <button class="search-icon-left">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type="text" id="property-search" class="search-box" placeholder="Search Property" onclick="showSuggestions()">
+                    <button class="clear-icon" onclick="clearSearch()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="date-selector">
+            <div class="date-field">
+                <label>Start</label>
+                <div class="date-input-container">
+                    <i class="far fa-calendar-alt date-icon"></i>
+                    <input type="date" class="date-input" value="">
+                </div>
+            </div>
+            <div class="date-divider"></div>
+            <div class="date-field">
+                <label>End</label>
+                <div class="date-input-container">
+                    <i class="far fa-calendar-alt date-icon"></i>
+                    <input type="date" class="date-input" value="">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="inputBox">
+                <input type="text" name="Breed type" list="Breeds" placeholder="Breed Type">
+                <datalist id="Breeds">
+                    <option value="American Bully">
+                    <option value="American Pitbull">
+                    <option value="Aspin">
+                    <option value="Beagle">
+                    <option value="Chihuahua">
+                    <option value="Chow Chow">
+                    <option value="Dachshund">
+                    <option value="Dalmatian">
+                    <option value="Dobermann">
+                    <option value="French Bulldog">
+                    <option value="German Shepherd">
+                    <option value="Golden Retriever">
+                    <option value="Greyhound">
+                    <option value="Japanese Spitz">
+                    <option value="Labrador">
+                    <option value="Maltese">
+                    <option value="Pomeranian">
+                    <option value="Poodle">
+                    <option value="Pug">
+                    <option value="Shih Tzu">
+                    <option value="Siberian Husky">
+                    <option value="Welsh Corgi">
+                </datalist>
+            </div>
+        
+            <div class="inputBox">
+                <input type="text" name="Size" list="Size" placeholder="Size">
+                <datalist id="Size">
+                    <option value="Small">
+                    <option value="Medium">
+                    <option value="Large">
+                </datalist>
+            </div>
+        
+            <div class="inputBox">
+                <input type="number" name="Number of Room" placeholder="# of Rooms">
+            </div>
+        </div>   
+      </section>
+  </section>
+
+        <button class="search-btn">Search</button>
+
+        <div class="suggestions" id="suggestions">
+            <div class="suggestions-grid">
+                <a href="thedog.html" class="suggestion-card">
+                    <img src="images/a.jpg" alt="Hotel">
+                    <div>
+                        <div>The Dog Spa & Hotel</div>
+                        <div class="hotel-rating">4.6 ⭐⭐⭐⭐</div>
+                    </div>
+                </a>
+                <a href="furple.html" class="suggestion-card">
+                    <img src="images/b.jpg" alt="Hotel">
+                    <div>
+                        <div>Furple Haven</div>
+                        <div class="hotel-rating">4.6 ⭐⭐⭐⭐</div>
+                    </div>
+                </a>
+                <a href="collar.html" class="suggestion-card">
+                    <img src="images/c.jpg" alt="Hotel">
+                    <div>
+                        <div>Collar & Comb</div>
+                        <div class="hotel-rating">4.6 ⭐⭐⭐⭐</div>
+                    </div>
+                </a>
+                <a href="hungry.html" class="suggestion-card">
+                    <img src="images/d.jpg" alt="Hotel">
+                    <div>
+                        <div>The Hungry Paws PH</div>
+                        <div class="hotel-rating">4.6 ⭐⭐⭐⭐</div>
+                    </div>
+                </a>
+                <a href="vermillion.html" class="suggestion-card">
+                    <img src="images/e.jpg" alt="Hotel">
+                    <div>
+                        <div>Vermillion Tails Pet Grooming and Hotel Services</div>
+                        <div class="hotel-rating">4.6 ⭐⭐⭐⭐</div>
+                    </div>
+                </a>
+                <a href="pawzone.html" class="suggestion-card">
+                    <img src="images/f.jpg" alt="Hotel">
+                    <div>
+                        <div>Pawzone</div>
+                        <div class="hotel-rating">4.6 ⭐⭐⭐⭐</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+        
+
+    <img src="images/cute.jpg" alt="Dogs playing" class="banner-image">
+
+    <div class="top-picks">
+        <div class="section-title">Top Picks</div>
+        <div class="hotel-grid">
+            <a href="mrpaws.html" class="hotel-card">
+                <img src="images/g.jpg" alt="Hotel">
+                <div class="hotel-name">Mr. Paws</div>
+            </a>
+            <a href="pawhouse.html" class="hotel-card">
+                <img src="images/h.jpg" alt="Hotel">
+                <div class="hotel-name">Paw House PH</div>
+            </a>
+            <a href="88bark.html" class="hotel-card">
+                <img src="images/i.jpg" alt="Hotel">
+                <div class="hotel-name">88 Bark Avenue</div>
+            </a>
+            <a href="paws.html" class="hotel-card">
+                <img src="images/j.jpg" alt="Hotel">
+                <div class="hotel-name">Paws & Fur White Plains</div>
+            </a>
+            <a href="dluxe.html" class="hotel-card">
+                <img src="images/k.jpg" alt="Hotel">
+                <div class="hotel-name">Dluxe Pet Hotel & Spa</div>
+            </a>
+            <a href="scarlette_s.html" class="hotel-card">
+                <img src="images/l.jpg" alt="Hotel">
+                <div class="hotel-name">Scarlette's Place Cat Hotel Makati</div>
+            </a>
+        </div>
+      </div>
+    <div class="bottom-nav">
+        <div class="nav-item active" id="home" onclick="navigateTo('home.html')">
+            <i class="fas fa-paw"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" id="mapTab" onclick="navigateTo('maps.html')">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Map</span>
+        </div>
+        <div class="nav-item" id="chat" onclick="navigateTo('chat.html')">
+            <i class="fas fa-comment"></i>
+            <span>Chat</span>
+        </div>
+        <div class="nav-item" id="review" onclick="navigateTo('reviews.html')">
+            <i class="fas fa-bone"></i>
+            <span>Review</span>
+        </div>
+    </div>
+    
+    <button class="chatbot-toggler">
+        <span class="material-symbols-rounded">smart_toy</span>
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      <div class="chatbot">
+        <header>
+          <h2>Chatbot</h2>
+          <span class="close-btn material-symbols-outlined">close</span>
+        </header>
+        <ul class="chatbox">
+          <li class="chat incoming">
+            <span class="material-symbols-outlined">smart_toy</span>
+            <p>Hi there <br>How can I help you today?</p>
+          </li>
+        </ul>
+        <div class="chat-input">
+          <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+          <span id="send-btn" class="material-symbols-rounded">send</span>
+        </div>
+      </div>
+
+    
+      <script>
+        document.querySelector(".chatbot-toggler").addEventListener("click", function () {
+            document.querySelector(".chatbot").classList.toggle("active");
+        });
+    </script>
+    
+    <script>
+        function showSuggestions() {
+            document.getElementById('suggestions').style.display = 'block';
+        }
+        
+        function hideSuggestions(event) {
+            if (!event.target.closest('.search-container')) {
+                document.getElementById('suggestions').style.display = 'none';
+            }
+        }
+        function clearSearch() {
+        const searchInput = document.getElementById('property-search');
+        searchInput.value = '';
+        document.querySelector('.clear-icon').style.display = 'none';
+        searchInput.focus();
+    }
+    
+    // Show/hide the clear button based on input content
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('property-search');
+        const clearButton = document.querySelector('.clear-icon');
+        
+        searchInput.addEventListener('input', function() {
+            if (this.value.length > 0) {
+                clearButton.style.display = 'block';
+            } else {
+                clearButton.style.display = 'none';
+            }
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".search-btn").addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent default if inside a form
+
+        let propertySearch = document.getElementById("property-search")?.value.trim() || "";
+        let startDate = document.querySelector(".date-field input[type='date']")?.value || "";
+        let endDate = document.querySelector(".date-field:nth-of-type(2) input[type='date']")?.value || "";
+        let breedType = document.querySelector("input[name='Breed type']")?.value.trim() || "";
+        let petSize = document.querySelector("input[name='Size']")?.value.trim() || "";
+        let numRooms = document.querySelector("input[name='Number of Room']")?.value.trim() || "";
+
+        let searchParams = { property: propertySearch, start_date: startDate, end_date: endDate, breed: breedType, size: petSize, rooms: numRooms };
+
+        console.log("Search Parameters:", searchParams);
+
+        let queryString = new URLSearchParams(searchParams).toString();
+        window.location.href = `search-results.html?${queryString}`;
+    });
+});
+function navigateTo(page) {
+                window.location.href = page; // Redirect to the specified page
+            }
+        
+            // Highlight the active tab based on the current page
+            document.addEventListener("DOMContentLoaded", function () {
+                const currentPage = window.location.pathname.split("/").pop(); // Get the current filename
+                const navItems = document.querySelectorAll(".nav-item");
+        
+                navItems.forEach(item => {
+                    if (item.getAttribute("onclick").includes(currentPage)) {
+                        item.classList.add("active"); // Add active class
+                    } 
+                });
+            });
+
+    </script>
+    <script type="module" src="home-page.js"></script>
+</body>
+</html>

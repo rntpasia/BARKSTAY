@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Attribute - Bark & Stay</title>
+    <link rel="stylesheet" href="pet-att.css">
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="goBack()">&#8592;</button>
+        
+        <h1>Pet Attribute</h1>
+
+        <form id="pet-form">
+            <div class="form-group">
+                <label for="pet-name">PET NAME</label>
+                <input type="text" id="pet-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="breed">BREED</label>
+                <input type="text" id="breed" required>
+            </div>
+
+            <div class="form-group">
+                <label for="size">SIZE</label>
+                <select id="size" required>
+                    <option value="" disabled selected>Select</option>
+                    <option>Small</option>
+                    <option>Medium</option>
+                    <option>Large</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="age">AGE</label>
+                <input type="number" id="age" min="1" required>
+                <select id="age-unit" required>
+                    <option disabled selected>Select unit</option>
+                    <option value="days">Days</option>
+                    <option value="months">Months</option>
+                    <option value="years">Years</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="diet">DIET</label>
+                <input type="text" id="diet" required>
+            </div>
+
+            <div class="form-group">
+                <label for="photo">PHOTO</label>
+                <input type="file" id="photo" accept="image/*" required>
+            </div>
+
+            <button class="button" type="submit">Submit</button>
+        </form>
+
+    <!-- Load JavaScript as a module -->
+    <script type="module" src="pet.js"></script>
+
+    <!-- Define goBack globally -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

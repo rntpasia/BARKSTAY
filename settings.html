@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Bark & Stay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #E4C89A;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .app-header {
+            width: 100%;
+            background-color: #0B2C48;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            background-color: #0B2C48;
+            padding: 8px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            font-size: 16px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+        
+        .setting-item:hover {
+            background: #f3f3f3;
+        }
+        
+        .danger {
+            color: red;
+        }
+        
+        .signout {
+            text-align: center;
+            color: gray;
+            font-size: 14px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #0B2C48;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            width: 80%;
+            max-width: 300px;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+        
+        .modal-btn {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .cancel-btn {
+            background-color: #6994b9;
+            color: rgb(246, 244, 244);
+        }
+        
+        .confirm-btn {
+            background-color: #6994b9;
+            color: red;
+            border-radius: 5px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+            background: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            font-weight: bold;
+        }
+        .termsmodal-content {
+            background-color: #0B2C48;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            color: white;
+            width: 150%;
+            max-width: 900px;
+            position: relative;
+            border: 2px solid black;
+        }
+        .password-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        
+        .password-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .password-buttons button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+      
+        .save-btn {
+            background-color: #6994b9;
+            color: rgb(6, 249, 42);
+        }
+        .modal {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: #0B2C48;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    width: 80%;
+    max-width: 300px;
+    position: relative;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <i class="fa fa-arrow-left back-button" onclick="history.back()"></i>
+        Settings
+    </div>
+    <div class="container">
+        <div class="section-title">General Settings</div>
+        <div class="setting-item" onclick="openModal('changePasswordModal')">
+            <i class="fa-solid fa-key"></i> Change Password <i class="fa-solid fa-angle-right"></i>
+        </div>
+        <div class="setting-item danger" onclick="openModal('deleteAccountModal')">
+            <i class="fa-solid fa-trash"></i> Delete Account <i class="fa-solid fa-angle-right"></i>
+        </div>
+        <div class="section-title">Information</div>
+        <div class="setting-item" onclick="openModal('aboutAppModal')">
+            <i class="fa-solid fa-mobile"></i> About App <i class="fa-solid fa-angle-right"></i>
+        </div>
+        <div class="setting-item" onclick="openModal('termsModal')">
+            <i class="fa-solid fa-file-contract"></i> Terms & Conditions <i class="fa-solid fa-angle-right"></i>
+        </div>
+        <div class="setting-item" onclick="openModal('privacyModal')">
+            <i class="fa-solid fa-shield-alt"></i> Privacy Policy <i class="fa-solid fa-angle-right"></i>
+        </div>
+
+        <div class="signout" onclick="openModal('signoutModal')">
+            <i class="signout">Sign Out</i>
+        </div>
+
+    <!-- Delete Account Modal -->
+    <div id="deleteAccountModal" class="modal">
+        <div class="modal-content">
+            <p>Delete your account?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" onclick="closeModal('deleteAccountModal')">Cancel</button>
+                <a href="index.html">
+                <button class="modal-btn confirm-btn">Delete</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="changePasswordModal" class="modal change-password-modal">
+        <div class="modal-content">
+            <p><strong>Change Password?</strong></p>
+            <input type="password" class="password-input" placeholder="Old Password">
+            <input type="password" class="password-input" placeholder="New Password">
+            <div class="password-buttons">
+                <button class="save-btn">Save</button>
+                <button class="modal-btn cancel-btn" onclick="closeModal('changePasswordModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="signoutModal" class="modal">
+        <div class="modal-content">
+            <p>Log Out of your Account?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" onclick="closeModal('signoutModal')">Cancel</button>
+            <a href="index.html">
+                <button class="modal-btn confirm-btn">Sign Out</button>
+            </a>
+            </div>
+        </div>
+    </div>
+    <div id="termsModal" class="modal">
+        <div class="termsmodal-content">
+            <span class="close-btn" onclick="closeModal('termsModal')">&times;</span>
+            <h1>Terms and Conditions</h1>
+    
+    <h2>1. Introduction</h2>
+    <p>Welcome to Bark & Stay, a platform for booking and navigating pet hotels. By using our app, you agree to these Terms and Conditions. If you do not agree, please refrain from using the app.</p>
+    
+    <h2>2. User Responsibilities</h2>
+    <ul>
+        <li>You must provide accurate and up-to-date information during registration and bookings.</li>
+        <li>You are responsible for ensuring your pet meets the requirements of the selected pet hotel (vaccinations, health status, etc.).</li>
+        <li>Any fraudulent activity or misuse of the platform will result in account termination.</li>
+    </ul>
+    
+    <h2>3. Bookings & Payments</h2>
+    <ul>
+        <li>All bookings are subject to availability.</li>
+        <li>Prices and cancellation policies are set by pet hotels and are displayed at the time of booking.</li>
+        <li>Refund policies depend on the pet hotel's individual terms.</li>
+    </ul>
+    
+    <h2>4. Limitation of Liability</h2>
+    <p>Bark & Stay acts as a booking platform and is not liable for any issues related to pet care, hotel services, or disputes between users and pet hotels.</p>
+    <p>We do not guarantee the availability, quality, or safety of listed pet hotels.</p>
+    
+    <h2>5. Data Privacy</h2>
+    <p>User data is collected and stored securely in compliance with privacy regulations.</p>
+    <p>We do not share personal information with third parties without consent.</p>
+    
+    <h2>6. Changes to Terms</h2>
+    <p>We may update these terms at any time. Continued use of the app signifies acceptance of any changes.</p>
+    
+    <h2>Contact</h2>
+    <p>For inquiries, contact us at <a href="mailto:Barkandstay@gmail.com" style="color: #99bede;">Barkandstay@gmail.com</a>.</p>
+            <div class="modal-buttons">
+            </div>
+        </div>
+    </div>
+    <div id="aboutAppModal" class="modal">
+        <div class="termsmodal-content">
+            <span class="close-btn" onclick="closeModal('aboutAppModal')">&times;</span>
+            <h1>About the Website</h1>
+    
+    
+    <p>Bark & Stay is a convenient platform designed for pet owners to easily book and navigate pet hotels.
+         Whether you're traveling, busy with work, or simply need a trusted place for your pet to stay, our app 
+         connects you with reputable pet hotels that meet your furry friend's needs.</p>
+    
+    <h2>Key Features:</h2>
+    <ul>
+        <li>Seamless Booking: Browse and reserve pet hotels with just a few taps.</li>
+        <li>Hotel Navigation: Find the best pet-friendly accommodations near you.</li>
+        <li>Verified Listings: Access trusted pet hotels with real reviews and ratings.</li>
+        <li>Personalized Experience: Filter hotels based on your pet’s size, breed, and special requirements.</li>
+        <li>Real-Time Updates: Get notifications about your booking status, hotel policies, and promotions.</li>
+    </ul>
+    
+    <p>At Bark & Stay, we prioritize your pet’s comfort and safety while
+         ensuring a hassle-free booking experience for pet owners. 
+         Your furry friend deserves the best stay! 🐾🏨
+    </p>
+    
+        </div>
+    </div>
+    <div id="privacyModal" class="modal">
+        <div class="termsmodal-content">
+            <span class="close-btn" onclick="closeModal('privacyModal')">&times;</span>
+            <h1>Privacy Policy</h1>
+    
+    
+    <p>Welcome to Bark & Stay! Your privacy is important to us. 
+        This Privacy Policy explains how we collect, use, store, 
+        and protect your personal information when you use our app and services.</p>
+    
+    <h2>1. Information We Collect</h2>
+    <p>We collect the following types of data:</p>
+    <ul>
+        <li>Personal Information: Name, email, contact number, and profile details.</li>
+        <li>Pet Information: Pet’s name, breed, age, and special requirements (optional).</li>
+        <li>Booking Data: Details of your reservations, including check-in and check-out dates.</li>
+        <li>Location Data: To provide navigation to pet hotels (only with your permission).</li>
+        <li>Payment Information: Processed securely through third-party payment providers (we do not store credit card details).</li>
+    </ul>
+    
+    <h2>2. How We Use Your Information</h2>
+    <p>Your data is used to:</p>
+    <ul>
+        <li>Process bookings and reservations.</li>
+        <li>Improve search results and personalized recommendations.</li>
+        <li>Provide navigation assistance to pet hotels.</li>
+        <li>Send notifications about bookings, promotions, and updates.</li>
+        <li>Ensure security and prevent fraudulent activities.</li>
+    </ul>
+    
+    <h2>3. Changes to Privacy Policy</h2>
+    <p>We may update this policy from time to time. You will be notified of any major changes.</p>
+        </div>
+      </div>
+    </div>
+    
+    
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        function openModal(modalId) {
+    let modal = document.getElementById(modalId);
+    modal.classList.add("show");
+}
+
+function closeModal(modalId) {
+    let modal = document.getElementById(modalId);
+    modal.classList.remove("show");
+}
+
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+    let modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        if (event.target === modal) {
+            closeModal(modal.id);
+        }
+    });
+};
+
+    </script>
+</body>
+</html>
