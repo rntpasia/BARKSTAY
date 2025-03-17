@@ -87,7 +87,7 @@ async function registerUser(event) {
         alert("📩 Please verify your email before logging in!");
 
         // Redirect to login page
-        window.location.href = "index.html";
+        window.location.href = "pet-attribute.html";
 
     } catch (err) {
         console.error("❌ Unexpected Error:", err);
@@ -110,7 +110,7 @@ async function loginUser() {
         }
 
         alert("✅ Login successful!");
-        window.location.href = "pet-attribute.html"; // Redirect to home.html after login
+        window.location.href = "home.html"; // Redirect to home.html after login
 
     } catch (err) {
         console.error("❌ Unexpected Error:", err);
