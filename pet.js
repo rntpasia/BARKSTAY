@@ -82,8 +82,6 @@ document.getElementById("pet-form").addEventListener("submit", async function (e
 });
 
 
-
-
 // Go back function
 function goBack() {
     window.history.back();
