@@ -6,7 +6,7 @@
     <title>Bark & Stay - Login</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="auth.js" defer></script>
+    <script type="module" src="auth.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -24,7 +24,7 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <!-- Change button type to hyperlink -->
-            <a href="home.html" class="button">Log In</a>
+            <a id ="login" class="button">Log In</a>
             <p>Don't have an account? <a href="register.html" onclick="clearAllFormData()">Register</a></p>
         </form>
     </div>
