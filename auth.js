@@ -1,11 +1,12 @@
-// auth.js - Handles authentication using Supabase
-
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
 // Initialize Supabase
 const SUPABASE_URL = "https://cwqhiwfmiymomtxgycwx.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3cWhpd2ZtaXltb210eGd5Y3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIxNTA3ODcsImV4cCI6MjA1NzcyNjc4N30.1fpWjVox5v2dAGM-MxXihwzdeuOb_Yxm-0Lr0Z8yLoU";
+
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+console.log("✅ supabase is loaded!");
 
 // Function to register a new user
 async function registerUser(event) {
@@ -86,7 +87,7 @@ async function registerUser(event) {
         alert("📩 Please verify your email before logging in!");
 
         // Redirect to login page
-        window.location.href = "pet-attribute.html";
+        window.location.href = "index.html";
 
     } catch (err) {
         console.error("❌ Unexpected Error:", err);
@@ -95,8 +96,7 @@ async function registerUser(event) {
 }
 
 // Function to log in a user
-async function loginUser(event) {
-    event.preventDefault();
+async function loginUser() {
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
@@ -110,7 +110,7 @@ async function loginUser(event) {
         }
 
         alert("✅ Login successful!");
-        window.location.href = "home.html"; // Redirect to home.html after login
+        window.location.href = "pet-attribute.html"; // Redirect to home.html after login
 
     } catch (err) {
         console.error("❌ Unexpected Error:", err);
@@ -119,10 +119,14 @@ async function loginUser(event) {
 }
 
 // Attach event listeners on page load
-document.addEventListener("DOMContentLoaded", function () {
     const registerForm = document.getElementById("register-form");
-    const loginForm = document.getElementById("login-form");
+    const loginForm = document.getElementById("login");
 
-    if (registerForm) registerForm.addEventListener("submit", registerUser);
-    if (loginForm) loginForm.addEventListener("submit", loginUser);
-});
+    if (registerForm)registerForm.addEventListener("submit", registerUser);
+
+    
+    loginForm.addEventListener("click", async function(event){
+            event.preventDefault();
+            console.log("button clicked");
+            await loginUser();
+        });
