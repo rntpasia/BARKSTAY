@@ -710,38 +710,93 @@
     });
 });
 const hotels = [
-            { name: "Paw Haven Hotel", stars: 3, location: "1.4km to City Center", price: 6000, totalPrice: 10000 },
-            { name: "Furry Friends Inn", stars: 4, location: "2km to City Center", price: 7500, totalPrice: 12500 },
-            { name: "Cozy Paws Resort", stars: 5, location: "500m to City Center", price: 10000, totalPrice: 20000 }
-        ];
+    { 
+        name: "88 Bark Avenue", 
+        stars: 4, 
+        location: "1.4km to City Center", 
+        price: 2500, 
+        totalPrice: 5000,
+        image: "images/i.jpg" 
+    },
+    { 
+        name: "Dluxe Pet Hotel & Spa", 
+        stars: 4, 
+        location: "2km to City Center", 
+        price: 7500, 
+        totalPrice: 12500,
+        image: "images/k.jpg" 
+    },
+    { 
+        name: "Mr. Paws", 
+        stars: 5, 
+        location: "500m to City Center", 
+        price: 10000, 
+        totalPrice: 20000,
+        image: "images/g.jpg" 
+    }
+];
 
-        // Function to load hotels dynamically
-        function loadHotels() {
-            const hotelList = document.getElementById('hotel-list');
-            hotelList.innerHTML = ""; // Clear previous content
 
-            hotels.forEach(hotel => {
-                const hotelCard = document.createElement('div');
-                hotelCard.classList.add('hotel-card');
+function loadHotels() {
+    const hotelList = document.getElementById('hotel-list');
+    hotelList.innerHTML = ""; // Clear previous content
 
-                hotelCard.innerHTML = `
-                    <img src="images/pet hotel.jpeg" alt="Hotel">
-                    <div class="details">
-                        <h4>${hotel.name}</h4>
-                        <p>⭐ ${'⭐'.repeat(hotel.stars)} hotel</p>
-                        <p>${hotel.location}</p>
-                    </div>
-                    <div class="price-section">
-                        <p class="price">₱${hotel.price.toLocaleString()}</p>
-                        <small>₱${hotel.totalPrice.toLocaleString()} for 2 nights</small>
-                        <br>
-                        <button>View Deal</button>
-                        <div class="more-prices">More Prices ▼</div>
-                    </div>
-                `;
-                hotelList.appendChild(hotelCard);
-            });
+    hotels.forEach(hotel => {
+        const hotelCard = document.createElement('div');
+        hotelCard.classList.add('hotel-card');
+        
+        // Determine which HTML file to link to based on the hotel name
+        let destinationPage;
+        if (hotel.name === "88 Bark Avenue") {
+            destinationPage = "88bark.html";
+        } else if (hotel.name === "Dluxe Pet Hotel & Spa") {
+            destinationPage = "dluxe.html";
+        } else if (hotel.name === "Mr. Paws") {
+            destinationPage = "mrpaws.html";
+        } else {
+            // Default fallback
+            destinationPage = "hotel-details.html";
         }
+        
+        // Make the entire card clickable
+        hotelCard.style.cursor = 'pointer';
+        hotelCard.addEventListener('click', function() {
+            window.location.href = destinationPage;
+        });
+
+        hotelCard.innerHTML = `
+            <img src="${hotel.image}" alt="${hotel.name}">
+            <div class="details">
+                <h4>${hotel.name}</h4>
+                <p>⭐ ${'⭐'.repeat(hotel.stars)} hotel</p>
+                <p>${hotel.location}</p>
+            </div>
+            <div class="price-section">
+                <p class="price">₱${hotel.price.toLocaleString()}</p>
+                <small>₱${hotel.totalPrice.toLocaleString()} for 2 nights</small>
+                <br>
+                <button onclick="event.stopPropagation(); viewDeal('${destinationPage}')">View Deal</button>
+                <div class="more-prices" onclick="event.stopPropagation(); showMorePrices('${destinationPage}')">More Prices ▼</div>
+            </div>
+        `;
+        hotelList.appendChild(hotelCard);
+    });
+}
+
+// Function to handle the "View Deal" button click
+function viewDeal(pageName) {
+    // This prevents the parent card's click event from triggering
+    window.location.href = pageName;
+}
+
+// Function to show more prices
+function showMorePrices(pageName) {
+    // This prevents the parent card's click event from triggering
+    console.log(`Show more prices for ${pageName}`);
+    // You could implement a popup or redirect to a pricing page
+    // For example:
+    // window.location.href = `pricing-${pageName}`;
+}
 
         // Load hotels on page load
         window.onload = loadHotels;
