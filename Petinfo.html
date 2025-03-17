@@ -228,15 +228,11 @@
         </div>
         <a href="manage.html" class="back-button">←</a>
         <div class="header-container">
-            <label for="petImageUpload" class="image-edit">
-                <img id="petImage" src="default-image.jpg" alt="Pet Image">
-                <input type="file" id="petImageUpload" accept="image/*" hidden>
-            </label>
             <h2 class="h2">Pet Information</h2>
         </div>
             <div class="form-container">
-                <form>
-                    <label for="pet-name">Pet’s Name:</label>
+                <form id="petInfo">
+                    <label for="pet-name">Pet’s Name:</label> <!--update-->
                     <input type="text" id="pet_name">
     
                     <label for="breed">Breed:</label>
@@ -248,13 +244,7 @@
                     <label for="diet">Diet:</label>
                     <input type="text" id="diet">
     
-                    <label for="birthday">Birthday:</label>
-                    <input type="date" id="birthday">
-    
-                    <label for="health-concerns">Health Concerns:</label>
-                    <input type="text" id="health-concerns">
-    
-                    <button type="submit" class="save-button">Save</button>
+                    <button type="submit" class="save-button" id="saveBtn">Save</button>
                 </form>
             </div>
        
@@ -294,17 +284,8 @@
                     } 
                 });
             });
-            document.getElementById('petImageUpload').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('petImage').src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-});
 
         </script>
+        <script type="module" src="updatePet.js"></script>
 </body>
 </html>
