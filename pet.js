@@ -32,8 +32,6 @@ if (!user.id){
     console.log("No user ID");
 }
 
-// Fetch and display pets on page load
-document.addEventListener("DOMContentLoaded", fetchPets);
 
 // Form submission handler
 document.getElementById("pet-form").addEventListener("submit", async function (event) {
@@ -80,27 +78,9 @@ document.getElementById("pet-form").addEventListener("submit", async function (e
     alert("✅ Pet saved successfully!");
     window.location.href="home.html";
 
-    // Clear form and refresh displayed pets
-    document.getElementById("pet-form").reset();
-    fetchPets();
+
 });
 
-// Fetch and display pets
-async function fetchPets() {
-    console.log("🔄 Fetching pets...");
-
-    const { data: pets, error } = await supabase
-        .from("pets")
-        .select("*")
-        .order("id", { ascending: false });
-
-    if (error) {
-        console.error("❌ Fetch Error:", error.message);
-        return;
-    }
-
-    console.log("✅ Pets fetched:", pets);
-}
 
 
 
