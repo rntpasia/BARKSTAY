@@ -30,38 +30,3 @@ let user = await getUser();
 if (!user.id){
     console.log("No user ID");
 }
-
-const conPay = document.getElementById("confirm");
-if(conPay){
-    conPay.addEventListener('click', async function(event){
-        event.preventDefault();
-
-        let userId = localStorage.getItem("auth_id");
-        console.log("USER ID: ", userId);
-        let card_name = document.getElementById("card_name").value; 
-        let card_number = document.getElementById("card_number").value;
-        let expiry = document.getElementById("expiry").value;
-
-        let cvv = document.getElementById("cvv").value;
-
-        if (!card_name || !card_number || !expiry || !cvv) {
-            alert("Please fill in all card details.");
-            return;
-        }
-
-        const{data, error} = await supabase.from("payment").insert([{
-            user_id: userId,
-            card_name,
-            card_number,
-            expiry,
-            cvv
-        }]).select("id").single();
-
-        alert("Payment has been confirmed. Thank you!");
-
-        if(error){
-            console.error("Error: ", error);
-        }
-
-    });
-}

@@ -9,206 +9,231 @@
     <script src="https://kit.fontawesome.com/c24857b17d.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
     <style>
-             * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-    
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100vw;
-            height: 100vh;
-            background-color: #111;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-        }
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        .phone-container {
-            width: 100vw;
-            height: 100vh;
-            background-color: #E4C89A;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: #f9f6f1;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow: hidden;
+    }
+
+    .phone-container {
+        width: 100vw;
+        height: 100vh;
+        background-color: #f9f6f1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .app-header {
+        width: 100%;
+        background-color: #002244;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        font-family: 'Playfair Display', serif;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .settings-container {
+        display: flex;
+        gap: 15px;
+    }
+
+    .profile-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px; /* Reduced from 20px */
+        padding: 20px 0 10px 0; /* Reduced bottom padding to bring menu closer */
+    }
+
+    .profile-pic-container {
+        position: relative;
+        width: 160px;
+        height: 160px;
+    }
 
 
+    .profile-pic {
+    width: 100%;
+    height: 100%;
+    border-radius: 30%;
 
-        .app-header {
-            width: 100%;
-            background-color: #0B2C48;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .settings-container {
-            display: flex;
-            gap: 15px;
-        }
-
-        .profile-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.profile-pic-container {
-    position: relative;
-    cursor: pointer;
-    display: inline-block;
-    margin-top: 20px;
-}
-
-.profile-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #002855;
-}
+    border: 3px solid #7e838a;  
+    transition: 0.3s;
+    }
 
-.edit-icon {
+    .profile-pic:hover {
+    opacity: 0.7;
+    cursor: pointer;
+    }
+
+    .edit-icon {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background: white;
+    bottom: 10px;
+    right: 10px;
+    background-color: white;
     border-radius: 50%;
     padding: 5px;
-    font-size: 12px;
-    color: #002855;
+    font-size: 14px;
     cursor: pointer;
-}
-        .username-container {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 20px;
-        }
+    color: #333;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    }
 
-        .username {
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            background: transparent;
-            border: none;
-            outline: none;
-            width: auto;
-            transition: background 0.3s ease;
-        }
+    .username-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 5px; /* Optional: add small space between image and username */
+    }
 
-        .username:focus {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            padding: 2px 5px;
-        }
+    .username-input {
+    font-size: 18px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    text-align: center;
+    font-weight: bold;
+    }
 
-        .edit {
-            cursor: pointer;
-            font-size: 18px;
-            color: white;
-            transition: color 0.3s ease;
-        }
+    #edituser {
+    padding: 6px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    }
 
-        .edit:hover {
-            color: #111;
-        }
 
-        .menu {
+    .edit:hover {
+        color: #e63946;
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        gap: 10px; /* Reduced from 20px */
+        margin-top: 0px; /* Remove extra space */
+    }
+
+    .menu a {
+    text-decoration: none; 
+    }
+
+    .menu-item {
+    font-weight: bold;       
+    font-size: 1.1rem;       
+    cursor: pointer;
+    padding: 20px 20px;
+    color: #002244;
+    border: none;
+    background-color: #f0f0f0; 
     display: flex;
-    flex-direction: column;
-    width: 60%;
-    gap: 30px;
-    margin-top: 50px; /* Adjust this value to move it down */
-}
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;            
+    margin-bottom: 10px;    
+    }
 
-        .menu-item {
-            background-color: #0B2C48;
-            color: white;
-            padding: 20px;
-            border: none;
-            border-radius: 12px;
-            text-align: left;
-            font-size: 18px;
-            cursor: pointer;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
 
-        .menu-item:hover {
-            background-color: #084067;
-            transform: scale(1.02);
-        }
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background: #0A192F;
-            padding: 15px 0;
-            color: white;
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-        }
+    .menu-item:hover {
+        background-color: #f1f9ff;
+    }
 
-        .nav-item {
-            text-align: center;
-            flex: 1;
-            cursor: pointer;
-            padding: 10px 0;
-            transition: background 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .nav-item i {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        .nav-item.active {
-            background: #B0C4DE;
-            color: #0A192F;
-            border-radius: 5px;
-        }
+    .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background: #002244;
+        padding: 15px 0;
+        color: white;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+    }
 
-        @media (max-width: 480px) {
-            .bottom-nav {
-                flex-direction: row;
-                justify-content: space-evenly;
-                padding: 10px 0;
-            }
-            .nav-item i {
-                font-size: 20px;
-            }
-            .nav-item span {
-                font-size: 12px;
-            }
-            .profile-section {
+    .nav-item {
+        text-align: center;
+        flex: 1;
+        cursor: pointer;
+        padding: 10px 0;
+        transition: background 0.3s;
+        display: flex;
         flex-direction: column;
         align-items: center;
     }
+
+    .nav-item i {
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+
+    .nav-item.active {
+        background: #e0e8f0;
+        color: #002244;
+        border-radius: 6px;
+    }
+
+    @media (max-width: 480px) {
+        .menu {
+            width: 90%;
         }
+
+        .bottom-nav {
+            flex-direction: row;
+            justify-content: space-evenly;
+            padding: 10px 0;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        .nav-item span {
+            font-size: 12px;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0 0 0; /* Reduced top padding */
+            gap: 10px; /* Smaller gap between profile image and username */
+        }
+
+    }
+
     </style>
+
     <script>
     </script>
 </head>
 <body>
     <div class="phone-container">
         <div class="app-header">
-            <h1>BARK & STAY</h1>
+            <h1 onclick="window.location.href='home.html'" style="cursor: pointer;">BARK & STAY</h1>
             <div class="settings-container" onclick="navigateTo('settings.html')">
             <i class="fa fa-gear" href="settings.html" style="color:white"></i>
                
@@ -216,21 +241,24 @@
         </div>
         
         <div class="profile-section">
-            <label for="profileImageUpload" class="profile-pic-container">
-                <img id="profileImage" src="profile.jpg" alt="User Profile" class="profile-pic">
-                <i class="fa fa-pencil edit-icon"></i>
+        <div class="profile-pic-container">
+            <label for="profileImageUpload">
+            <img id="profileImage" src="/images/pfp.jpg" alt="User Profile" class="profile-pic" />
+            <i class="fa fa-pencil edit-icon" title="Change photo"></i>
             </label>
-            <input type="file" id="profileImageUpload" accept="image/*" style="display: none" onchange="updateProfileImage(event)">
-        
-            <div class="username-container">
-                <input type="text" id="username" class="username" readonly>
-                <i class="fa fa-pencil edit" id="editenabled"></i>
-                <i class="" id="edituser" hidden>Save</i>
-            </div>
+            <input type="file" id="profileImageUpload" accept="image/*" hidden onchange="updateProfileImage(event)" />
         </div>
+
+        <div class="username-container">
+            <input type="text" id="username" class="username-input" readonly value="YourUsernameHere" />
+            <button id="edituser" hidden>Save</button>
+        </div>
+        </div>
+
+
         
         <div class="menu">
-         <a href="PI.html"> <button class="menu-item">Personal Information <i class="fa-solid fa-angle-right"></i></button></a> 
+         <a href="PI.html"> <button class="menu-item">Personal Information<i class="fa-solid fa-angle-right"></i></button></a> 
          <a href="Petinfo.html"><button class="menu-item">Pet Information <i class="fa-solid fa-angle-right"></i></button></a>
          <a href="Payment.html">  <button class="menu-item">Payment Information <i class="fa-solid fa-angle-right"></i></button></a>
          <a href="bookinghistory.html">   <button class="menu-item">Booking History <i class="fa-solid fa-angle-right"></i></button></a>

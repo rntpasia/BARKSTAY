@@ -9,89 +9,63 @@
     <script src="https://kit.fontawesome.com/c24857b17d.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
     <style>
-             * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
         }
-    
+
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100vw;
-            height: 100vh;
-            background-color: #111;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: #f9f6f1;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow: hidden;
         }
+
         .phone-container {
-            width: 100vw;
-            height: 100vh;
-            background-color: #E4C89A;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+        background-color: #f9f6f1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
         }
+
         .app-header {
-            width: 100%;
-            background-color: #0B2C48;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            font-family: 'Playfair Display', serif;
+        width: 100%;
+        background-color:#002244;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        font-family: 'Playfair Display', serif;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .settings-container {
-            display: flex;
-            gap: 15px;
-        }
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background: #0A192F;
-            padding: 15px 0;
-            color: white;
-            width: 100%;
-            position: absolute;
-            bottom: 0;
+        display: flex;
+        gap: 15px;
+        cursor: pointer;
         }
 
-        .nav-item {
-            text-align: center;
-            flex: 1;
-            cursor: pointer;
-            padding: 10px 0;
-            transition: background 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .nav-item i {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        .nav-item.active {
-            background: #B0C4DE;
-            color: #0A192F;
-            border-radius: 5px;
-        }
         .back-button {
             position: absolute;
-            left: 15px;  /* Move it to the left */
-            top: 20%;
+            left: 50px;  /* Move it to the left */
+            top: 160px;
             transform: translateY(-50%); /* Center it vertically */
             width: 40px;
             height: 40px;
             background-color: #002855;
-            border-radius: 50%;
+            border-radius: 20%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -102,125 +76,115 @@
             color: white;
         }
 
+        .h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color:#002244;
+        margin-top: 100px;
+        margin-bottom: 20px;
+        text-align: center;
+        }
+
         .form-container {
-            background-color: #002855;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-            margin-top: -2%;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        width: 80%;
+        max-width: 350px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         label {
-            display: block;
-            font-weight: bold;
-            color: white;
-            text-align: left;
-            margin: 10px 0 5px;
+        display: block;
+        font-weight: bold;
+        color:#002244;
+        margin: 12px 0 6px;
+        text-align: left;
         }
 
         input {
-            width: 100%;
-            padding: 8px;
-            border-radius: 5px;
-            border: none;
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
         }
 
         .save-button {
-            background-color: #1E73E8;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 10px;
-            width: 100%;
-            border: none;
-            border-radius: 5px;
-            margin-top: 15px;
-            cursor: pointer;
+        background-color:#002244;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 12px;
+        width: 100%;
+        border: none;
+        border-radius: 6px;
+        margin-top: 20px;
+        cursor: pointer;
         }
 
         .save-button:hover {
-            background-color: #1663c7;
+        background-color: #16314a;
         }
 
-        .header-container {
-    display: flex;
-    align-items: center; /* Aligns items vertically */
-    gap: 10px; /* Adds space between the image and the text */
-    justify-content: flex-start; /* Aligns everything to the left */
-    margin-bottom: 10px; /* Adds space below the header */
-}
+        .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background:#002244;
+        padding: 15px 0;
+        color: white;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        }
 
-.image-edit {
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-}
+        .nav-item {
+        text-align: center;
+        flex: 1;
+        cursor: pointer;
+        padding: 10px 0;
+        transition: background 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        }
 
-.image-edit img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #002855;
-}
+        .nav-item i {
+        font-size: 22px;
+        margin-bottom: 5px;
+        }
 
-.image-edit::after {
-    content: "✏️"; /* Edit icon */
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: white;
-    border-radius: 50%;
-    padding: 2px;
-    font-size: 12px;
-}
+        .nav-item span {
+        font-size: 13px;
+        }
 
-/* Fixes the h2 alignment */
-.h2 {
-    font-size: 22px;
-    font-weight: bold;
-    color: #002855;
-    margin: 0; /* Removes any default margin */
-}
+        .nav-item.active {
+        background: #e0e8f0;
+        color:#002244;
+        border-radius: 6px;
+        }
 
         @media (max-width: 480px) {
-            .bottom-nav {
-                flex-direction: row;
-                justify-content: space-evenly;
-                padding: 10px 0;
-            }
-            .nav-item i {
-                font-size: 20px;
-            }
-            .nav-item span {
-                font-size: 12px;
-            }
-    .header-container {
-        flex-direction: column; /* Stack items vertically */
-        align-items: center; /* Center align for better UI */
-    }
-    
-    .image-edit img {
-        width: 40px;
-        height: 40px;
-    }
+        .form-container {
+            width: 90%;
+        }
 
-    .h2 {
-        font-size: 18px; /* Reduce font size for smaller screens */
-    }
-}
+        .nav-item i {
+            font-size: 20px;
+        }
 
-
-
+        .nav-item span {
+            font-size: 12px;
+        }
+        }
     </style>
 
 
         <body>
     <div class="phone-container">
         <div class="app-header">
-            <h1>BARK & STAY</h1>
+            <h1 onclick="window.location.href='home.html'" style="cursor: pointer;">BARK & STAY</h1>
             <div class="settings-container" onclick="navigateTo('settings.html')">
             <i class="fa fa-gear" href="settings.html" style="color:white"></i>
                

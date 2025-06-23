@@ -101,6 +101,8 @@ async function disableEditing(event, id) {
                     event.preventDefault();
                     console.log("button is clicked");
                     await updateUserAccount();
+                    alert("Your information has been saved!");
+                    window.location.href = "manage.html";
                 });
                 ////////////PET INFO/////////
 

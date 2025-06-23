@@ -7,217 +7,244 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            background-color: #E4C89A;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        .app-header {
-            width: 100%;
-            background-color: #0B2C48;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            font-size: 22px;
-            font-weight: bold;
-            font-family: 'Playfair Display', serif;
-            position: relative;
-        }
-        
-        .back-button {
-            position: absolute;
-            left: 15px;
-            font-size: 20px;
-            cursor: pointer;
-            color: white;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        .container {
-            margin-top: 40px;
-        }
-        
-        .section-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: white;
-            background-color: #0B2C48;
-            padding: 8px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-        }
-        
-        .setting-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            font-size: 16px;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer;
-        }
-        
-        .setting-item:hover {
-            background: #f3f3f3;
-        }
-        
-        .danger {
-            color: red;
-        }
-        
-        .signout {
-            text-align: center;
-            color: gray;
-            font-size: 14px;
-            margin-top: 15px;
-            cursor: pointer;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 10;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background-color: #0B2C48;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            color: white;
-            width: 80%;
-            max-width: 300px;
-        }
-        
-        .modal-buttons {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
-        }
-        
-        .modal-btn {
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        .cancel-btn {
-            background-color: #6994b9;
-            color: rgb(246, 244, 244);
-        }
-        
-        .confirm-btn {
-            background-color: #6994b9;
-            color: red;
-            border-radius: 5px;
-        }
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 20px;
-            cursor: pointer;
-            color: white;
-            background: white;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: black;
-            font-weight: bold;
-        }
-        .termsmodal-content {
-            background-color: #0B2C48;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: left;
-            color: white;
-            width: 150%;
-            max-width: 900px;
-            position: relative;
-            border: 2px solid black;
-        }
-        .password-input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: none;
-        }
-        
-        .password-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-        .password-buttons button {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-      
-        .save-btn {
-            background-color: #6994b9;
-            color: rgb(6, 249, 42);
-        }
-        .modal {
-    opacity: 0;
-    visibility: hidden;
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-}
+    body {
+        background-color: #f9f6f1;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+        line-height: 1.6;
+    }
 
-.modal.show {
-    opacity: 1;
-    visibility: visible;
-}
+    /* Header */
+    .app-header {
+        width: 100%;
+        background-color: #002244;
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 18px 20px;
+        font-size: 24px;
+        font-weight: bold;
+        font-family: 'Playfair Display', serif;
+        position: relative;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 
-.modal-content {
-    background-color: #0B2C48;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    color: white;
-    width: 80%;
-    max-width: 300px;
-    position: relative;
-}
+    .back-button {
+        position: absolute;
+        left: 25px;
+        font-size: 33px;
+        cursor: pointer;
+        color: white;
+        transition: transform 0.2s ease;
+    }
+    .back-button:hover {
+        transform: scale(1.1);
+    }
 
+    /* Container & Section */
+    .container {
+        padding: 30px 20px;
+    }
+
+    .section-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #002244;
+        background-color: #e0e8f0;
+        padding: 10px 12px;
+        border-radius: 8px;
+        margin: 30px 0 15px;
+    }
+
+    /* Setting Item */
+    .setting-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 16px;
+        font-size: 17px;
+        border-radius: 8px;
+        background: white;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        transition: background 0.2s ease;
+        cursor: pointer;
+    }
+
+    .setting-item i {
+        margin-right: 10px;
+        color: #457b9d;
+    }
+
+    .setting-item:hover {
+        background: #f1f9ff;
+    }
+
+    .danger {
+        color: #e63946;
+    }
+
+    .signout {
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+        margin-top: 25px;
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+    .signout:hover {
+        color: #e63946;
+    }
+
+    /* Modal */
+    .modal {
+        opacity: 0;
+        visibility: hidden;
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+
+    .modal.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 25px 20px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 350px;
+        text-align: center;
+        color: #002244;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        position: relative;
+    }
+
+    .modal-content h1 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    /* Modal Buttons */
+    .modal-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .modal-btn {
+        padding: 10px 20px;
+        font-size: 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .cancel-btn {
+        background-color: #ced4da;
+        color: #333;
+    }
+    .cancel-btn:hover {
+        background-color: #adb5bd;
+    }
+
+    .confirm-btn {
+        background-color: #e63946;
+        color: white;
+    }
+    .confirm-btn:hover {
+        background-color: #c92a3d;
+    }
+
+    /* Terms Modal */
+    .termsmodal-content {
+        background-color: white;
+        padding: 30px;
+        border-radius: 12px;
+        width: 95%;
+        max-width: 800px;
+        color: #002244;
+        line-height: 1.7;
+        position: relative;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        overflow-y: auto;
+        max-height: 90vh;
+    }
+
+    /* Close Button */
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 20px;
+        background: #f1f1f1;
+        color: #111;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    /* Password Modal */
+    .password-input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+    }
+
+    .password-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .password-buttons button {
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .save-btn {
+        background-color: #002244;
+        color: white;
+    }
+    .save-btn:hover {
+        background-color: #21867a;
+    }
 
     </style>
 </head>
 <body>
     <div class="app-header">
         <i class="fa fa-arrow-left back-button" onclick="history.back()"></i>
-        Settings
+        <h3 style="margin-left: 50px;" style="font-size: larger;"
+        >Settings</h3>
+        
     </div>
     <div class="container">
         <div class="section-title">General Settings</div>
@@ -260,8 +287,8 @@
             <input type="password" class="password-input" placeholder="Old Password">
             <input type="password" class="password-input" placeholder="New Password">
             <div class="password-buttons">
-                <button class="save-btn">Save</button>
                 <button class="modal-btn cancel-btn" onclick="closeModal('changePasswordModal')">Cancel</button>
+                <button class="save-btn">Save</button>
             </div>
         </div>
     </div>

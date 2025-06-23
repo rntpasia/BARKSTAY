@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 8px;
+      padding: 25px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .header {
+      text-align: center;
+      background-color: #002244;
+      color: white;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    .payment-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .payment-option {
+      background: #f0f0f0;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    .payment-option:hover {
+      background-color: #ddd;
+    }
+
+    .payment-option img {
+      width: 80px;
+      height: auto;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .button {
+      display: block;
+      background-color: #002244;
+      color: white;
+      padding: 12px;
+      text-align: center;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    .button:hover {
+      background-color: #0055aa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Select Payment Method</h2>
+    </div>
+
+    <div class="payment-options">
+      <div class="payment-option" onclick="showForm('gcash')">
+        <img src="images/gcash.png" alt="GCash" />
+        <p>GCash</p>
+      </div>
+      <div class="payment-option" onclick="showForm('paypal')">
+        <img src="images/paypal.png" alt="PayPal" />
+        <p>PayPal</p>
+      </div>
+      <div class="payment-option" onclick="showForm('card')">
+        <img src="images/visamasterscard.jpg" alt="Card" style="width: 100px;" />
+        <p>Card</p>
+      </div>
+      <div class="payment-option" onclick="showForm('maya')">
+        <img src="images/maya.png" alt="Maya" />
+        <p>Maya</p>
+      </div>
+    </div>
+
+    <div id="form-area">
+      <div id="gcash-form" class="hidden">
+        <h3>Pay with GCash</h3>
+        <img src="images/gcash-qr.jpg" alt="GCash QR" style="width: 100%; max-width: 300px; display: block; margin: 20px auto;">
+        <a href="#" class="button">I Have Paid</a>
+      </div>
+
+      <div id="paypal-form" class="hidden">
+        <h3>Pay with PayPal</h3>
+        <p>You will be redirected to PayPal to complete the payment.</p>
+        <a href="#" class="button">Proceed to PayPal</a>
+      </div>
+
+      <div id="card-form" class="hidden">
+        <h3>Pay with Card</h3>
+        <form>
+          <label>Card Number</label>
+          <input type="text" placeholder="Enter card number" required />
+
+          <label>Cardholder Name</label>
+          <input type="text" placeholder="Name on card" required />
+
+          <label>Expiry Date</label>
+          <input type="month" required />
+
+          <label>CVV</label>
+          <input type="text" placeholder="3-digit code" required />
+
+          <a href="#" class="button">Confirm Payment</a>
+        </form>
+      </div>
+
+      <div id="maya-form" class="hidden">
+        <h3>Pay with Maya</h3>
+        <img src="images/maya-qr.jpg" alt="Maya QR" style="width: 100%; max-width: 300px; display: block; margin: 20px auto;">
+        <a href="#" class="button">I Have Paid</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showForm(method) {
+      const forms = ['gcash', 'paypal', 'card', 'maya'];
+      forms.forEach(f => {
+        document.getElementById(f + '-form').classList.add('hidden');
+      });
+      document.getElementById(method + '-form').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

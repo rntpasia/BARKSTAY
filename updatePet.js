@@ -71,7 +71,7 @@ async function updatePets(){
     if(error){
         console.log("error: ", error);
     }
-    alert("updated pet profile");
+    alert("Update Successful!");
 }
 
 const saveBtn = document.getElementById("saveBtn");
@@ -79,6 +79,7 @@ saveBtn.addEventListener("click", async function(event){
     event.preventDefault();
     console.log("button clicked");
     await updatePets();
+    window.location.href = "manage.html";
 
 });
 }

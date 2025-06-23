@@ -9,89 +9,63 @@
     <script src="https://kit.fontawesome.com/c24857b17d.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
     <style>
-             * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
         }
-    
+
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100vw;
-            height: 100vh;
-            background-color: #111;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: #f9f6f1;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow: hidden;
         }
+
         .phone-container {
-            width: 100vw;
-            height: 100vh;
-            background-color: #E4C89A;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+        background-color: #f9f6f1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
         }
+
         .app-header {
-            width: 100%;
-            background-color: #0B2C48;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            font-family: 'Playfair Display', serif;
+        width: 100%;
+        background-color: #002244;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        font-family: 'Playfair Display', serif;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .settings-container {
-            display: flex;
-            gap: 15px;
-        }
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background: #0A192F;
-            padding: 15px 0;
-            color: white;
-            width: 100%;
-            position: absolute;
-            bottom: 0;
+        display: flex;
+        gap: 15px;
+        cursor: pointer;
         }
 
-        .nav-item {
-            text-align: center;
-            flex: 1;
-            cursor: pointer;
-            padding: 10px 0;
-            transition: background 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .nav-item i {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        .nav-item.active {
-            background: #B0C4DE;
-            color: #0A192F;
-            border-radius: 5px;
-        }
         .back-button {
             position: absolute;
-            left: 15px;  /* Move it to the left */
-            top: 20%;
+            left: 50px;  /* Move it to the left */
+            top: 160px;
             transform: translateY(-50%); /* Center it vertically */
             width: 40px;
             height: 40px;
             background-color: #002855;
-            border-radius: 50%;
+            border-radius: 20%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -101,77 +75,116 @@
             text-decoration: none;
             color: white;
         }
-        .h2{
-            font-size: 30px; /* Adjust the size */
-            font-weight: bold;
-            color: #000000; 
-            padding: 10px 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            text-align: center;
+
+        .h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #002244;
+        margin-top: 100px;
+        margin-bottom: 20px;
+        text-align: center;
         }
+
         .form-container {
-            background-color: #002855;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        width: 80%;
+        max-width: 350px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         label {
-            display: block;
-            font-weight: bold;
-            color: white;
-            text-align: left;
-            margin: 10px 0 5px;
+        display: block;
+        font-weight: bold;
+        color: #002244;
+        margin: 12px 0 6px;
+        text-align: left;
         }
 
         input {
-            width: 100%;
-            padding: 8px;
-            border-radius: 5px;
-            border: none;
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
         }
 
         .save-button {
-            background-color: #1E73E8;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 10px;
-            width: 100%;
-            border: none;
-            border-radius: 5px;
-            margin-top: 15px;
-            cursor: pointer;
+        background-color: #002244;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 12px;
+        width: 100%;
+        border: none;
+        border-radius: 6px;
+        margin-top: 20px;
+        cursor: pointer;
         }
 
         .save-button:hover {
-            background-color: #1663c7;
+        background-color: #16314a;
         }
 
+        .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background: #002244;
+        padding: 15px 0;
+        color: white;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        }
+
+        .nav-item {
+        text-align: center;
+        flex: 1;
+        cursor: pointer;
+        padding: 10px 0;
+        transition: background 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        }
+
+        .nav-item i {
+        font-size: 22px;
+        margin-bottom: 5px;
+        }
+
+        .nav-item span {
+        font-size: 13px;
+        }
+
+        .nav-item.active {
+        background: #e0e8f0;
+        color: #002244;
+        border-radius: 6px;
+        }
 
         @media (max-width: 480px) {
-            .bottom-nav {
-                flex-direction: row;
-                justify-content: space-evenly;
-                padding: 10px 0;
-            }
-            .nav-item i {
-                font-size: 20px;
-            }
-            .nav-item span {
-                font-size: 12px;
-            }
+        .form-container {
+            width: 90%;
         }
 
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        .nav-item span {
+            font-size: 12px;
+        }
+        }
     </style>
 
 
         <body>
     <div class="phone-container">
         <div class="app-header">
-            <h1>BARK & STAY</h1>
+            <h1 onclick="window.location.href='home.html'" style="cursor: pointer;">BARK & STAY</h1>
             <div class="settings-container" onclick="navigateTo('settings.html')">
             <i class="fa fa-gear" href="settings.html" style="color:white"></i>
                
@@ -187,7 +200,7 @@
                 <label for="phone-number">Contact Number:</label>
                 <input type="tel" id="phone_number"   name="phone-number" required maxlength="11">
     
-                <button id="submit" class="save-button">Save</button>
+                <button type="submit" id="submit" class="save-button">Save</button>
             </form>
         </div>
 
@@ -210,23 +223,31 @@
             </div>
         </div>
     </div>
-        <script>
-            function navigateTo(page) {
-                window.location.href = page; // Redirect to the specified page
-            }
-        
-            // Highlight the active tab based on the current page
-            document.addEventListener("DOMContentLoaded", function () {
-                const currentPage = window.location.pathname.split("/").pop(); // Get the current filename
-                const navItems = document.querySelectorAll(".nav-item");
-        
-                navItems.forEach(item => {
-                    if (item.getAttribute("onclick").includes(currentPage)) {
-                        item.classList.add("active"); // Add active class
-                    } 
-                });
+    <script>
+    function navigateTo(page) {
+        window.location.href = page;
+    }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentPage = window.location.pathname.split("/").pop(); 
+            const navItems = document.querySelectorAll(".nav-item");
+
+            navItems.forEach(item => {
+                const targetPage = item.getAttribute("onclick")?.match(/'([^']+)'/)?.[1];
+                if (targetPage === currentPage) {
+                    item.classList.add("active");
+                }
             });
-        </script>
+
+            const form = document.querySelector("form");
+            form.addEventListener("submit", function (e) {
+                e.preventDefault(); 
+                alert("Your information has been saved!");
+            });
+        });
+    </script>
+
+
         <script type="module" src="manage.js"></script>
 </body>
 </html>

@@ -14,22 +14,22 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: #e6d9b8;
+            background: #ffffff;
         }
         
         .app-header {
     width: auto;
-    background-color: #0B2C48;
+    background-color: #002244;
     color: white;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
+    padding: 0px 20px;
     font-size: clamp(18px, 2vw, 24px); /* Adjusts size dynamically */
     font-weight: bold;
     font-family: 'Playfair Display', serif;
-    min-height: 60px;
+
 }
 
 /* Wrap settings container properly */
@@ -47,16 +47,16 @@
     text-align: center;
 }
 
-/* Back button adjustments */
-.back-button {
+
+        .back-button {
             position: absolute;
-            left: 15px;  /* Move it to the left */
-            top: 25%;
-            transform: translateY(-50%); /* Center it vertically */
+            left: 50px;  
+            top: 160px;
+            transform: translateY(-50%); 
             width: 40px;
             height: 40px;
-            background-color: #002855;
-            border-radius: 50%;
+            background-color: #002244;
+            border-radius: 20%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -79,7 +79,7 @@
         .booking-card {
             background: #002244;
             color: white;
-            margin: 15px 20px;
+            margin: 20px 50px;
             border-radius: 5px;
             padding: 15px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -165,7 +165,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: #0A192F;
+    background: #002244;
     padding: 15px 0;
     color: white;
     width: 100%;
@@ -218,7 +218,7 @@ main {
 <body>
     <div class="navbar">
         <div class="app-header">
-            <h1>BARK & STAY</h1>
+            <h1 onclick="window.location.href='home.html'" style="cursor: pointer;">BARK & STAY</h1>
             <div class="settings-container" onclick="navigateTo('settings.html')">
             <i class="fa fa-gear" href="settings.html" style="color:white"></i>
                
