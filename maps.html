@@ -95,7 +95,7 @@
                 <i class="fas fa-map-marker-alt"></i>
                 <span>Map</span>
             </div>
-            <div class="nav-item" id="chat" onclick="navigateTo('Chat.html')">
+            <div class="nav-item" id="chat" onclick="navigateTo('chat.html')">
                 <i class="fas fa-comment"></i>
                 <span>Chat</span>
             </div>
@@ -114,22 +114,21 @@
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
+        
         var petHotels = [
-            { name: "Happy Paws Hotel", lat: 14.5525, lng: 121.0198 },
-            { name: "Paw Haven", lat: 14.5568, lng: 121.0235 },
-            { name: "Furry Friends Inn", lat: 14.5583, lng: 121.0291 },
-            { name: "Bark Park Hotel", lat: 14.5662, lng: 121.0367 },
-            { name: "Pet Loft Hotel", lat: 14.5794, lng: 121.0518 },
-            { name: "Dog Haven Suites", lat: 14.5721, lng: 121.0453 },
-            { name: "VIP Pet Hotel", lat: 14.5238, lng: 121.0023 },
-            { name: "Royal Paws Pet Hotel", lat: 14.5896, lng: 121.0678 },
-            { name: "Woof Lodge & Spa", lat: 14.5457, lng: 121.0359 },
-            { name: "Pet Paradise Hotel", lat: 14.5369, lng: 121.0284 }
-        ];
+            { name: "Mr. Paws PH", lat:  14.548910842796674, lng: 121.05055009564767, url: "https://www.instagram.com/mrpawsph/"},
+            { name: "Paw House PH", lat: 14.586541290718138, lng: 121.06606161276126, url: "https://www.pawhavenct.com/" },
+            { name: "Fur Friends", lat: 14.563191016167517, lng: 121.02528866495807, url: "https://web.facebook.com/FurryFriendsInn/?_rdc=1&_rdr#" },
+            { name: "Barkhaus Hotel", lat: 14.577079805934984, lng: 121.06343009564831, url: "https://web.facebook.com/barkhausph/?_rdc=1&_rdr#" },
+            { name: "Golden Fur", lat: 14.555304194016676, lng: 121.01689683305909, url: "https://web.facebook.com/TheGoldenFurMakati/?_rdc=1&_rdr#"},
+            { name: "Royal Paws Pet Hotel", lat: 14.429565446099895, lng: 121.00179466271892, url: "https://web.facebook.com/profile.php/?id=100087624120862&_rdc=1&_rdr#" },
+            { name: "Dluxe Pet Hotel and Spa", lat: 114.6273190080042, lng: 121.03338940914057, url: "https://web.facebook.com/dluxepethotelandspa/?_rdc=1&_rdr#" },
+            { name: "Paws and Fur White Plains", lat: 14.610266251813078, lng: 121.07054330728646, url: "https://web.facebook.com/pawsandfurpetcarecenter/?_rdc=1&_rdr#" }
+        ];  
 
         petHotels.forEach(hotel => {
-            L.marker([hotel.lat, hotel.lng]).addTo(map)
-                .bindPopup(`<b>${hotel.name}</b>`);
+           L.marker([hotel.lat, hotel.lng]).addTo(map)
+             .bindPopup(`<b><a href="${hotel.url}" target="_blank">${hotel.name}</a></b>`);
         });
 
         function navigateTo(page) {
