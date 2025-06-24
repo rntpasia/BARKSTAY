@@ -345,6 +345,19 @@
     z-index: 1000; /* Ensure it stays above other elements */
 }
 
+.results-container {
+  margin-top: 20px;
+}
+
+.hotel {
+  padding: 12px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
 /* Add padding-bottom to .container to avoid content getting hidden */
 .container {
     padding-bottom: 80px; /* Adjust based on nav height */
@@ -596,7 +609,7 @@
 
     <div class="app-title">BARK & STAY</div>
 
-    <div class="search-container" onclick="event.stopPropagation()">
+    <div class="search-container">
         <div class="search-box-container">
             <div class="search-input-group">
                 <label for="property-search" class="search-label">Search Property:</label>
@@ -672,12 +685,14 @@
                 <input type="number" name="Number of Room" placeholder="# of Rooms">
             </div>
         </div>   
-      </section>
+      </section>    
   </section>
-
+        
+    
         <button class="search-btn">Search</button>
 
-        <div class="suggestions" id="suggestions">
+
+         <div class="suggestions" id="suggestions">
             <div class="suggestions-grid">
                 <a href="thedog.html" class="suggestion-card">
                     <img src="images/a.jpg" alt="Hotel">
@@ -723,7 +738,7 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div> 
         
 
     <img src="images/cute.jpg" alt="Dogs playing" class="banner-image">
@@ -741,7 +756,7 @@
             </a>
             <a href="88bark.html" class="hotel-card">
                 <img src="images/i.jpg" alt="Hotel">
-                <div class="hotel-name">88 Bark Avenue</div>
+                <div class="hotel-name">Barkin Bubbles</div>
             </a>
             <a href="paws.html" class="hotel-card">
                 <img src="images/j.jpg" alt="Hotel">
@@ -753,7 +768,7 @@
             </a>
             <a href="scarlette_s.html" class="hotel-card">
                 <img src="images/l.jpg" alt="Hotel">
-                <div class="hotel-name">Scarlette's Place Cat Hotel Makati</div>
+                <div class="hotel-name">Golden Fur</div>
             </a>
         </div>
       </div>
@@ -871,5 +886,6 @@ function navigateTo(page) {
 
     </script>
     <script type="module" src="home-page.js"></script>
+    <script type="module" src="search.js"></script>
 </body>
 </html>
