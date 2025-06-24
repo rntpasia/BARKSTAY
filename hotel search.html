@@ -9,6 +9,7 @@
     <!-- Google Fonts Link For Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="chatbotscript.js" defer></script>
     
     <style>
@@ -653,6 +654,29 @@
 </div>
 
     <script>
+        //supabase initialization
+        const SUPABASE_URL = "https://cwqhiwfmiymomtxgycwx.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3cWhpd2ZtaXltb210eGd5Y3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIxNTA3ODcsImV4cCI6MjA1NzcyNjc4N30.1fpWjVox5v2dAGM-MxXihwzdeuOb_Yxm-0Lr0Z8yLoU";
+        const supabase =  window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchTerm = urlParams.get('property')?.toLowerCase() || '';
+
+        async function fetchHotels() { //dagdagan nyo nalang kung may gusto pa kayo isearch
+        
+            let { data: hotels, error } = await supabase
+                .from('hotel')
+                .select('hotel_name, price, address, rating')
+                .or(`hotel_name.ilike.%${searchTerm}%,address.ilike.%${searchTerm}%`);
+        
+            if (error) {
+                console.error('Error fetching hotels:', error);
+                return;
+            }
+        
+            loadHotels(hotels);
+        }
+        
+
         function showSuggestions() {
             document.getElementById('suggestions').style.display = 'block';
         }
@@ -682,124 +706,66 @@
             }
         });
     });
-    document.addEventListener("DOMContentLoaded", function () {
-    document.querySelector(".search-btn").addEventListener("click", function () {
-        // Get search inputs
-        let propertySearch = document.getElementById("property-search").value;
-        let startDate = document.querySelector(".date-input[type='date']:nth-child(1)").value;
-        let endDate = document.querySelector(".date-input[type='date']:nth-child(2)").value;
-        let breedType = document.querySelector("input[name='Breed type']").value;
-        let petSize = document.querySelector("input[name='Size']").value;
-        let numRooms = document.querySelector("input[name='Number of Room']").value;
-
-        // Store values in an object
-        let searchData = {
-            property: propertySearch,
-            startDate: startDate,
-            endDate: endDate,
-            breed: breedType,
-            size: petSize,
-            rooms: numRooms
-        };
-
-        console.log("Search Data:", searchData); // Logs the data (can be sent to a backend)
-        
-        // Example: Redirect to a results page (modify as needed)
-        // let queryString = new URLSearchParams(searchData).toString();
-        // window.location.href = `search-results.html?${queryString}`;
-    });
-});
-const hotels = [
-    { 
-        name: "88 Bark Avenue", 
-        stars: 4, 
-        location: "1.4km to City Center", 
-        price: 2500, 
-        totalPrice: 5000,
-        image: "images/i.jpg" 
-    },
-    { 
-        name: "Dluxe Pet Hotel & Spa", 
-        stars: 4, 
-        location: "2km to City Center", 
-        price: 7500, 
-        totalPrice: 12500,
-        image: "images/k.jpg" 
-    },
-    { 
-        name: "Mr. Paws", 
-        stars: 5, 
-        location: "500m to City Center", 
-        price: 10000, 
-        totalPrice: 20000,
-        image: "images/g.jpg" 
-    }
-];
-
-
-function loadHotels() {
-    const hotelList = document.getElementById('hotel-list');
-    hotelList.innerHTML = ""; // Clear previous content
-
-    hotels.forEach(hotel => {
-        const hotelCard = document.createElement('div');
-        hotelCard.classList.add('hotel-card');
-        
-        // Determine which HTML file to link to based on the hotel name
-        let destinationPage;
-        if (hotel.name === "88 Bark Avenue") {
-            destinationPage = "88bark.html";
-        } else if (hotel.name === "Dluxe Pet Hotel & Spa") {
-            destinationPage = "dluxe.html";
-        } else if (hotel.name === "Mr. Paws") {
-            destinationPage = "mrpaws.html";
-        } else {
-            // Default fallback
-            destinationPage = "hotel-details.html";
-        }
-        
-        // Make the entire card clickable
-        hotelCard.style.cursor = 'pointer';
-        hotelCard.addEventListener('click', function() {
-            window.location.href = destinationPage;
+    document.addEventListener("DOMContentLoaded", function () { //changes: copied search btn function from home html
+        document.querySelector(".search-btn").addEventListener("click", function (event) {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            event.preventDefault(); // Prevent default if inside a form
+    
+            let propertySearch = document.getElementById("property-search")?.value.trim() || "";
+            let startDate = document.querySelector(".date-field input[type='date']")?.value || "";
+            let endDate = document.querySelector(".date-field:nth-of-type(2) input[type='date']")?.value || "";
+            let breedType = document.querySelector("input[name='Breed type']")?.value.trim() || "";
+            let petSize = document.querySelector("input[name='Size']")?.value.trim() || "";
+            let numRooms = document.querySelector("input[name='Number of Room']")?.value.trim() || "";
+    
+            let searchParams = { property: propertySearch, start_date: startDate, end_date: endDate, breed: breedType, size: petSize, rooms: numRooms };
+    
+            console.log("Search Parameters:", searchParams);
+    
+            let queryString = new URLSearchParams(searchParams).toString();
+            window.location.href = `hotel search.html?${queryString}`;
         });
+});
 
-        hotelCard.innerHTML = `
-            <img src="${hotel.image}" alt="${hotel.name}">
-            <div class="details">
-                <h4>${hotel.name}</h4>
-                <p>⭐ ${'⭐'.repeat(hotel.stars)} hotel</p>
-                <p>${hotel.location}</p>
-            </div>
-            <div class="price-section">
-                <p class="price">₱${hotel.price.toLocaleString()}</p>
-                <small>₱${hotel.totalPrice.toLocaleString()} for 2 nights</small>
-                <br>
-                <button onclick="event.stopPropagation(); viewDeal('${destinationPage}')">View Deal</button>
-                <div class="more-prices" onclick="event.stopPropagation(); showMorePrices('${destinationPage}')">More Prices ▼</div>
-            </div>
-        `;
-        hotelList.appendChild(hotelCard);
-    });
-}
+        // Function to load hotels dynamically
+        function loadHotels(hotels) {
+            const hotelList = document.getElementById('hotel-list');
+            hotelList.innerHTML = ""; // Clear previous content
 
-// Function to handle the "View Deal" button click
-function viewDeal(pageName) {
-    // This prevents the parent card's click event from triggering
-    window.location.href = pageName;
-}
+            if(hotels.length===0){
+                alert("No hotels found");
+            }
 
-// Function to show more prices
-function showMorePrices(pageName) {
-    // This prevents the parent card's click event from triggering
-    console.log(`Show more prices for ${pageName}`);
-    // You could implement a popup or redirect to a pricing page
-    // For example:
-    // window.location.href = `pricing-${pageName}`;
-}
+            hotels.forEach(hotels => {
+                const hotelCard = document.createElement('div');
+                hotelCard.classList.add('hotel-card');
+
+                const rating = parseInt(hotels.rating) || 0;
+                const stars = '⭐'.repeat(rating);
+                
+        
+                hotelCard.innerHTML = `
+                    <img src="images/pet hotel.jpeg" alt="Hotel">
+                    <div class="details">
+                        <h4>${hotels.hotel_name}</h4>
+                        <p>${stars} hotel</p>
+                        <p>${hotels.address}</p>
+                    </div>
+                    <div class="price-section">
+                        <p class="price">₱${hotels.price.toLocaleString()}</p>
+                        <small>₱${(hotels.price*2).toLocaleString()} for 2 nights</small>  <!-- change formula according to set price of deal -->
+                        <br>
+                        <button>View Deal</button>
+                        <div class="more-prices">More Prices ▼</div>
+                    </div>
+                `;
+                hotelList.appendChild(hotelCard);
+            });
+        }
 
         // Load hotels on page load
-        window.onload = loadHotels;
+        window.onload = fetchHotels;
         function navigateTo(page) {
                 window.location.href = page; // Redirect to the specified page
             }
