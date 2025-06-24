@@ -8,30 +8,8 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 console.log("✅ pet.js is loaded!");
 
-console.log("✅ supabase is loaded!");
-
-let user = await getUser();
-  if(!user){
-      alert("You must be logged in to access this page.");
-      window.location.href="index.html";
-  }
-
-async function getUser(){ //retrieves user id 
-    const { data, error } = await supabase.auth.getUser();
-    if (error || !data.user) {
-        return null;
-    }
-
-    localStorage.setItem("auth_id", data.user.id);
-    
-    return data.user;
-
-}
-
-if (!user.id){
-    console.log("No user ID");
-}
-
+// Fetch and display pets on page load
+document.addEventListener("DOMContentLoaded", fetchPets);
 
 // Form submission handler
 document.getElementById("pet-form").addEventListener("submit", async function (event) {
@@ -39,34 +17,87 @@ document.getElementById("pet-form").addEventListener("submit", async function (e
     console.log("🚀 Attempting to save pet...");
 
     // Get form values
-    let auth_id = localStorage.getItem("auth_id");
     const petName = document.getElementById("pet-name").value.trim();
     const breed = document.getElementById("breed").value.trim();
     const size = document.getElementById("size").value;
     const age = document.getElementById("age").value.trim();
     const ageUnit = document.getElementById("age-unit").value;
     const diet = document.getElementById("diet").value.trim();
+    const petImage = document.getElementById("photo").files[0];
 
     // Check required fields
-    if (!petName || !breed || !size || !age || !ageUnit || !diet) {
+    if (!petName || !breed || !size || !age || !ageUnit || !diet || !petImage) {
         alert("❌ Please fill in all fields.");
         return;
     }
+
+    const {
+        data: { user },
+        error: userError
+        } = await supabase.auth.getUser();
+
+        if (userError || !user) {
+        alert("❌ Unable to identify logged-in user.");
+        console.error("Auth Error:", userError);
+        return;
+    }
+
+
+    console.log("🖼 Uploading image...");
+
+    // Create unique filename
+    const filePath = `pets/${Date.now()}_${petImage.name}`;
+
+    // Upload Image to Supabase Storage
+    const { data: imageData, error: imageError } = await supabase.storage
+        .from("pet-images")
+        .upload(filePath, petImage, {
+            contentType: petImage.type, // Ensuring correct content type
+            cacheControl: "3600",
+            upsert: false
+        });
+
+    if (imageError) {
+        console.error("❌ Image Upload Error:", imageError.message);
+        console.error("🔎 Full Error Object:", imageError);
+        alert("❌ Failed to upload pet image.");
+        return;
+    }
+
+    console.log("✅ Image uploaded successfully!");
+
+    // Get the public URL of the uploaded image
+    const { data } = supabase.storage
+        .from("pet-images")
+        .getPublicUrl(filePath);
+
+    const imageUrl = data.publicUrl;
+
+    if (!imageUrl) {
+        console.error("❌ Error retrieving public image URL.");
+        alert("❌ Failed to get image URL.");
+        return;
+    }
+
+    console.log("🌍 Public Image URL:", imageUrl);
+
+    console.log("📂 Saving pet data to database...");
 
     // Insert Pet Data into Supabase
     const { error: dbError } = await supabase
         .from("pets")
         .insert([
-            {   
-                auth_id: auth_id,
+            {
                 pet_name: petName,
                 breed: breed,
                 size: size,
                 age: parseInt(age),
                 age_unit: ageUnit,
                 diet: diet,
+                pet_photo: imageUrl,
+                auth_id: user.id
             }
-        ]).eq("id").single();
+        ]);
 
     if (dbError) {
         console.error("❌ Database Error:", dbError.message);
@@ -78,9 +109,27 @@ document.getElementById("pet-form").addEventListener("submit", async function (e
     alert("✅ Pet saved successfully!");
     window.location.href="home.html";
 
-
+    // Clear form and refresh displayed pets
+    document.getElementById("pet-form").reset();
+    fetchPets();
 });
 
+// Fetch and display pets
+async function fetchPets() {
+    console.log("🔄 Fetching pets...");
+
+    const { data: pets, error } = await supabase
+        .from("pets")
+        .select("*")
+        .order("id", { ascending: false });
+
+    if (error) {
+        console.error("❌ Fetch Error:", error.message);
+        return;
+    }
+
+    console.log("✅ Pets fetched:", pets);
+}
 
 // Go back function
 function goBack() {
