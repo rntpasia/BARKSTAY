@@ -58,7 +58,7 @@
         
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
         
@@ -68,6 +68,7 @@
             padding: 15px;
             border-radius: 10px;
             text-align: center;
+            transition: transform 0.3s ease;
         }
         .card:hover {
             transform: scale(1.05);
@@ -272,7 +273,42 @@
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 15px;
-}
+        }
+
+        .loading {
+            color: #ccc;
+            font-style: italic;
+        }
+
+        .refresh-btn {
+            display: block;
+            margin: 10px auto;
+            background-color: #002244;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .refresh-btn:hover {
+            background-color: #003366;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .count-display {
+            font-size: 16px;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
 .modal {
             display: none;
             position: fixed;
@@ -401,7 +437,6 @@
 </head>
 <body>
 
-
     <div class="container">
         <div class="chat-header">
             <div class="header-content">
@@ -419,38 +454,194 @@
            </div>
         </div>
 
+        <section class="dashboard">
+            <div class="label-container">
+                <h2>Real-time Feedback Dashboard</h2>
+            </div>
+            <button class="refresh-btn" onclick="fetchDashboardData()">
+                <i class="fa fa-refresh"></i> Refresh Data
+            </button>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-bar-chart"></i></div>
+                    <h3>Most Serviced Breed</h3>
+                    <p><strong id="most-breed">Loading...</strong></p>
+                    <p class="count-display" id="breed-count">-</p>
+                    <p id="breed-trend"><i class="fa fa-refresh loading"></i> Calculating...</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-building"></i></div>
+                    <h3>Most Availed Hotel</h3>
+                    <p><strong id="most-hotel">Loading...</strong></p>
+                    <p class="count-display" id="hotel-count">-</p>
+                    <p id="hotel-trend"><i class="fa fa-refresh loading"></i> Calculating...</p>
+                </div>
+            </div>
+            <div class="last-updated" id="last-updated">Last updated: Never</div>
+        </section>
 
-<section class="dashboard">
-    <div class="label-container">
-        <h2>Feedback Dashboard</h2>
     </div>
-    <div class="grid">
-        <div class="card">
-            <div class="card-icon"><i class="fa fa-bar-chart"></i></div>
-            <h3>Most Serviced Breed</h3>
-            <p><strong>Shih Tzu</strong></p>
-            <p><i class="fa fa-arrow-up"></i> Up to 75% from last month</p>
-        </div>
-        <div class="card">
-            <div class="card-icon"><i class="fa fa-scissors"></i></div>
-            <h3>Most Availed Service</h3>
-            <p><strong>Grooming</strong></p>
-            <p><i class="fa fa-arrow-up"></i> Up to 50% from last month</p>
-        </div>
-        <div class="card">
-            <div class="card-icon"><i class="fa fa-line-chart"></i></div>
-            <h3>Most Frequented Amenities</h3>
-            <p><strong>Pool</strong></p>
-            <p><i class="fa fa-arrow-up"></i> Up to 27% from last month</p>
-        </div>
-        <div class="card">
-            <div class="card-icon"><i class="fa fa-building"></i></div>
-            <h3>Most Availed Hotel</h3>
-            <p><strong>The Golden Fur</strong></p>
-            <p><i class="fa fa-arrow-up"></i> Up to 10% from last month</p>
-        </div>
-    </div>
-</section>
+
+    <script type="module">
+        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+        // Initialize Supabase with your credentials
+        const SUPABASE_URL = "https://cwqhiwfmiymomtxgycwx.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3cWhpd2ZtaXltb210eGd5Y3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIxNTA3ODcsImV4cCI6MjA1NzcyNjc4N30.1fpWjVox5v2dAGM-MxXihwzdeuOb_Yxm-0Lr0Z8yLoU";
+
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        console.log("✅ Dashboard script loaded!");
+
+        // Sample hotel data (you can later connect this to a hotels table)
+        const hotels = [
+             "Adorafur Happy Stay",
+   "Lara's Ark",
+   "Dluxe Pet Hotel and Spa",
+   "Haily's Pet Boarding",
+   "Pet Starz",
+   "Paw House PH",
+   "Mr. Paws PH",
+   "Happy Paws",
+   "My Pet Space",
+   "The Golden Fur",
+   "Abby's Paws n' Play",
+   "Amazing Pets",
+   "Paws and Fur White Plains",
+   "Snow Angels Pet Hub",
+   "Elite Paws",
+   "Furmont Pet Hotel",
+            "Barkin Bubbles"
+        ];
+
+        let previousData = {
+            mostBreed: null,
+            breedCount: 0,
+            mostHotel: null,
+            hotelCount: 0
+        };
+
+        // Function to get a random hotel (simulate hotel bookings)
+        function getRandomHotel() {
+            return hotels[Math.floor(Math.random() * hotels.length)];
+        }
+
+        // Function to calculate percentage change
+        function calculatePercentageChange(current, previous) {
+            if (previous === 0) return current > 0 ? 100 : 0;
+            return Math.round(((current - previous) / previous) * 100);
+        }
+
+        // Function to fetch and analyze dashboard data
+        async function fetchDashboardData() {
+            try {
+                console.log("🔄 Fetching dashboard data...");
+                
+                // Show loading state
+                document.getElementById('most-breed').textContent = 'Loading...';
+                document.getElementById('most-hotel').textContent = 'Loading...';
+                document.getElementById('breed-count').textContent = '-';
+                document.getElementById('hotel-count').textContent = '-';
+
+                // Fetch all pets from the database
+                const { data: pets, error } = await supabase
+                    .from('pets')
+                    .select('breed')
+                    .order('id', { ascending: false });
+
+                if (error) {
+                    console.error("❌ Error fetching pets:", error.message);
+                    document.getElementById('most-breed').textContent = 'Error loading';
+                    document.getElementById('breed-trend').innerHTML = '<i class="fa fa-exclamation-triangle"></i> Error loading data';
+                    return;
+                }
+
+                console.log("✅ Pets data fetched:", pets);
+
+                // Analyze breed data
+                const breedCounts = {};
+                let totalPets = 0;
+
+                pets.forEach(pet => {
+                    if (pet.breed) {
+                        breedCounts[pet.breed] = (breedCounts[pet.breed] || 0) + 1;
+                        totalPets++;
+                    }
+                });
+
+                // Find most popular breed
+                let mostPopularBreed = 'No data';
+                let highestCount = 0;
+
+                Object.entries(breedCounts).forEach(([breed, count]) => {
+                    if (count > highestCount) {
+                        highestCount = count;
+                        mostPopularBreed = breed;
+                    }
+                });
+
+                // Calculate breed percentage change
+                const breedPercentChange = calculatePercentageChange(highestCount, previousData.breedCount);
+                const breedTrendIcon = breedPercentChange >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
+                const breedTrendColor = breedPercentChange >= 0 ? '#4CAF50' : '#f44336';
+
+                // Update breed display
+                document.getElementById('most-breed').textContent = mostPopularBreed;
+                document.getElementById('breed-count').textContent = `${highestCount} pets registered`;
+                document.getElementById('breed-trend').innerHTML = 
+                    `<i class="fa ${breedTrendIcon}" style="color: ${breedTrendColor}"></i> ${Math.abs(breedPercentChange)}% from last refresh`;
+
+                // Simulate hotel data (in a real app, this would come from bookings/reservations table)
+                const randomHotel = getRandomHotel();
+                const simulatedHotelCount = Math.floor(Math.random() * 50) + 10; // Random count between 10-59
+                
+                // Calculate hotel percentage change
+                const hotelPercentChange = calculatePercentageChange(simulatedHotelCount, previousData.hotelCount);
+                const hotelTrendIcon = hotelPercentChange >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
+                const hotelTrendColor = hotelPercentChange >= 0 ? '#4CAF50' : '#f44336';
+
+                // Update hotel display
+                document.getElementById('most-hotel').textContent = randomHotel;
+                document.getElementById('hotel-count').textContent = `${simulatedHotelCount} bookings`;
+                document.getElementById('hotel-trend').innerHTML = 
+                    `<i class="fa ${hotelTrendIcon}" style="color: ${hotelTrendColor}"></i> ${Math.abs(hotelPercentChange)}% from last refresh`;
+
+                // Store current data for next comparison
+                previousData = {
+                    mostBreed: mostPopularBreed,
+                    breedCount: highestCount,
+                    mostHotel: randomHotel,
+                    hotelCount: simulatedHotelCount
+                };
+
+                // Update last updated time
+                const now = new Date();
+                document.getElementById('last-updated').textContent = 
+                    `Last updated: ${now.toLocaleTimeString()}`;
+
+                console.log("✅ Dashboard updated successfully!");
+
+            } catch (error) {
+                console.error("❌ Error updating dashboard:", error);
+                document.getElementById('most-breed').textContent = 'Error';
+                document.getElementById('most-hotel').textContent = 'Error';
+            }
+        }
+
+        // Make fetchDashboardData available globally
+        window.fetchDashboardData = fetchDashboardData;
+
+        // Fetch data on page load
+        document.addEventListener('DOMContentLoaded', fetchDashboardData);
+
+        // Auto-refresh every 30 seconds
+        setInterval(fetchDashboardData, 30000);
+
+        console.log("🚀 Real-time dashboard initialized!");
+    </script>
+
+</body>
+</html>
 
 <!-- Reviews Section -->
 <section class="reviews">
@@ -719,3 +910,6 @@ function navigateTo(page) {
 
 </body>
 </html>
+
+
+
