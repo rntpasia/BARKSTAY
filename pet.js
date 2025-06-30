@@ -18,7 +18,7 @@ document.getElementById("pet-form").addEventListener("submit", async function (e
 
     // Get form values
     const petName = document.getElementById("pet-name").value.trim();
-    const breed = document.getElementById("breed").value.trim();
+    const breed = document.getElementById("breed").value;
     const size = document.getElementById("size").value;
     const age = document.getElementById("age").value.trim();
     const ageUnit = document.getElementById("age-unit").value;
