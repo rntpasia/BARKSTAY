@@ -175,7 +175,7 @@
             <div class="chat-user">
                 <a href="chat.html" class="back-button">←</a>
                 <div class="chat-avatar">H</div>
-                <div class="chat-username">HOTEL NAME</div>
+                <div class="chat-username">The Dog Spa & Hotel</div>
             </div>
             <div class="call-icon">📞</div>
         </div>
@@ -192,30 +192,55 @@
         </div>
     </div>
     
-    <script>
-        function sendMessage() {
-            const inputField = document.getElementById("message-input");
-            const messageText = inputField.value.trim();
-            if (messageText === "") return;
-            
-            const chatArea = document.getElementById("chat-area");
-            const messageDiv = document.createElement("div");
-            messageDiv.classList.add("user-message", "message");
-            messageDiv.textContent = messageText;
-            
-            chatArea.appendChild(messageDiv);
+
+<script>
+    function sendMessage() {
+        const inputField = document.getElementById("message-input");
+        const messageText = inputField.value.trim();
+        if (messageText === "") return;
+
+        const chatArea = document.getElementById("chat-area");
+
+        // Show user message
+        const userMsg = document.createElement("div");
+        userMsg.classList.add("user-message", "message");
+        userMsg.textContent = messageText;
+        chatArea.appendChild(userMsg);
+        chatArea.scrollTop = chatArea.scrollHeight;
+        inputField.value = "";
+
+        setTimeout(() => {
+            const botMsg = document.createElement("div");
+            botMsg.classList.add("hotel-message", "message");
+
+            const text = messageText.toLowerCase();
+
+
+            if (text.includes("book") || text.includes("reserve") || text.includes("booking")|| text.includes("yes")) {
+    botMsg.textContent = "To book a pet suite, please visit our homepage and use the booking form. 🐾";
+} else if (text.includes("grooming") || text.includes("groom") || text.includes("bath") || text.includes("nail") || text.includes("spa")) {
+    botMsg.textContent = "Yes! We offer full-service grooming including bath, blow-dry, haircut, nail trimming, and ear cleaning. Prices start at ₱500 depending on your pet’s size and coat type. Would you like to schedule an appointment?";
+} else if (text.includes("available") || text.includes("room") || text.includes("suite") || text.includes("accommodation")) {
+    botMsg.textContent = "Yes! We currently have both deluxe and standard pet suites available. Would you like to book one?";
+} else if (text.includes("check-in") || text.includes("checkin") || text.includes("time") || text.includes("open")) {
+    botMsg.textContent = "Check-in is available daily from 8 AM to 6 PM. Early drop-offs can be arranged — just let us know!";
+} else if (text.includes("location") || text.includes("where") || text.includes("address") || text.includes("find")) {
+    botMsg.textContent = "The Dog Spa & Hotel is located along Makati Ave, near Century City Mall. We’re excited to welcome you!";
+} else if (text.includes("price") || text.includes("rate") || text.includes("cost") || text.includes("fee")) {
+    botMsg.textContent = "Our rates start at ₱800/night for standard suites. Grooming starts at ₱500. Let us know what service you need!";
+} else {
+    botMsg.textContent = "Hi! This is The Dog Spa & Hotel 🐶🐾 How can we assist you and your pet today?";
+}
+
+
+
+            chatArea.appendChild(botMsg);
             chatArea.scrollTop = chatArea.scrollHeight;
-            
-            inputField.value = "";
-        }
-        
-        document.getElementById("send-button").addEventListener("click", sendMessage);
-        document.getElementById("message-input").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                sendMessage();
-            }
-        });
-    </script>
-    
-</body>
-</html>
+        }, 600);
+    }
+
+    document.getElementById("send-button").addEventListener("click", sendMessage);
+    document.getElementById("message-input").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") sendMessage();
+    });
+</script>
