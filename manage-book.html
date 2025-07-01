@@ -87,54 +87,50 @@
     </style>
 </head>
 <body>
-    <div class="confirmation-container">
-        <div class="confirmation-header">
-            <h2>Confirmation #: <span class="confirmation-number">BK-28475931</span></h2>
-        </div>
-        
-        <div class="booking-details">
-            <div class="detail-group">
-                <div class="detail-label">Check-in Date</div>
-                <div class="detail-value">March 20, 2025</div>
-            </div>
-            
-            <div class="detail-group">
-                <div class="detail-label">Check-out Date</div>
-                <div class="detail-value">March 23, 2025</div>
-            </div>
-        </div>
-        
-        <div class="booking-details">
-            <div class="detail-group">
-                <div class="detail-label">Number of Rooms</div>
-                <div class="detail-value">1</div>
-            </div>
-            
-            <div class="detail-group">
-                <div class="detail-label">Room Type</div>
-                <div class="detail-value">Deluxe Room</div>
-            </div>
-        </div>
-        
-        <div class="booking-details">
-            <div class="detail-group">
-                <div class="detail-label">Number of Pets</div>
-                <div class="detail-value">1 Pet</div>
-            </div>
-            
-            <div class="detail-group">
-                <div class="detail-label">Total Price</div>
-                <div class="detail-value">Php 2,500</div>
-            </div>
-        </div>
-        
-        <a href="pay-options.html" class="button" role="button">
-            Proceed to Payment
-        </a>
-
-        <a href="index.html" class="button" role="button">
-            Return to Home
-        </a>
+  <div class="confirmation-container">
+    <div class="confirmation-header">
+      <h2>Confirmation #: <span class="confirmation-number">BK-28475931</span></h2>
     </div>
+
+    <div class="booking-details">
+      <div class="detail-group">
+        <div class="detail-label">Check-in Date</div>
+        <div class="detail-value" id="checkInDate">-</div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">Check-out Date</div>
+        <div class="detail-value" id="checkOutDate">-</div>
+      </div>
+    </div>
+
+    <div class="booking-details">
+      <div class="detail-group">
+        <div class="detail-label">Number of Rooms</div>
+        <div class="detail-value" id="numRooms">-</div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">Room Type</div>
+        <div class="detail-value" id="roomType">-</div>
+      </div>
+    </div>
+
+    <div class="booking-details">
+      <div class="detail-group">
+        <div class="detail-label">Number of Pets</div>
+        <div class="detail-value" id="numPets">-</div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">Total Price</div>
+        <div class="detail-value" id="totalPrice">-</div>
+      </div>
+    </div>
+
+    <a href="#" id="confirmPaymentBtn" class="button">Confirm and Proceed to Payment</a>
+    <a href="home.html" class="button">Return to Home</a>
+  </div>
+
+  <script type="module" src="supabase.js"></script>
+  <script type="module" src="managebooking.js"></script>
+
 </body>
 </html>

@@ -91,8 +91,14 @@ input {
     font-size: 16px;
     color: #333;
     outline: none;
-    transition: all 0.3s ease-in-out;
 }
+
+form {
+    width: 100%;
+    max-width: 300px; 
+    margin: 0 auto;  
+}
+
 
 input:focus {
     border-color: #76ceec;

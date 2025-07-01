@@ -1,4 +1,4 @@
-// src/pages/Home.js
+
 import React, { useState } from "react";
 import { FaSearch, FaFilter } from "react-icons/fa";
 import "./Home.css";

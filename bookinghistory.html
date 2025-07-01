@@ -3,216 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bark & Stay - Booking History</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://kit.fontawesome.com/c24857b17d.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Booking History - BARK & STAY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { 
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background: #ffffff;
+            box-sizing: border-box;
         }
-        
-        .app-header {
-    width: auto;
-    background-color: #002244;
-    color: white;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 20px;
-    font-size: clamp(18px, 2vw, 24px); /* Adjusts size dynamically */
-    font-weight: bold;
-    font-family: 'Playfair Display', serif;
 
-}
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            padding-bottom: 80px;
+        }
 
-/* Wrap settings container properly */
-.settings-container {
-    display: flex;
-    gap: 5px;
-}
-        
-        .app-title {
-    font-size: clamp(18px, 2vw, 24px);
-    font-weight: bold;
-    font-family: 'Times New Roman', Times, serif;
-    color: white;
-    flex-grow: 1;
-    text-align: center;
-}
-
-
-        .back-button {
-            position: absolute;
-            left: 50px;  
-            top: 160px;
-            transform: translateY(-50%); 
-            width: 40px;
-            height: 40px;
+        .navbar {
             background-color: #002244;
-            border-radius: 20%;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .app-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: none;
-            color: white;
+            justify-content: space-between;
+            width: 100%;
         }
-        
 
-        
-        .page-title {
-            font-size: 22px;
+        .app-header h1 {
+            font-size: 24px;
             font-weight: bold;
-            margin: 15px 20px;
-            text-align: center;
         }
-        
-        .booking-card {
-            background: #002244;
+
+        .back-button {
             color: white;
-            margin: 20px 50px;
-            border-radius: 5px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 5px 10px;
+        }
+
+        .settings-container {
             cursor: pointer;
+            padding: 5px;
         }
-        
-        .booking-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        .booking-id {
+
+        .page-title {
+            margin-top: 80px;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
             text-align: center;
+            color: #002244;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
             font-size: 18px;
-            margin-bottom: 10px;
         }
-        
-        .booking-hotel {
+
+        .fa-spinner {
+            margin-right: 10px;
+        }
+
+        .no-bookings {
             text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-bookings i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        .no-bookings h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .booking-card {
+            background: white;
+            margin: 15px 20px;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #002244;
+        }
+
+        .booking-id {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .booking-hotel {
             font-size: 20px;
             font-weight: bold;
-            margin-bottom: 15px;
+            color: #333;
+            margin-bottom: 5px;
         }
-        
-        .booking-dates {
+
+        .booking-dates, .booking-details {
             display: flex;
             justify-content: space-between;
             margin: 8px 0;
+            padding: 5px 0;
         }
-        
+
         .date-label {
+            font-size: 12px;
+            color: #666;
             font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        
+
         .status-container {
+            margin: 15px 0;
             display: flex;
-            justify-content: flex-end;
-            margin-top: 15px;
+            justify-content: center;
         }
-        
+
         .status-button {
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: bold;
+            padding: 8px 16px;
             border: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        
-        .status-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+
+        .status-ongoing { background-color: #28a745; color: white; }
+        .status-completed { background-color: #6c757d; color: white; }
+        .status-cancelled { background-color: #dc3545; color: white; }
+        .status-pending { background-color: #ffc107; color: #333; }
+        .status-refund-requested { background-color: #fd7e14; color: white; }
+
+        .booking-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
         }
-        
-        .status-ongoing {
-            background: #4cd964;
-            color: white;
+
+        .action-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s ease;
         }
-        
-        .status-ongoing:hover {
-            background: #3ac955;
+
+        .chat-btn { background-color: #002244; color: white; }
+        .refund-btn { background-color: #fd7e14; color: white; }
+        .view-btn { background-color: #28a745; color: white; }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        
-        .status-completed {
-            background: #007aff;
-            color: white;
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .status-completed:hover {
-            background: #0066dd;
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
         }
-        
-        .status-cancelled {
-            background: #ff3b30;
-            color: white;
+
+        .modal-content h3 {
+            margin-bottom: 15px;
+            color: #333;
         }
-        
-        .status-cancelled:hover {
-            background: #e62e24;
+
+        .modal-content p {
+            margin-bottom: 20px;
+            color: #666;
+            line-height: 1.5;
         }
-        
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .confirm-btn { background-color: #fd7e14; color: white; }
+        .cancel-modal-btn { background-color: #6c757d; color: white; }
+
         .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: #002244;
-    padding: 15px 0;
-    color: white;
-    width: 100%;
-    position: fixed; /* Fixes at the bottom */
-    bottom: 0;
-}
-
-main {
-    padding-bottom: 70px; /* Adjust based on nav height */
-}
-
-.nav-item {
-    text-align: center;
-    flex: 1;
-    cursor: pointer;
-    padding: 10px 0;
-    transition: background 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.nav-item i {
-    font-size: 24px;
-    margin-bottom: 5px;
-}
-
-.nav-item.active {
-    background: #B0C4DE;
-    color: #0A192F;
-    border-radius: 5px;
-}
-        
-        @media (max-width: 480px) {
-            .bottom-nav {
-                flex-direction: row;
-                justify-content: space-evenly;
-                padding: 10px 0;
-            }
-            .nav-item i {
-                font-size: 20px;
-            }
-            .nav-item span {
-                font-size: 12px;
-            }
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
         }
 
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: #8B4513;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 12px;
+        }
+
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            padding: 20px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            margin: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .booking-actions {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                min-width: auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -220,59 +302,40 @@ main {
         <div class="app-header">
             <h1 onclick="window.location.href='home.html'" style="cursor: pointer;">BARK & STAY</h1>
             <div class="settings-container" onclick="navigateTo('settings.html')">
-            <i class="fa fa-gear" href="settings.html" style="color:white"></i>
-               
-        </div>
+                <i class="fa fa-gear" href="settings.html" style="color:white"></i>
+            </div>
         </div>
         <a href="manage.html" class="back-button">←</a>
+    </div>
     
     <div class="page-title">Booking History</div>
     
-    <div class="booking-card">
-        <div class="booking-id">BH12345678</div>
-        <div class="booking-hotel">The Golden Fur, Makati</div>
-        <div class="booking-dates">
-            <div class="date-label">CHECK IN:</div>
-            <div>23 January 2025</div>
-        </div>
-        <div class="booking-dates">
-            <div class="date-label">CHECK OUT:</div>
-            <div>25 January 2025</div>
-        </div>
-        <div class="status-container">
-            <button class="status-button status-ongoing">Ongoing</button>
-        </div>
+    <div id="loading" class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Loading your bookings...
     </div>
     
-    <div class="booking-card">
-        <div class="booking-id">BH12345678</div>
-        <div class="booking-hotel">The Golden Fur, Makati</div>
-        <div class="booking-dates">
-            <div class="date-label">CHECK IN:</div>
-            <div>23 January 2025</div>
-        </div>
-        <div class="booking-dates">
-            <div class="date-label">CHECK OUT:</div>
-            <div>25 January 2025</div>
-        </div>
-        <div class="status-container">
-            <button class="status-button status-completed">COMPLETED</button>
-        </div>
+    <div id="bookings-container">
+
+    </div>
+
+    <div id="no-bookings" class="no-bookings" style="display: none;">
+        <i class="fas fa-calendar-times"></i>
+        <h3>No bookings found</h3>
+        <p>You haven't made any bookings yet. Start exploring our pet-friendly hotels!</p>
+        <button class="action-btn view-btn" onclick="navigateTo('home.html')">
+            <i class="fas fa-search"></i> Browse Hotels
+        </button>
     </div>
     
-    <div class="booking-card">
-        <div class="booking-id">BH12345678</div>
-        <div class="booking-hotel">The Golden Fur, Makati</div>
-        <div class="booking-dates">
-            <div class="date-label">CHECK IN:</div>
-            <div>23 January 2025</div>
-        </div>
-        <div class="booking-dates">
-            <div class="date-label">CHECK OUT:</div>
-            <div>25 January 2025</div>
-        </div>
-        <div class="status-container">
-            <button class="status-button status-cancelled">Cancelled</button>
+    <!-- Refund Modal -->
+    <div id="refundModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Request Refund</h3>
+            <p>Would you like to request a refund for this booking? We'll process your request within 3-5 business days.</p>
+            <div class="modal-buttons">
+                <button id="confirmRefund" class="modal-btn confirm-btn">Request Refund</button>
+                <button id="refundModalClose" class="modal-btn cancel-modal-btn">Cancel</button>
+            </div>
         </div>
     </div>
     
@@ -296,35 +359,314 @@ main {
     </div>
     
     <script>
-        // Add functionality to back button
-        document.querySelector('.back-button').addEventListener('click', function() {
-            // Go back to previous page
-            window.history.back();
-        });
+const SUPABASE_URL = "https://cwqhiwfmiymomtxgycwx.supabase.co";  
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3cWhpd2ZtaXltb210eGd5Y3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIxNTA3ODcsImV4cCI6MjA1NzcyNjc4N30.1fpWjVox5v2dAGM-MxXihwzdeuOb_Yxm-0Lr0Z8yLoU";
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function navigateTo(page) {
+    window.location.href = page;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const currentPage = window.location.pathname.split("/").pop();
+    const navItems = document.querySelectorAll(".nav-item");
+
+    navItems.forEach(item => {
+        const onclickAttr = item.getAttribute("onclick");
+        if (onclickAttr && onclickAttr.includes(currentPage)) {
+            item.classList.add("active");
+        } 
+    });
+});
+
+// Modal functionality
+let currentBookingId = null;
+
+function showRefundModal(bookingId) {
+    currentBookingId = bookingId;
+    const modal = document.getElementById('refundModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+function closeRefundModal() {
+    const modal = document.getElementById('refundModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+    currentBookingId = null;
+}
+
+function openChat(hotelName, bookingId) {
+    window.location.href = `chat.html?hotel=${encodeURIComponent(hotelName)}&booking=${bookingId}`;
+}
+
+function initializeModals() {
+    const refundModalClose = document.getElementById('refundModalClose');
+    
+    if (refundModalClose) {
+        refundModalClose.addEventListener('click', closeRefundModal);
+    }
+    
+    window.addEventListener('click', function(event) {
+        const refundModal = document.getElementById('refundModal');
         
-        // Add click event to booking cards
-        document.querySelectorAll('.booking-card').forEach(function(card) {
-            card.addEventListener('click', function() {
-                // You can add functionality to view booking details
-                console.log('Booking details clicked');
-                // For example: window.location.href = 'booking-details.html?id=' + this.querySelector('.booking-id').textContent;
-            });
-        });
-        function navigateTo(page) {
-                window.location.href = page; // Redirect to the specified page
+        if (refundModal && event.target === refundModal) {
+            closeRefundModal();
+        }
+    });
+}
+
+function getUserId() {
+    const userIdFromStorage = localStorage.getItem('user_id');
+    const userIdFromUrl = new URLSearchParams(window.location.search).get('user_id');
+    
+    const testUserId = '12345678-1234-1234-1234-123456789012'; 
+    
+    return userIdFromStorage || userIdFromUrl || testUserId;
+}
+
+function isValidUUID(str) {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(str);
+}
+
+async function loadBookings() {
+    const userId = getUserId();
+    
+    if (!userId || !isValidUUID(userId)) {
+        console.error('Invalid or missing user ID. Must be a valid UUID format.');
+        const loadingElement = document.getElementById('loading');
+        if (loadingElement) {
+            loadingElement.innerHTML = 
+                '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Invalid user ID. Please log in again.</div>';
+            loadingElement.style.display = 'block';
+        }
+        return;
+    }
+
+    try {
+        console.log('Loading bookings for user:', userId);
+        
+        const { data: bookings, error } = await supabase
+            .from('bookings')
+            .select(`
+                bookings_id,
+                check_in,
+                check_out,
+                payment_status,
+                hotel_id,
+                room_type,
+                num_rooms,
+                total_amount,
+                booking_date,
+                num_pets,
+                hotel:hotel_id (
+                    hotel_name,
+                    address
+                )
+            `)
+            .eq('user_id', userId)
+            .order('booking_date', { ascending: false });
+
+        console.log('Supabase response:', { bookings, error });
+        
+        const loadingElement = document.getElementById('loading');
+        if (loadingElement) {
+            loadingElement.style.display = 'none';
+        }
+
+        if (error) {
+            console.error('Error fetching bookings:', error);
+            if (loadingElement) {
+                loadingElement.innerHTML = 
+                    '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Error loading bookings: ' + error.message + '</div>';
+                loadingElement.style.display = 'block';
             }
-        
-            // Highlight the active tab based on the current page
-            document.addEventListener("DOMContentLoaded", function () {
-                const currentPage = window.location.pathname.split("/").pop(); // Get the current filename
-                const navItems = document.querySelectorAll(".nav-item");
-        
-                navItems.forEach(item => {
-                    if (item.getAttribute("onclick").includes(currentPage)) {
-                        item.classList.add("active"); // Add active class
-                    } 
-                });
+            return;
+        }
+
+        if (!bookings || bookings.length === 0) {
+            const noBookingsElement = document.getElementById('no-bookings');
+            if (noBookingsElement) {
+                noBookingsElement.style.display = 'block';
+            }
+            return;
+        }
+
+        const bookingsContainer = document.getElementById('bookings-container');
+        if (!bookingsContainer) {
+            console.error('Bookings container not found');
+            return;
+        }
+
+        bookingsContainer.innerHTML = '';
+
+        bookings.forEach(booking => {
+            const card = document.createElement('div');
+            card.className = 'booking-card';
+
+            const checkIn = new Date(booking.check_in).toLocaleDateString('en-US', { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
             });
+            const checkOut = new Date(booking.check_out).toLocaleDateString('en-US', { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
+            });
+            
+            // Format booking date
+            const bookingDate = new Date(booking.booking_date).toLocaleDateString('en-US', { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            // Determine status class and actions
+            const statusInfo = getStatusInfo(booking.payment_status);
+            const hotelName = booking.hotel?.hotel_name || 'Hotel Name Not Available';
+            const hotelAddress = booking.hotel?.address || 'Address Not Available';
+
+            card.innerHTML = `
+                <div class="booking-id">Booking ID: ${booking.bookings_id}</div>
+                <div class="booking-hotel">${hotelName}</div>
+                <div class="booking-hotel" style="font-size: 14px; margin-bottom: 10px; opacity: 0.8;">${hotelAddress}</div>
+                <div class="booking-details">
+                    <div class="date-label">BOOKED ON:</div>
+                    <div>${bookingDate}</div>
+                </div>
+                <div class="booking-dates">
+                    <div class="date-label">CHECK IN:</div>
+                    <div>${checkIn}</div>
+                </div>
+                <div class="booking-dates">
+                    <div class="date-label">CHECK OUT:</div>
+                    <div>${checkOut}</div>
+                </div>
+                <div class="booking-details">
+                    <div class="date-label">ROOM TYPE:</div>
+                    <div>${booking.room_type || 'Standard'}</div>
+                </div>
+                <div class="booking-details">
+                    <div class="date-label">ROOMS:</div>
+                    <div>${booking.num_rooms || 1}</div>
+                </div>
+                <div class="booking-details">
+                    <div class="date-label">PETS:</div>
+                    <div>${booking.num_pets || 0}</div>
+                </div>
+                <div class="booking-details">
+                    <div class="date-label">TOTAL:</div>
+                    <div>₱${booking.total_amount ? parseFloat(booking.total_amount).toLocaleString() : 'N/A'}</div>
+                </div>
+                <div class="status-container">
+                    <button class="status-button ${statusInfo.class}">${statusInfo.text.toUpperCase()}</button>
+                </div>
+                <div class="booking-actions">
+                    <button class="action-btn chat-btn" onclick="openChat('${hotelName.replace(/'/g, "\\'")}', '${booking.bookings_id}')">
+                        <i class="fas fa-comments"></i> Contact Hotel
+                    </button>
+                    ${getActionButtons(booking.payment_status, booking.bookings_id)}
+                </div>
+            `;
+
+            bookingsContainer.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error('Error loading bookings:', error);
+        const loadingElement = document.getElementById('loading');
+        if (loadingElement) {
+            loadingElement.innerHTML = 
+                '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Error loading bookings. Please try again later.</div>';
+            loadingElement.style.display = 'block';
+        }
+    }
+}
+
+function getStatusInfo(status) {
+    const statusLower = status.toLowerCase();
+    switch(statusLower) {
+        case 'ongoing':
+        case 'confirmed':
+            return { class: 'status-ongoing', text: 'Ongoing' };
+        case 'completed':
+            return { class: 'status-completed', text: 'Completed' };
+        case 'cancelled':
+            return { class: 'status-cancelled', text: 'Cancelled' };
+        case 'pending':
+            return { class: 'status-pending', text: 'Pending' };
+        case 'refund_requested':
+            return { class: 'status-refund-requested', text: 'Refund Requested' };
+        default:
+            return { class: 'status-pending', text: status };
+    }
+}
+
+function getActionButtons(status, bookingId) {
+    let buttons = '';
+    const statusLower = status.toLowerCase();
+    
+    console.log('Getting action buttons for status:', statusLower, 'booking:', bookingId);
+    
+    if (statusLower === 'paid') {
+        // Show refund button for completed bookings
+        buttons += `<button class="action-btn refund-btn" onclick="showRefundModal('${bookingId}')">
+            <i class="fas fa-undo"></i> Request Refund
+        </button>`;
+    }
+    // For cancelled or refund_requested, no additional buttons
+    
+    console.log('Generated buttons:', buttons);
+    return buttons;
+}
+
+// Handle refund request
+async function handleRefundRequest() {
+    if (!currentBookingId) return;
+
+    try {
+        const { error } = await supabase
+            .from('bookings')
+            .update({ payment_status: 'refund_requested' })
+            .eq('bookings_id', currentBookingId);
+
+        if (error) {
+            console.error('Error requesting refund:', error);
+            alert('Failed to request refund. Please try again.');
+        } else {
+            alert('Refund request submitted successfully! We will process your request within 3-5 business days.');
+            closeRefundModal();
+            loadBookings(); // Reload bookings
+        }
+    } catch (error) {
+        console.error('Error requesting refund:', error);
+        alert('Failed to request refund. Please try again.');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeModals();
+    
+    const confirmRefund = document.getElementById('confirmRefund');
+    
+    if (confirmRefund) {
+        confirmRefund.addEventListener('click', handleRefundRequest);
+    }
+    
+    // Load bookings
+    loadBookings();
+});
+
+// Make functions globally available
+window.showRefundModal = showRefundModal;
+window.openChat = openChat;
     </script>
 </body>
 </html>

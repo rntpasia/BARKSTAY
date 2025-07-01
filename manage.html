@@ -154,7 +154,9 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;            
-    margin-bottom: 10px;    
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
     }
 
 
@@ -233,7 +235,7 @@
 <body>
     <div class="phone-container">
         <div class="app-header">
-            <h1 onclick="window.location.href='home.html'" style="cursor: pointer;">BARK & STAY</h1>
+            <h1 onclick="navigateTo('home.html')" style="cursor: pointer;">BARK & STAY</h1>
             <div class="settings-container" onclick="navigateTo('settings.html')">
             <i class="fa fa-gear" href="settings.html" style="color:white"></i>
                
@@ -258,11 +260,12 @@
 
         
         <div class="menu">
-         <a href="PI.html"> <button class="menu-item">Personal Information<i class="fa-solid fa-angle-right"></i></button></a> 
-         <a href="Petinfo.html"><button class="menu-item">Pet Information <i class="fa-solid fa-angle-right"></i></button></a>
-         <a href="Payment.html">  <button class="menu-item">Payment Information <i class="fa-solid fa-angle-right"></i></button></a>
-         <a href="bookinghistory.html">   <button class="menu-item">Booking History <i class="fa-solid fa-angle-right"></i></button></a>
+        <button class="menu-item" onclick="navigateTo('PI.html')">Personal Information <i class="fa-solid fa-angle-right"></i></button>
+        <button class="menu-item" onclick="navigateTo('Petinfo.html')">Pet Information <i class="fa-solid fa-angle-right"></i></button>
+        <button class="menu-item" onclick="navigateTo('Payment.html')">Payment Information <i class="fa-solid fa-angle-right"></i></button>
+        <button class="menu-item" onclick="navigateTo('bookinghistory.html')">Booking History <i class="fa-solid fa-angle-right"></i></button>
         </div>
+
 
         <div class="bottom-nav">
             <div class="nav-item" id="home" onclick="navigateTo('home.html')">
@@ -284,33 +287,53 @@
         </div>
     </div>
         <script>
-            function navigateTo(page) {
-                window.location.href = page; // Redirect to the specified page
+        // ✅ Updated navigateTo function that includes user_id
+        function navigateTo(page) {
+            const userId = localStorage.getItem('user_id');
+            console.log('navigateTo called with page:', page);
+            console.log('user_id from localStorage:', userId);
+            
+            if (userId) {
+                const url = new URL(page, window.location.origin);
+                url.searchParams.set('user_id', userId);
+                const finalUrl = url.toString();
+                console.log('Final URL:', finalUrl);
+                window.location.href = finalUrl;
+            } else {
+                console.log('No user_id found, navigating without parameter');
+                window.location.href = page;
             }
-        
-            // Highlight the active tab based on the current page
-            document.addEventListener("DOMContentLoaded", function () {
-                const currentPage = window.location.pathname.split("/").pop(); // Get the current filename
-                const navItems = document.querySelectorAll(".nav-item");
-        
-                navItems.forEach(item => {
-                    if (item.getAttribute("onclick").includes(currentPage)) {
-                        item.classList.add("active"); // Add active class
-                    } 
-                });
-            });
-            function updateProfileImage(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById("profileImage").src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-}
+        }
 
+        // ✅ Highlight current nav-item based on page
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const currentPage = window.location.pathname.split("/").pop(); 
+            const navItems = document.querySelectorAll(".nav-item");
+
+            navItems.forEach(item => {
+                if (item.getAttribute("onclick") && item.getAttribute("onclick").includes(currentPage)) {
+                    item.classList.add("active");
+                }
+            });
+
+            // Log current user_id for debugging
+            console.log('Current user_id:', localStorage.getItem('user_id'));
+        });
+
+        // ✅ Function to update profile image preview
+        function updateProfileImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("profileImage").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
         </script>
+
         <script type="module" src="manage.js" defer></script>
 </body>
 </html>
