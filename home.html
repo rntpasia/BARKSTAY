@@ -345,6 +345,19 @@
     z-index: 1000; /* Ensure it stays above other elements */
 }
 
+.results-container {
+  margin-top: 20px;
+}
+
+.hotel {
+  padding: 12px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
 /* Add padding-bottom to .container to avoid content getting hidden */
 .container {
     padding-bottom: 80px; /* Adjust based on nav height */
@@ -596,7 +609,7 @@
 
     <div class="app-title">BARK & STAY</div>
 
-    <div class="search-container" onclick="event.stopPropagation()">
+    <div class="search-container">
         <div class="search-box-container">
             <div class="search-input-group">
                 <label for="property-search" class="search-label">Search Property:</label>
@@ -630,7 +643,7 @@
             </div>
         </div>
 
-        <div class="row">
+      <div class="row">
             <div class="inputBox">
                 <input type="text" name="Breed type" list="Breeds" placeholder="Breed Type">
                 <datalist id="Breeds">
@@ -638,6 +651,7 @@
                     <option value="American Pitbull">
                     <option value="Aspin">
                     <option value="Beagle">
+                    <option value="Border Collie">
                     <option value="Chihuahua">
                     <option value="Chow Chow">
                     <option value="Dachshund">
@@ -646,16 +660,19 @@
                     <option value="French Bulldog">
                     <option value="German Shepherd">
                     <option value="Golden Retriever">
+                    <option value="Great Dane">    
                     <option value="Greyhound">
                     <option value="Japanese Spitz">
                     <option value="Labrador">
                     <option value="Maltese">
                     <option value="Pomeranian">
                     <option value="Poodle">
+                    <option value="Rottweiler">
                     <option value="Pug">
                     <option value="Shih Tzu">
                     <option value="Siberian Husky">
                     <option value="Welsh Corgi">
+                    <option value="Yorkshire Terrier">
                 </datalist>
             </div>
         
@@ -672,12 +689,14 @@
                 <input type="number" name="Number of Room" placeholder="# of Rooms">
             </div>
         </div>   
-      </section>
+      </section>    
   </section>
-
+        
+    
         <button class="search-btn">Search</button>
 
-        <div class="suggestions" id="suggestions">
+
+         <div class="suggestions" id="suggestions">
             <div class="suggestions-grid">
                 <a href="thedog.html" class="suggestion-card">
                     <img src="images/a.jpg" alt="Hotel">
@@ -723,7 +742,7 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div> 
         
 
     <img src="images/cute.jpg" alt="Dogs playing" class="banner-image">
@@ -741,7 +760,9 @@
             </a>
             <a href="goldenfur.html" class="hotel-card">
                 <img src="images/i.jpg" alt="Hotel">
+
                 <div class="hotel-name">The Golden Fur</div>
+
             </a>
             <a href="paws.html" class="hotel-card">
                 <img src="images/j.jpg" alt="Hotel">
@@ -753,7 +774,9 @@
             </a>
             <a href="snowangels.html" class="hotel-card">
                 <img src="images/l.jpg" alt="Hotel">
+
                 <div class="hotel-name">Snow Angels Pet Hub</div>
+
             </a>
         </div>
       </div>
@@ -871,5 +894,6 @@ function navigateTo(page) {
 
     </script>
     <script type="module" src="home-page.js"></script>
+    <script type="module" src="search.js"></script>
 </body>
 </html>

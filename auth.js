@@ -22,23 +22,41 @@ async function registerUser(event) {
     const dobDay = document.getElementById("dob-day").value;
     const dobYear = document.getElementById("dob-year").value;
     const dob = `${dobYear}-${dobMonth}-${dobDay}`;
+    const birthdate = new Date(`${dobYear}-${dobMonth}-${dobDay}`);
+    const today = new Date();
 
     // Validate passwords match
     if (password !== confirmPassword) {
-        document.getElementById("password-error").textContent = "❌ Passwords do not match!";
+        document.getElementById("password-error").textContent = "Passwords do not match!";
         return;
+    }
+
+    //Validate birthday -- must be 18 and above
+    let age = today.getFullYear() - birthdate.getFullYear();
+    const monthDiff = today.getMonth() - birthdate.getMonth();
+    const dayDiff = today.getDate() - birthdate.getDate();
+
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)){
+        age--;
+    }
+
+    if(age < 18 ){
+        document.getElementById("dob-error").textContent = "You must be 18 years old to register.";
+        return;
+    } else {
+        document.getElementById("dob-error").textContent = "";
     }
 
     // Validate phone number format
     if (!/^\d{11}$/.test(phoneNumber)) {
-        document.getElementById("phone-number-error").textContent = "❌ Phone number must be 11 digits.";
+        document.getElementById("phone-number-error").textContent = "Phone number must be 11 digits.";
         return;
     } else {
         document.getElementById("phone-number-error").textContent = "";
     }
 
     try {
-        console.log("🚀 Attempting to register user...");
+        console.log("Attempting to register user...");
 
         // Step 1: Register user in Supabase Auth
         const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -47,22 +65,22 @@ async function registerUser(event) {
         });
 
         if (authError) {
-            console.error("❌ Auth Error:", authError);
-            alert(`❌ Authentication Error: ${authError.message}`);
+            console.error("Auth Error:", authError);
+            alert(`Authentication Error: ${authError.message}`);
             return;
         }
 
         if (!authData?.user) {
-            console.error("❌ No user data returned from Supabase.");
-            alert("❌ Registration failed. Please try again.");
+            console.error("No user data returned from Supabase.");
+            alert("Registration failed. Please try again.");
             return;
         }
 
-        console.log("✅ User registered successfully:", authData);
+        console.log("User registered successfully:", authData);
 
         // Step 2: Get the user ID from Auth
         const userId = authData.user.id;
-        console.log("✅ Retrieved user ID:", userId);
+        console.log("Retrieved user ID:", userId);
 
         // Step 3: Insert additional user data into 'users' table
         const { error: dbError } = await supabase
@@ -78,20 +96,20 @@ async function registerUser(event) {
             ], { onConflict: ["auth_id"] }); // Ensures no duplicate entries
 
         if (dbError) {
-            console.error("❌ Database Error:", dbError);
-            alert(`❌ Database Error: ${dbError.message}`);
+            console.error("Database Error:", dbError);
+            alert(`Database Error: ${dbError.message}`);
             return;
         }
 
-        alert("✅ Registration successful! Check your email for verification.");
-        alert("📩 Please verify your email before logging in!");
+        alert("Registration successful! Check your email for verification.");
+        alert("Please verify your email before logging in!");
 
         // Redirect to login page
         window.location.href = "pet-attribute.html";
 
     } catch (err) {
-        console.error("❌ Unexpected Error:", err);
-        alert(`❌ Error: ${err.message}`);
+        console.error("Unexpected Error:", err);
+        alert(`Error: ${err.message}`);
     }
 }
 
@@ -105,16 +123,16 @@ async function loginUser() {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
         if (error) {
-            alert("❌ Login failed: " + error.message);
+            alert("Login failed: " + error.message);
             return;
         }
 
-        alert("✅ Login successful!");
+        alert("Login successful!");
         window.location.href = "home.html"; // Redirect to home.html after login
 
     } catch (err) {
-        console.error("❌ Unexpected Error:", err);
-        alert(`❌ Error: ${err.message}`);
+        console.error("Unexpected Error:", err);
+        alert(`Error: ${err.message}`);
     }
 }
 
