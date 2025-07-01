@@ -5,376 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paws & Fur White Plains</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        
-        /* Header Styles */
-        .header {
-            background-color: #002244;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .user-profile {
-            display: flex;
-            align-items: center;
-        }
-        
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-        }
-        
-        .user-avatar img {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-        }
-        
-        .user-info {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .username {
-            font-size: 14px;
-            color: #cccccc;
-        }
-        
-        .manage-account {
-            font-size: 14px;
-            color: white;
-            text-decoration: none;
-        }
-        
-        .header-icons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .icon-button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        
-        /* Banner Image */
-        .banner-img {
-            width: 100%;
-            height: 300px; /* Much larger banner */
-            object-fit: cover;
-}
-        
-        /* Hotel Title Section */
-        .hotel-title {
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: white;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .hotel-name {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        
-        .hotel-address {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .chat-icon {
-            width: 40px;
-            height: 40px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Date Selection */
-        .date-selection {
-    display: flex;
-    background-color: white;
-    padding: 20px;
-    gap: 15px;
-    border-bottom: 1px solid #eee;
-    justify-content: center;
-}
-
-.date-box, .room-count {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.date-label {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.date-input, .room-select {
-    padding: 12px;
-    width: 100%;
-    max-width: 200px;
-    font-size: 16px;
-    border: 2px solid #aaa;
-    border-radius: 8px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.confirm-button {
-    background-color: #002244;
-    color: white;
-    padding: 15px 30px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    margin: 15px auto;
-}
-
-.confirm-button:hover {
-    background-color: #516d88;
- }
-
-
-        
-        /* Facilities Section */
-        .section {
-            margin: 10px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        
-        .section-title {
-            padding: 10px 15px;
-            font-size: 16px;
-            border-bottom: 1px solid #eee;
-            font-weight: bold;
-        }
-        
-        .facilities-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            padding: 10px 15px;
-        }
-        
-        .facility-item {
-            display: flex;
-            align-items: center;
-            margin: 5px 0;
-        }
-        
-        .facility-item i {
-            color: #4CAF50;
-            margin-right: 5px;
-        }
-        
-        /* Reviews Section */
-        .review-summary {
-            padding: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .review-score {
-            font-size: 18px;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        
-        .review-stars {
-            color: #FFD700;
-        }
-        
-        .reviewer {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-        
-        .reviewer-img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            object-fit: cover;
-}
-
-        
-        .reviewer-name {
-            font-size: 14px;
-        }
-        
-        /* Location Section */
-        .location-map {
-            width: 100%;
-            height: 150px;
-            background-color: #eee;
-        }
-        
-        /* Rooms Section */
-        .rooms-title {
-            padding: 15px 20px;
-            font-size: 20px;
-            font-weight: bold;
-            background-color: white;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .rooms-grid {
-            display: flex;
-            overflow-x: auto;
-            padding: 10px;
-            gap: 10px;
-            background-color: white;
-        }
-        
-        .room-card {
-            min-width: 150px;
-            width: 150px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .room-img {
-            width: 100%;
-            height: 100px;
-            background: linear-gradient(to bottom, #87CEEB, #4CAF50);
-        }
-        
-        .room-details {
-            padding: 10px;
-            background-color: #516d88;
-            color: white;
-        }
-        
-        .room-name {
-            font-weight: bold;
-            margin-bottom: 2px;
-        }
-        
-        .room-subtitle {
-            font-size: 12px;
-            color: #eee;
-        }
-        
-        /* Hotel Policies */
-        .policies-content {
-            padding: 15px;
-            color: #666;
-            font-size: 14px;
-        }
-        
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            background-color: #002244;
-            color: white;
-        }
-        
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px 0;
-            color: white;
-            text-decoration: none;
-        }
-        
-        .nav-item i {
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-        
-        .nav-text {
-            font-size: 12px;
-        }
-        
-        /* Chat Button */
-        .chat-button {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background-color: #002244;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            border: 2px solid white;
-            font-size: 24px;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .facilities-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .room-card {
-                min-width: 130px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .hotel-name {
-                font-size: 20px;
-            }
-            
-            .facilities-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .date-selection {
-                flex-direction: column;
-            }
-            
-            .date-box {
-                border-right: none;
-                border-bottom: 1px solid #eee;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="hotelstyle.css">
 </head>
 <body>
     <!-- Header -->
@@ -407,34 +38,77 @@
             <i class="fas fa-comment"></i>
         </div>
     </div>
-    
-    <!-- Date Selection -->
-<div class="date-selection">
-    <div class="date-box">
-        <label class="date-label" for="check-in">Check In</label>
-        <input type="date" id="check-in" class="date-input">
+    <div class="booking-container">
+    <div class="booking-header">
+        <div class="booking-title">Book Your Stay</div>
+        <div class="booking-subtitle">Reserve the perfect room for your furry friend</div>
     </div>
-    <div class="date-box">
-        <label class="date-label" for="check-out">Check Out</label>
-        <input type="date" id="check-out" class="date-input">
-    </div>
-    <div class="room-count">
-        <label for="room-number"># of Rooms</label>
-        <select id="room-number" class="room-select">
+
+    <form id="bookingForm" action="manage-book.html" method="get" class="booking-form">
+        <!-- Date Selection Row -->
+        <div class="form-row">
+        <div class="form-group">
+            <label class="form-label" for="check-in">
+            <i class="fas fa-calendar-alt"></i> Check In
+            </label>
+            <input type="date" id="check-in" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="check-out">
+            <i class="fas fa-calendar-alt"></i> Check Out
+            </label>
+            <input type="date" id="check-out" class="form-input" required>
+        </div>
+        </div>
+
+        <!-- Room and Pet Details Row -->
+        <div class="form-row">
+        <div class="form-group">
+            <label class="form-label" for="room-number">
+            <i class="fas fa-door-open"></i> # of Rooms
+            </label>
+            <select id="room-number" class="form-select" required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
-        </select>
-    </div>
-</div>
+            </select>
+        </div>
 
-<div style="text-align: center; margin: 15px 0;">
-    <form action="manage-book.html" method="get">
-        <button type="submit" class="confirm-button">Confirm Booking</button>
+        <div class="form-group">
+            <label class="form-label" for="room-type">
+            <i class="fas fa-bed"></i> Room Type
+            </label>
+            <select id="room-type" class="form-select" required>
+                <option value="Standard">Standard - ₱1,000/night</option>
+                <option value="Deluxe">Deluxe - ₱1,400/night</option>
+                <option value="Suite">Suite - ₱2,000/night</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="num-pets">
+            <i class="fas fa-paw"></i> # of Pets
+            </label>
+            <input type="number" id="num-pets" class="form-input" min="0" max="5" value="0" required>
+        </div>
+        </div>
+                <!-- Price Display -->
+            <div class="price-display" id="price-display" style="display: none;">
+                <div class="price-label">Total Amount</div>
+                <div class="price-amount" id="total-amount">₱0</div>
+                <div class="price-breakdown" id="price-breakdown"></div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="confirm-button">
+                <i class="fas fa-paw"></i> Confirm Booking
+            </button>
+                
     </form>
-</div>
+    </div>
     
     <!-- Facilities Section -->
     <div class="section">
@@ -541,13 +215,184 @@
     </div>
 </div>
 
-    
-    <!-- Rooms Section -->
-    <h2 class="rooms-title">Rooms</h2>
-    <div class="rooms-grid">
-        <div class="room-card">
-            <img src="images/c.jpg" alt="Room" class="room-img">
-            <div class="room-details">
-                <div class="room-name">The Bark Lounge</div>
-                <div class="room-subtitle">Deluxe</div>
+        <!-- Rooms Section -->
+    <section class="section">
+        <h2 class="section-title">Rooms</h2>
+        <div class="rooms-grid">
+            <div class="room-card">
+                <img src="images/c.jpg" alt="The Bark Lounge Deluxe Room" class="room-img">
+                <div class="room-details">
+                    <div class="room-name">The Bark Lounge</div>
+                    <div class="room-subtitle">Deluxe</div>
+                </div>
             </div>
+            <div class="room-card">
+                <div class="room-img"></div>
+                <div class="room-details">
+                    <div class="room-name">Paw Suite</div>
+                    <div class="room-subtitle">Suite</div>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-img"></div>
+                <div class="room-details">
+                    <div class="room-name">Cozy Den</div>
+                    <div class="room-subtitle">Standard</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hotel Policies Section -->
+    <section class="section">
+        <h2 class="section-title">Hotel Policies</h2>
+        <div class="policies-content">
+            <p><strong>Check-in:</strong> 2:00 PM - 8:00 PM</p>
+            <p><strong>Check-out:</strong> 8:00 AM - 12:00 PM</p>
+            <p><strong>Pet Requirements:</strong> All pets must be up-to-date on vaccinations</p>
+            <p><strong>Cancellation:</strong> 24 hours notice required</p>
+            <p><strong>Payment:</strong> Full payment required upon check-in</p>
+        </div>
+    </section>
+
+        <script>
+    const ROOM_PRICING = {
+        "Standard": 1000,
+        "Deluxe": 1400,
+        "Suite": 2000
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeForm();
+    });
+
+    function initializeForm() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('check-in').min = today;
+        document.getElementById('check-out').min = today;
+        
+        // Bind events for real-time price calculation
+        ['check-in', 'check-out', 'room-number', 'room-type', 'num-pets'].forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('change', calculatePrice);
+            }
+        });
+        
+        // Update check-out minimum date when check-in changes
+        document.getElementById('check-in').addEventListener('change', function(e) {
+            const checkInDate = new Date(e.target.value);
+            const nextDay = new Date(checkInDate);
+            nextDay.setDate(nextDay.getDate() + 1);
+            document.getElementById('check-out').min = nextDay.toISOString().split('T')[0];
+            calculatePrice();
+        });
+    }
+
+    function calculatePrice() {
+        const checkIn = document.getElementById('check-in').value;
+        const checkOut = document.getElementById('check-out').value;
+        const numRooms = parseInt(document.getElementById('room-number').value) || 0;
+        const roomType = document.getElementById('room-type').value;
+        const numPets = parseInt(document.getElementById('num-pets').value) || 0;
+
+        // Hide price display if required fields are missing
+        const priceDisplay = document.getElementById('price-display');
+        if (!checkIn || !checkOut || !numRooms || !roomType) {
+            if (priceDisplay) priceDisplay.style.display = 'none';
+            return;
+        }
+
+        const checkInDate = new Date(checkIn);
+        const checkOutDate = new Date(checkOut);
+        const diffTime = checkOutDate - checkInDate;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        // Hide price display if dates are invalid
+        if (diffDays < 1) {
+            if (priceDisplay) priceDisplay.style.display = 'none';
+            return;
+        }
+
+        // Calculate total price
+        const pricePerNight = ROOM_PRICING[roomType] || 1400;
+        const totalAmount = diffDays * numRooms * pricePerNight;
+
+        // Update price display
+        const totalAmountElement = document.getElementById('total-amount');
+        const priceBreakdownElement = document.getElementById('price-breakdown');
+        
+        if (totalAmountElement) {
+            totalAmountElement.textContent = `₱${totalAmount.toLocaleString()}`;
+        }
+        
+        if (priceBreakdownElement) {
+            priceBreakdownElement.textContent = 
+                `${diffDays} night${diffDays > 1 ? 's' : ''} × ${numRooms} room${numRooms > 1 ? 's' : ''} × ₱${pricePerNight.toLocaleString()}/night`;
+        }
+        
+        if (priceDisplay) {
+            priceDisplay.style.display = 'block';
+        }
+    }
+
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
+        e.preventDefault(); // ✅ always prevent default so you control what happens next
+
+        // Get values
+        const checkIn = new Date(document.getElementById("check-in").value);
+        const checkOut = new Date(document.getElementById("check-out").value);
+        const numRooms = parseInt(document.getElementById("room-number").value) || 0;
+        const roomType = document.getElementById("room-type").value;
+        const numPets = parseInt(document.getElementById("num-pets").value) || 0;
+
+        // Enhanced validation
+        if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) {
+            alert("Please select valid check-in and check-out dates.");
+            return;
+        }
+
+        const diffTime = checkOut - checkIn;
+        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+        if (diffDays < 1) {
+            alert("Check-out must be at least one day after check-in.");
+            return;
+        }
+
+        if (numRooms < 1) {
+            alert("Please select at least one room.");
+            return;
+        }
+
+        if (numPets < 1) {
+            alert("Please specify at least 1 pet.");
+            return;
+        }
+
+        // Enhanced price calculation using room type pricing
+        const pricePerNight = ROOM_PRICING[roomType] || 1400;
+        const totalPrice = diffDays * numRooms * pricePerNight;
+
+        // Build booking data object
+        const bookingData = {
+            hotel_id: "8073602d-011e-4feb-81e0-7db56aa2629f", 
+            check_in: checkIn.toISOString().split('T')[0],
+            check_out: checkOut.toISOString().split('T')[0],
+            num_rooms: numRooms,
+            room_type: roomType,
+            num_pets: numPets,
+            total_nights: diffDays,
+            price_per_night: pricePerNight,
+            total_amount: totalPrice
+        };
+
+        console.log("✅ Booking data saved to localStorage:", bookingData);
+
+        localStorage.setItem("bookingData", JSON.stringify(bookingData));
+
+        window.location.href = "manage-book.html";
+    });
+    </script>
+    </body>
+    </html>

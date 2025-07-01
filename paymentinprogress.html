@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment In Progress</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #002244;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .status-message {
+      font-size: 18px;
+      color: #333;
+    }
+    .button {
+      margin-top: 20px;
+      display: inline-block;
+      background-color: #002244;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .button:hover {
+      background-color: #0055aa;
+    }
+  </style>
+</head>
+<body>
+  <h2>Payment In Progress...</h2>
+  <div class="loader"></div>
+  <p class="status-message">Waiting for your payment to be completed in the PayMongo tab...</p>
+
+<script type="module">
+import { supabase } from './supabase.js';
+
+const paymentLinkId = localStorage.getItem('paymongoLinkId');
+const bookingId = localStorage.getItem('bookingId');
+
+console.log('🔍 Debug Info:', {
+    paymentLinkId,
+    bookingId,
+    paymentLinkIdType: typeof paymentLinkId,
+    bookingIdType: typeof bookingId
+});
+
+if (!paymentLinkId) {
+    alert("No payment link found. Returning to booking page.");
+    window.location.href = 'manage-book.html';
+}
+
+if (!bookingId) {
+    alert("No booking ID found. Please contact support.");
+    window.location.href = 'manage-book.html';
+}
+
+const interval = setInterval(async () => {
+    try {
+        const res = await fetch(`https://api.paymongo.com/v1/links/${paymentLinkId}`, {
+            headers: {
+                accept: 'application/json',
+                authorization: 'Basic c2tfdGVzdF9NNWdSUTN3VDllR3Nvbmt6M2tCNmtNVXE6'
+            }
+        });
+        const data = await res.json();
+        console.log("Checking payment status...", data);
+
+        const status = data.data.attributes.status;
+        console.log("Payment status:", status);
+
+        if (status === "paid") {
+            clearInterval(interval);
+            console.log("💰 Payment confirmed! Updating booking status...");
+            
+            // First, let's verify the booking exists
+            try {
+                const { data: existingBooking, error: fetchError } = await supabase
+                    .from('bookings')
+                    .select('bookings_id, payment_status, user_id')
+                    .eq('bookings_id', bookingId)
+                    .single();
+
+                console.log('🔍 Existing booking check:', { existingBooking, fetchError });
+
+                if (fetchError) {
+                    console.error('❌ Booking not found:', fetchError);
+                    alert("Booking not found in database. Please contact support with booking ID: " + bookingId);
+                    window.location.href = `paymentsuccess.html?booking_id=${bookingId}`;
+                    return;
+                }
+
+                console.log('✅ Booking found, current status:', existingBooking.payment_status);
+
+                // Now update the booking status
+                const { data: updateData, error: updateError } = await supabase
+                    .from('bookings')
+                    .update({ 
+                        payment_status: 'paid'
+                        // Remove updated_at if your table doesn't have this column
+                        // updated_at: new Date().toISOString()
+                    })
+                    .eq('bookings_id', bookingId)
+                    .select(); // Add select to return updated data
+
+                console.log('📝 Update result:', { updateData, updateError });
+
+                if (updateError) {
+                    console.error('❌ Error updating booking status:', updateError);
+                    alert(`Payment successful but failed to update booking status. Error: ${updateError.message}. Please contact support with booking ID: ${bookingId}`);
+                } else {
+                    console.log('✅ Booking status updated to paid successfully:', updateData);
+                }
+
+            } catch (supabaseError) {
+                console.error('❌ Supabase operation error:', supabaseError);
+                alert(`Payment successful but database error occurred. Please contact support with booking ID: ${bookingId}`);
+            }
+
+            // Clean up localStorage and redirect regardless of update status
+            localStorage.removeItem('paymongoLinkId');
+            localStorage.removeItem('bookingData');
+            // Keep bookingId for success page
+            
+            window.location.href = `paymentsuccess.html?booking_id=${bookingId}`;
+            
+        } else if (status === "expired" || status === "cancelled") {
+            clearInterval(interval);
+            console.log("❌ Payment failed/cancelled");
+            
+            // Update booking status to failed/cancelled
+            try {
+                const { error } = await supabase
+                    .from('bookings')
+                    .update({ 
+                        payment_status: 'failed'
+                        // Remove updated_at if your table doesn't have this column
+                        // updated_at: new Date().toISOString()
+                    })
+                    .eq('bookings_id', bookingId);
+
+                if (error) {
+                    console.error('Error updating booking status to failed:', error);
+                }
+            } catch (error) {
+                console.error('Error updating booking status to failed:', error);
+            }
+            
+            alert("❌ Payment was not successful. Please try again.");
+            localStorage.removeItem('paymongoLinkId');
+            localStorage.removeItem('bookingId');
+            localStorage.removeItem('bookingData');
+            window.location.href = 'home.html'; 
+        } else {
+            console.log("⏳ Payment still pending, status:", status);
+        }
+
+    } catch (err) {
+        console.error('❌ Error checking payment status:', err);
+        clearInterval(interval);
+        alert("⚠️ Error checking payment status. Returning to home.");
+        window.location.href = 'index.html';
+    }
+}, 5000);
+
+// Add some additional debugging
+console.log('🚀 Payment progress script started');
+console.log('📊 Supabase client:', supabase);
+</script>
+</body>
+</html>
