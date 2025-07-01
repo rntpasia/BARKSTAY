@@ -1,10 +1,10 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-// Initialize Supabase (Replace with your actual Supabase credentials)
+// Initialize Supabase
 const SUPABASE_URL = "https://cwqhiwfmiymomtxgycwx.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3cWhpd2ZtaXltb210eGd5Y3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIxNTA3ODcsImV4cCI6MjA1NzcyNjc4N30.1fpWjVox5v2dAGM-MxXihwzdeuOb_Yxm-0Lr0Z8yLoU";
 
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 console.log("✅ Supabase client initialized");
 
@@ -45,41 +45,39 @@ document.getElementById("next-btn").addEventListener("click", async function (ev
     }
 
     if (data?.user) {
-  const user_id = data.user.id;
+      const user_id = data.user.id;
 
-  // ✅ Step 1: Insert into users table
-  const { error: userInsertError } = await supabase.from("users").insert([
-    {
-      auth_id: user_id,
-      name,
-      email,
-      phone_number,
-      dob: `${dobYear}-${dobMonth}-${dobDay}`
-    }
-  ]);
+      // ✅ Step 1: Insert into users table
+      const { error: userInsertError } = await supabase.from("users").insert([
+        {
+          auth_id: user_id,
+          name,
+          email,
+          phone_number,
+          dob: `${dobYear}-${dobMonth}-${dobDay}`
+        }
+      ]);
 
-  if (userInsertError) {
-    console.error("❌ Failed to insert into users table:", userInsertError);
-    return;
-  }
+      if (userInsertError) {
+        console.error("❌ Failed to insert into users table:", userInsertError);
+        return;
+      }
 
-  // ✅ Step 2: Insert into logs table
-  const { error: logError } = await supabase.from("logs").insert([
-    {
-      action_type: "register",
-      description: `New user registered with email: ${email}`,
-      user_id: user_id, // <- IMPORTANT: must be uuid
-      timestamp: new Date().toISOString()
-    }
-  ]);
+      // ✅ Step 2: Insert into logs table
+      const { error: logError } = await supabase.from("logs").insert([
+        {
+          action_type: "register",
+          description: `New user registered with email: ${email}`,
+          user_id: user_id, // <- UUID
+          timestamp: new Date().toISOString()
+        }
+      ]);
 
-  if (logError) {
-    console.error("⚠️ Failed to insert log:", logError.message);
-  } else {
-    console.log("📝 Log entry saved.");
-  }
-}
-
+      if (logError) {
+        console.error("⚠️ Failed to insert log:", logError.message);
+      } else {
+        console.log("📝 Log entry saved.");
+      }
 
       alert("✅ Registration successful! Check your email for verification.");
       window.location.href = "index.html";
