@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audit Logs | Bark & Stay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/c24857b17d.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f9f6f1;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .phone-container {
+      width: 100vw;
+      height: 100vh;
+      background-color: #f9f6f1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .app-header {
+      width: 100%;
+      background-color: #002244;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      font-family: 'Playfair Display', serif;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .settings-container {
+      display: flex;
+      gap: 15px;
+      cursor: pointer;
+    }
+
+    .back-button {
+      position: absolute;
+      left: 50px;
+      top: 160px;
+      width: 40px;
+      height: 40px;
+      background-color: #002855;
+      border-radius: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .h2 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #002244;
+      margin-top: 100px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .logs-container {
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 95%;
+      height: auto; /* Was: 50vh */
+      max-height: none;
+      overflow-y: visible; /* Was: auto */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+
+    table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: auto;
+}
+
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #e0e8f0;
+      color: #002244;
+    }
+
+    .print-button {
+      margin-top: 10px;
+      background-color: #002244;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .print-button:hover {
+      background-color: #16314a;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: #002244;
+      padding: 15px 0;
+      color: white;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+    }
+
+    .nav-item {
+      text-align: center;
+      flex: 1;
+      cursor: pointer;
+      padding: 10px 0;
+      transition: background 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .nav-item i {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .nav-item span {
+      font-size: 13px;
+    }
+
+    .nav-item.active {
+      background: #e0e8f0;
+      color: #002244;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 480px) {
+      .nav-item i {
+        font-size: 20px;
+      }
+
+      .nav-item span {
+        font-size: 12px;
+      }
+    }
+
+    @media print {
+      .print-button, .bottom-nav, .app-header, .back-button {
+        display: none;
+      }
+
+      body {
+        overflow: visible;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="phone-container">
+    <div class="app-header">
+      <h1 onclick="window.location.href='home.html'" style="cursor: pointer;">BARK & STAY</h1>
+      <div class="settings-container" onclick="navigateTo('settings.html')">
+        <i class="fa fa-gear" style="color:white"></i>
+      </div>
+    </div>
+
+    <a href="admindash.html" class="back-button">←</a>
+    <h2 class="h2">Audit Logs</h2>
+
+    <div class="logs-container">
+      <table id="logsTable">
+        <thead>
+  <tr>
+    <th>User</th> 
+    <th>Action</th>
+    <th>Description</th>
+    <th>Timestamp</th>
+  </tr>
+</thead>
+
+        <tbody>
+          <!-- Logs will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+
+    <button class="print-button" onclick="window.print()">🖨️ Print Logs</button>
+
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="navigateTo('home.html')">
+        <i class="fas fa-paw"></i>
+        <span>Home</span>
+      </div>
+      <div class="nav-item" onclick="navigateTo('maps.html')">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Map</span>
+      </div>
+      <div class="nav-item" onclick="navigateTo('chat.html')">
+        <i class="fas fa-comment"></i>
+        <span>Chat</span>
+      </div>
+      <div class="nav-item" onclick="navigateTo('review.html')">
+        <i class="fas fa-bone"></i>
+        <span>Review</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+  </script>
+
+  <script src="auditlogs.js" type="module"></script>
+</body>
+</html>

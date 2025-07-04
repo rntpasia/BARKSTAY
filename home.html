@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bark & Stay</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="chatbotstyle.css">
-    <!-- Google Fonts Link For Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bark & Stay</title>
 
-
+  <!-- External Stylesheets -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="chatbotstyle.css">
 
     <script src="chatbotscript.js" defer></script>
     
@@ -295,9 +293,6 @@
     color: inherit;
 }
 
-
-    
-    /* Remove the old search icon style */
     .search-icon {
         display: none;
     }
@@ -431,9 +426,8 @@
             font-weight: bold;
             font-size: 16px;
         }
-/* Responsive styles - add these to your existing CSS */
 
-/* Media query for tablets and smaller devices */
+
 @media (max-width: 700px) {
     .hotel-grid {
         grid-template-columns: repeat(2, 1fr); /* Change from 3 columns to 2 */
@@ -532,8 +526,7 @@
     cursor: pointer;
     z-index: 1000; /* Make sure it's above other elements */
 }
-}
-/* Fix user icon alignment in the header */
+
 .user-info {
     display: flex;
     align-items: center;
@@ -566,7 +559,7 @@
     font-size: 14px;
 }
 
-/* Ensure the bottom nav stays in place */
+
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -589,22 +582,23 @@
     </style>
 </head>
 <body onclick="hideSuggestions(event)">
-    <div class="container">
+  <div class="container">
+    <!-- Header -->
     <div class="chat-header">
-        <div class="header-content">
-            <div class="user-info">
-                <div class="user-avatar">
-                    <i class="fas fa-user" style="font-size: 20px;"></i>
-                </div>
-                <div class="text">
-                    <span><div id="user_name"></div></span>
-                    <span class="bold" onclick="navigateTo('manage.html')" style="cursor: pointer;">Manage Account</span>
-                </div>
-            </div>
-            <a href="sort.html">
-                <i class='fas fa-filter' style='font-size:24px; color: white;'></i>
-            </a>
+      <div class="header-content">
+        <div class="user-info">
+          <div class="user-avatar">
+            <i class="fas fa-user" style="font-size: 20px;"></i>
+          </div>
+          <div class="text">
+            <span><div id="user_name"></div></span>
+            <span id="manageAccountLink" class="bold" style="cursor: pointer;">Manage Account</span>
+          </div>
         </div>
+        <a href="sort.html">
+          <i class='fas fa-filter' style='font-size:24px; color: white;'></i>
+        </a>
+      </div>
     </div>
 
     <div class="app-title">BARK & STAY</div>
@@ -747,153 +741,140 @@
 
     <img src="images/cute.jpg" alt="Dogs playing" class="banner-image">
 
+    <!-- Top Picks Section -->
     <div class="top-picks">
-        <div class="section-title">Top Picks</div>
-        <div class="hotel-grid">
-            <a href="mrpaws.html" class="hotel-card">
-                <img src="images/g.jpg" alt="Hotel">
-                <div class="hotel-name">Mr. Paws</div>
-            </a>
-            <a href="pawhouse.html" class="hotel-card">
-                <img src="images/h.jpg" alt="Hotel">
-                <div class="hotel-name">Paw House PH</div>
-            </a>
-            <a href="goldenfur.html" class="hotel-card">
-                <img src="images/i.jpg" alt="Hotel">
-
-                <div class="hotel-name">The Golden Fur</div>
-
-            </a>
-            <a href="paws.html" class="hotel-card">
-                <img src="images/j.jpg" alt="Hotel">
-                <div class="hotel-name">Paws & Fur White Plains</div>
-            </a>
-            <a href="dluxe.html" class="hotel-card">
-                <img src="images/k.jpg" alt="Hotel">
-                <div class="hotel-name">Dluxe Pet Hotel & Spa</div>
-            </a>
-            <a href="snowangels.html" class="hotel-card">
-                <img src="images/l.jpg" alt="Hotel">
-
-                <div class="hotel-name">Snow Angels Pet Hub</div>
-
-            </a>
-        </div>
+      <div class="section-title">Top Picks</div>
+      <div class="hotel-grid">
+        <!-- Hotel Cards -->
       </div>
-    <div class="bottom-nav">
-        <div class="nav-item active" id="home" onclick="navigateTo('home.html')">
-            <i class="fas fa-paw"></i>
-            <span>Home</span>
-        </div>
-        <div class="nav-item" id="mapTab" onclick="navigateTo('maps.html')">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>Map</span>
-        </div>
-        <div class="nav-item" id="chat" onclick="navigateTo('chat.html')">
-            <i class="fas fa-comment"></i>
-            <span>Chat</span>
-        </div>
-        <div class="nav-item" id="review" onclick="navigateTo('reviews.html')">
-            <i class="fas fa-bone"></i>
-            <span>Review</span>
-        </div>
     </div>
-    
-    <button class="chatbot-toggler">
-        <span class="material-symbols-rounded">smart_toy</span>
-        <span class="material-symbols-outlined">close</span>
-      </button>
-      <div class="chatbot">
-        <header>
-          <h2>Chatbot</h2>
-          <span class="close-btn material-symbols-outlined">close</span>
-        </header>
-        <ul class="chatbox">
-          <li class="chat incoming">
-            <span class="material-symbols-outlined">smart_toy</span>
-            <p>Hi there <br>How can I help you today?</p>
-          </li>
-        </ul>
-        <div class="chat-input">
-          <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
-          <span id="send-btn" class="material-symbols-rounded">send</span>
-        </div>
-      </div>
+  </div>
 
-    
-      <script>
-        document.querySelector(".chatbot-toggler").addEventListener("click", function () {
-            document.querySelector(".chatbot").classList.toggle("active");
-        });
-    </script>
-    
-    <script>
-        function showSuggestions() {
-            document.getElementById('suggestions').style.display = 'block';
-        }
-        
-        function hideSuggestions(event) {
-            if (!event.target.closest('.search-container')) {
-                document.getElementById('suggestions').style.display = 'none';
-            }
-        }
-        function clearSearch() {
-        const searchInput = document.getElementById('property-search');
-        searchInput.value = '';
-        document.querySelector('.clear-icon').style.display = 'none';
-        searchInput.focus();
+  <!-- Chatbot Toggler and Window -->
+  <button class="chatbot-toggler">
+    <span class="material-symbols-rounded">smart_toy</span>
+    <span class="material-symbols-outlined">close</span>
+  </button>
+  <div class="chatbot">
+    <header>
+      <h2>Chatbot</h2>
+      <span class="close-btn material-symbols-outlined">close</span>
+    </header>
+    <ul class="chatbox">
+      <li class="chat incoming">
+        <span class="material-symbols-outlined">smart_toy</span>
+        <p>Hi there <br>How can I help you today?</p>
+      </li>
+    </ul>
+    <div class="chat-input">
+      <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+      <span id="send-btn" class="material-symbols-rounded">send</span>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div class="nav-item active" id="home" onclick="navigateTo('home.html')">
+      <i class="fas fa-paw"></i>
+      <span>Home</span>
+    </div>
+    <div class="nav-item" id="mapTab" onclick="navigateTo('maps.html')">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>Map</span>
+    </div>
+    <div class="nav-item" id="chat" onclick="navigateTo('chat.html')">
+      <i class="fas fa-comment"></i>
+      <span>Chat</span>
+    </div>
+    <div class="nav-item" id="review" onclick="navigateTo('reviews.html')">
+      <i class="fas fa-bone"></i>
+      <span>Review</span>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // chatbot toggler
+    document.querySelector(".chatbot-toggler").addEventListener("click", function () {
+      document.querySelector(".chatbot").classList.toggle("active");
+    });
+
+    function showSuggestions() {
+      document.getElementById('suggestions').style.display = 'block';
     }
-    
-    // Show/hide the clear button based on input content
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('property-search');
-        const clearButton = document.querySelector('.clear-icon');
-        
-        searchInput.addEventListener('input', function() {
-            if (this.value.length > 0) {
-                clearButton.style.display = 'block';
-            } else {
-                clearButton.style.display = 'none';
-            }
-        });
-    });
+
+    function hideSuggestions(event) {
+      if (!event.target.closest('.search-container')) {
+        document.getElementById('suggestions').style.display = 'none';
+      }
+    }
+
+    function clearSearch() {
+      const searchInput = document.getElementById('property-search');
+      searchInput.value = '';
+      document.querySelector('.clear-icon').style.display = 'none';
+      searchInput.focus();
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
-    document.querySelector(".search-btn").addEventListener("click", function (event) {
-        event.preventDefault(); // Prevent default if inside a form
+      const searchInput = document.getElementById('property-search');
+      const clearButton = document.querySelector('.clear-icon');
 
-        let propertySearch = document.getElementById("property-search")?.value.trim() || "";
-        let startDate = document.querySelector(".date-field input[type='date']")?.value || "";
-        let endDate = document.querySelector(".date-field:nth-of-type(2) input[type='date']")?.value || "";
-        let breedType = document.querySelector("input[name='Breed type']")?.value.trim() || "";
-        let petSize = document.querySelector("input[name='Size']")?.value.trim() || "";
-        let numRooms = document.querySelector("input[name='Number of Room']")?.value.trim() || "";
-
-        let searchParams = { property: propertySearch, start_date: startDate, end_date: endDate, breed: breedType, size: petSize, rooms: numRooms };
-
-        console.log("Search Parameters:", searchParams);
-
-        let queryString = new URLSearchParams(searchParams).toString();
-        window.location.href = `hotel search.html?${queryString}`;
+      searchInput.addEventListener('input', function () {
+        clearButton.style.display = this.value.length > 0 ? 'block' : 'none';
+      });
     });
-});
-function navigateTo(page) {
-                window.location.href = page; // Redirect to the specified page
-            }
-        
-            // Highlight the active tab based on the current page
-            document.addEventListener("DOMContentLoaded", function () {
-                const currentPage = window.location.pathname.split("/").pop(); // Get the current filename
-                const navItems = document.querySelectorAll(".nav-item");
-        
-                navItems.forEach(item => {
-                    if (item.getAttribute("onclick").includes(currentPage)) {
-                        item.classList.add("active"); // Add active class
-                    } 
-                });
-            });
 
-    </script>
-    <script type="module" src="home-page.js"></script>
-    <script type="module" src="search.js"></script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelector(".search-btn").addEventListener("click", function (event) {
+        event.preventDefault();
+        const propertySearch = document.getElementById("property-search")?.value.trim() || "";
+        const startDate = document.querySelector(".date-field input[type='date']")?.value || "";
+        const endDate = document.querySelector(".date-field:nth-of-type(2) input[type='date']")?.value || "";
+        const breedType = document.querySelector("input[name='Breed type']")?.value.trim() || "";
+        const petSize = document.querySelector("input[name='Size']")?.value.trim() || "";
+        const numRooms = document.querySelector("input[name='Number of Room']")?.value.trim() || "";
+
+        const searchParams = { property: propertySearch, start_date: startDate, end_date: endDate, breed: breedType, size: petSize, rooms: numRooms };
+        const queryString = new URLSearchParams(searchParams).toString();
+
+        window.location.href = `hotel search.html?${queryString}`;
+      });
+    });
+
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const currentPage = window.location.pathname.split("/").pop();
+      document.querySelectorAll(".nav-item").forEach(item => {
+        if (item.getAttribute("onclick").includes(currentPage)) {
+          item.classList.add("active");
+        }
+      });
+    });
+  </script>
+
+  <script type="module" src="home-page.js"></script>
+  <script type="module" src="search.js"></script>
+  <script type="module">
+    import { supabase } from './supabase.js';
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      const link = document.getElementById("manageAccountLink");
+
+      if (!user || !link) return;
+
+      link.addEventListener("click", () => {
+        if (user.email === "admin@gmail.com") {
+          window.location.href = "admindash.html";
+        } else {
+          window.location.href = "manage.html";
+        }
+      });
+    });
+  </script>
 </body>
 </html>
