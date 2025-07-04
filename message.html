@@ -231,7 +231,25 @@
 } else if (text.includes("contact") || text.includes("phone") || text.includes("email") || text.includes("number") || text.includes("reach")) {
     botMsg.textContent = "📞 You can reach us at (02) 8888-PAWS (7297) or email us at hello@thedogspahotel.ph. We’re happy to help!";
 } else if (text.includes("package") || text.includes("packages") || text.includes("bundle") || text.includes("deal")) {
-    botMsg.textContent = "Here are our pet care packages:\n\n🐶 **Basic Spa Package (₱500)**\n- Bath & Blow-dry\n- Nail Clipping\n- Ear Cleaning\n\n🐾 **Deluxe Spa Package (₱800)**\n- All from Basic\n- Haircut & Styling\n- De-shedding treatment\n\n🏨 **Overnight Stay Package (₱800/night)**\n- Standard Suite\n- Daily updates\n- Clean bedding and food bowls\n\n🌟 **Premium Stay + Grooming (₱1,500/night)**\n- Deluxe Suite\n- Full Grooming on check-out\n- 24/7 pet monitoring\n\nLet us know if you'd like to reserve a package or need help choosing!";
+    botMsg.textContent = 
+        "📦 Here are our pet care packages:\n\n" +
+        "🐶 Basic Spa Package — ₱500\n" +
+        "• Bath & Blow-dry\n" +
+        "• Nail Clipping\n" +
+        "• Ear Cleaning\n\n" +
+        "🐾 Deluxe Spa Package — ₱800\n" +
+        "• Includes Basic Spa Package\n" +
+        "• Haircut & Styling\n" +
+        "• De-shedding Treatment\n\n" +
+        "🏨 Overnight Stay — ₱800/night\n" +
+        "• Standard Suite\n" +
+        "• Daily Updates\n" +
+        "• Clean Bedding & Food Bowls\n\n" +
+        "🌟 Premium Stay + Grooming — ₱1,500/night\n" +
+        "• Deluxe Suite\n" +
+        "• Full Grooming on Check-out\n" +
+        "• 24/7 Pet Monitoring\n\n" +
+        "Would you like to reserve any of these? 😊";
 } else {
     botMsg.textContent = "Hi! This is The Dog Spa & Hotel 🐶🐾 How can we assist you and your pet today?";
 }
