@@ -17,24 +17,21 @@
     }
 
     body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #f9f6f1;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      height: 100vh;
-      overflow: hidden;
-    }
+  margin: 0;
+  padding: 0;
+  background-color: #f9f6f1;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
 
     .phone-container {
-      width: 100vw;
-      height: 100vh;
-      background-color: #f9f6f1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-    }
+  min-height: 100vh;
+  background-color: #f9f6f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 80px; /* space for nav */
+}
 
     .app-header {
       width: 100%;
@@ -83,14 +80,14 @@
     }
 
     .logs-container {
-      padding: 20px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 95%;
-      height: auto; /* Was: 50vh */
-      max-height: none;
-      overflow-y: visible; /* Was: auto */
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 95%;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 55vh; /* Adjust as needed */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 
@@ -129,16 +126,19 @@
     }
 
     .bottom-nav {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      background: #002244;
-      padding: 15px 0;
-      color: white;
-      width: 100%;
-      position: absolute;
-      bottom: 0;
-    }
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #002244;
+  padding: 15px 0;
+  color: white;
+  width: 100%;
+  position: fixed; /* sticky at the bottom */
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+}
+
 
     .nav-item {
       text-align: center;
