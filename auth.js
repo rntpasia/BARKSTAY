@@ -108,8 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("📝 Registration logged.");
       }
 
-      alert("✅ Registration successful! Check your email for verification.");
-      alert("Please verify your email before logging in.");
+      alert("Registration successful!");
+    
       window.location.href = "pet-attribute.html";
 
     } catch (err) {
