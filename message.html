@@ -170,97 +170,114 @@
     </style>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="chat-header">
-            <div class="chat-user">
-                <a href="Chat.html" class="back-button">←</a>
-                <div class="chat-avatar">H</div>
-                <div class="chat-username">The Dog Spa & Hotel</div>
-            </div>
-            <div class="call-icon">📞</div>
-        </div>
-        
-        <div class="chat-area" id="chat-area">
-            <div class="hotel-message message">Hello! Welcome to our hotel. How can I assist you today?</div>
-        </div>
-        
-        <div class="input-area">
-            <input type="file" id="file-input" style="display: none;">
-            <div class="file-button" onclick="document.getElementById('file-input').click();">➕</div>
-            <input type="text" class="chat-input" id="message-input" placeholder="Type a message...">
-            <div class="send-button" id="send-button">➤</div>
-        </div>
+   <!-- Chat Container -->
+  <div class="chat-container">
+
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-user">
+        <a href="chat.html" class="back-button">←</a>
+        <div class="chat-avatar">H</div>
+        <div class="chat-username">Loading...</div>
+      </div>
+      <div class="call-icon">📞</div>
     </div>
-    
 
-<script>
-    function sendMessage() {
-        const inputField = document.getElementById("message-input");
-        const messageText = inputField.value.trim();
-        if (messageText === "") return;
+    <!-- Chat Area -->
+    <div class="chat-area" id="chat-area">
+      <div class="hotel-message message">Hello! Welcome to our hotel. How can I assist you today?</div>
+    </div>
 
-        const chatArea = document.getElementById("chat-area");
+    <!-- Input Area -->
+    <div class="input-area">
+      <input type="file" id="file-input" style="display: none;">
+      <div class="file-button" onclick="document.getElementById('file-input').click();">➕</div>
+      <input type="text" class="chat-input" id="message-input" placeholder="Type a message...">
+      <div class="send-button" id="send-button">➤</div>
+    </div>
 
-        // Show user message
-        const userMsg = document.createElement("div");
-        userMsg.classList.add("user-message", "message");
-        userMsg.textContent = messageText;
-        chatArea.appendChild(userMsg);
-        chatArea.scrollTop = chatArea.scrollHeight;
-        inputField.value = "";
+  </div>
 
-        setTimeout(() => {
-            const botMsg = document.createElement("div");
-            botMsg.classList.add("hotel-message", "message");
-
-            const text = messageText.toLowerCase();
-
-
-            if (text.includes("book") || text.includes("reserve") || text.includes("booking") || text.includes("yes")) {
-    botMsg.textContent = "To book a pet suite, please visit our homepage and use the booking form. 🐾";
-} else if (text.includes("grooming") || text.includes("groom") || text.includes("bath") || text.includes("nail") || text.includes("spa")) {
-    botMsg.textContent = "Yes! We offer full-service grooming including bath, blow-dry, haircut, nail trimming, and ear cleaning. Prices start at ₱500 depending on your pet’s size and coat type. Would you like to schedule an appointment?";
-} else if (text.includes("available") || text.includes("room") || text.includes("suite") || text.includes("accommodation")) {
-    botMsg.textContent = "Yes! We currently have both deluxe and standard pet suites available. Would you like to book one?";
-} else if (text.includes("check-in") || text.includes("checkin") || text.includes("time") || text.includes("open")) {
-    botMsg.textContent = "Check-in is available daily from 8 AM to 6 PM. Early drop-offs can be arranged — just let us know!";
-} else if (text.includes("location") || text.includes("where") || text.includes("address") || text.includes("find")) {
-    botMsg.textContent = "The Dog Spa & Hotel is located along Makati Ave, near Century City Mall. We’re excited to welcome you!";
-} else if (text.includes("price") || text.includes("rate") || text.includes("cost") || text.includes("fee")) {
-    botMsg.textContent = "Our rates start at ₱800/night for standard suites. Grooming starts at ₱500. Let us know what service you need!";
-} else if (text.includes("contact") || text.includes("phone") || text.includes("email") || text.includes("number") || text.includes("reach")) {
-    botMsg.textContent = "📞 You can reach us at (02) 8888-PAWS (7297) or email us at hello@thedogspahotel.ph. We’re happy to help!";
-} else if (text.includes("package") || text.includes("packages") || text.includes("bundle") || text.includes("deal")) {
-    botMsg.textContent = 
-        "📦 Here are our pet care packages:\n\n" +
-        "🐶 Basic Spa Package — ₱500\n" +
-        "• Bath & Blow-dry\n" +
-        "• Nail Clipping\n" +
-        "• Ear Cleaning\n\n" +
-        "🐾 Deluxe Spa Package — ₱800\n" +
-        "• Includes Basic Spa Package\n" +
-        "• Haircut & Styling\n" +
-        "• De-shedding Treatment\n\n" +
-        "🏨 Overnight Stay — ₱800/night\n" +
-        "• Standard Suite\n" +
-        "• Daily Updates\n" +
-        "• Clean Bedding & Food Bowls\n\n" +
-        "🌟 Premium Stay + Grooming — ₱1,500/night\n" +
-        "• Deluxe Suite\n" +
-        "• Full Grooming on Check-out\n" +
-        "• 24/7 Pet Monitoring\n\n" +
-        "Would you like to reserve any of these? 😊";
-} else {
-    botMsg.textContent = "Hi! This is The Dog Spa & Hotel 🐶🐾 How can we assist you and your pet today?";
-}
-
-            chatArea.appendChild(botMsg);
-            chatArea.scrollTop = chatArea.scrollHeight;
-        }, 600);
+  <!-- Scripts -->
+  <script>
+    // Set hotel name from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const hotelName = urlParams.get('hotel_name');
+    if (hotelName) {
+      document.querySelector('.chat-username').textContent = decodeURIComponent(hotelName);
     }
 
+    // Send message logic
+    function sendMessage() {
+      const inputField = document.getElementById("message-input");
+      const messageText = inputField.value.trim();
+      if (messageText === "") return;
+
+      const chatArea = document.getElementById("chat-area");
+
+      // Append user message
+      const userMsg = document.createElement("div");
+      userMsg.classList.add("user-message", "message");
+      userMsg.textContent = messageText;
+      chatArea.appendChild(userMsg);
+      chatArea.scrollTop = chatArea.scrollHeight;
+      inputField.value = "";
+
+      // Bot reply after delay
+      setTimeout(() => {
+        const botMsg = document.createElement("div");
+        botMsg.classList.add("hotel-message", "message");
+        const text = messageText.toLowerCase();
+
+        if (text.includes("book") || text.includes("reserve") || text.includes("booking") || text.includes("yes")) {
+          botMsg.textContent = "To book a pet suite, please visit our homepage and use the booking form. 🐾";
+        } else if (text.includes("grooming") || text.includes("groom") || text.includes("bath") || text.includes("nail") || text.includes("spa")) {
+          botMsg.textContent = "Yes! We offer full-service grooming including bath, blow-dry, haircut, nail trimming, and ear cleaning. Prices start at ₱500 depending on your pet’s size and coat type. Would you like to schedule an appointment?";
+        } else if (text.includes("available") || text.includes("room") || text.includes("suite") || text.includes("accommodation")) {
+          botMsg.textContent = "Yes! We currently have both deluxe and standard pet suites available. Would you like to book one?";
+        } else if (text.includes("check-in") || text.includes("checkin") || text.includes("time") || text.includes("open")) {
+          botMsg.textContent = "Check-in is available daily from 8 AM to 6 PM. Early drop-offs can be arranged — just let us know!";
+        } else if (text.includes("location") || text.includes("where") || text.includes("address") || text.includes("find")) {
+          botMsg.textContent = "The Dog Spa & Hotel is located along Makati Ave, near Century City Mall. We’re excited to welcome you!";
+        } else if (text.includes("price") || text.includes("rate") || text.includes("cost") || text.includes("fee") || text.includes("much")) {
+          botMsg.textContent = "Our rates start at ₱800/night for standard suites. Grooming starts at ₱500. Let us know what service you need!";
+        } else if (text.includes("contact") || text.includes("phone") || text.includes("email") || text.includes("number") || text.includes("reach")) {
+          botMsg.textContent = "📞 You can reach us at (02) 8888-PAWS (7297) or email us at hello@thedogspahotel.ph. We’re happy to help!";
+        } else if (text.includes("package") || text.includes("packages") || text.includes("bundle") || text.includes("deal")) {
+          botMsg.innerText = 
+            "📦 Pet Care Packages:\n\n" +
+            "🐶 Basic Spa Package — ₱500\n" +
+            "• Bath & Blow-dry\n" +
+            "• Nail Clipping\n" +
+            "• Ear Cleaning\n\n" +
+            "🐾 Deluxe Spa Package — ₱800\n" +
+            "• Includes Basic Spa Package\n" +
+            "• Haircut & Styling\n" +
+            "• De-shedding Treatment\n\n" +
+            "🏨 Overnight Stay — ₱800/night\n" +
+            "• Standard Suite\n" +
+            "• Daily Updates\n" +
+            "• Clean Bedding & Food Bowls\n\n" +
+            "🌟 Premium Stay + Grooming — ₱1,500/night\n" +
+            "• Deluxe Suite\n" +
+            "• Full Grooming on Check-out\n" +
+            "• 24/7 Pet Monitoring\n\n" +
+            "Would you like to reserve any of these? 😊";
+        } else {
+          botMsg.textContent = "Hi!🐶🐾 How can we assist you and your pet today?";
+        }
+
+        chatArea.appendChild(botMsg);
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }, 600);
+    }
+
+    // Event listeners
     document.getElementById("send-button").addEventListener("click", sendMessage);
-    document.getElementById("message-input").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") sendMessage();
+    document.getElementById("message-input").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") sendMessage();
     });
-</script>
+  </script>
+
+</body>
+</html>
