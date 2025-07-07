@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       console.log("Attempting to register user...");
 
-      // Step 1: Register in Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
@@ -74,7 +73,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const userId = authData.user.id;
       console.log("User registered:", userId);
 
-      // Step 2: Insert into 'users' table
+      localStorage.setItem('user_id', userId);
+      localStorage.setItem('user_email', email);
+      localStorage.setItem('user_name', name);
+      console.log("✅ User data stored in localStorage");
+
       const { error: dbError } = await supabase.from("users").upsert(
         [{
           auth_id: userId,
@@ -92,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Step 3: Insert into 'logs' table
       const { error: logError } = await supabase.from("logs").insert([
         {
           action_type: "register",
@@ -108,6 +110,9 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("📝 Registration logged.");
       }
 
+      alert("✅ Registration successful!");
+      
+      window.location.href = `pet-attribute.html?user_id=${userId}`;
       alert("Registration successful!");
     
       window.location.href = "pet-attribute.html";
@@ -118,26 +123,99 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Login
   async function loginUser() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
     try {
+      console.log("Attempting to login user...");
+      
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      
       if (error) {
+        console.error("❌ Login error:", error);
         alert("❌ Login failed: " + error.message);
         return;
       }
 
+      if (!data?.user) {
+        alert("❌ Login failed. Please try again.");
+        return;
+      }
+
+      const userId = data.user.id;
+      const userEmail = data.user.email;
+      
+      console.log("✅ User logged in successfully:", userId);
+
+      localStorage.setItem('user_id', userId);
+      localStorage.setItem('user_email', userEmail);
+      
+      try {
+        const { data: userData, error: userError } = await supabase
+          .from('users')
+          .select('name, phone_number, dob')
+          .eq('auth_id', userId)
+          .single();
+
+        if (userData) {
+          localStorage.setItem('user_name', userData.name || '');
+          localStorage.setItem('user_phone', userData.phone_number || '');
+          localStorage.setItem('user_dob', userData.dob || '');
+          console.log("✅ User details stored in localStorage");
+        }
+      } catch (fetchError) {
+        console.log("⚠️ Could not fetch user details:", fetchError);
+      }
+
+      try {
+        const { error: logError } = await supabase.from("logs").insert([
+          {
+            action_type: "login",
+            description: `User logged in with email: ${userEmail}`,
+            user_id: userId,
+            timestamp: new Date().toISOString(),
+          }
+        ]);
+
+        if (logError) {
+          console.error("⚠️ Log insert failed:", logError);
+        } else {
+          console.log("📝 Login logged.");
+        }
+      } catch (logError) {
+        console.log("⚠️ Could not log login action:", logError);
+      }
+
       alert("✅ Login successful!");
-      window.location.href = "home.html";
+      
+      window.location.href = `home.html?user_id=${userId}`;
 
     } catch (err) {
       console.error("❌ Login error:", err);
       alert(`Error: ${err.message}`);
     }
   }
+
+  async function checkAuthStatus() {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        console.log("✅ User is already logged in:", user.id);
+        localStorage.setItem('user_id', user.id);
+        localStorage.setItem('user_email', user.email);
+        return user;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error("❌ Error checking auth status:", error);
+      return null;
+    }
+  }
+
+  checkAuthStatus();
 
   // Attach events only if elements exist
   const registerForm = document.getElementById("register-form");

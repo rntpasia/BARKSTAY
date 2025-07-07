@@ -190,20 +190,61 @@
     </div>
 
     <div class="button-container">
-      <a href="bookinghistory.html" class="button">
+      <button class="button" onclick="navigateTo('bookinghistory.html')">
         <i class="fas fa-history"></i>
         View My Bookings
-      </a>
-      <a href="home.html" class="button secondary">
+      </button>
+      <button class="button secondary" onclick="navigateTo('home.html')">
         <i class="fas fa-home"></i>
         Back to Home
-      </a>
+      </button>
     </div>
 
     <div class="countdown">
       <span class="loading-dots">Redirecting to your bookings in <span id="countdown">5</span> seconds</span>
     </div>
   </div>
+
+  <script>
+    function navigateTo(page) {
+        console.log('navigateTo called with page:', page);
+        
+        let userId = localStorage.getItem('user_id');
+        
+        if (!userId) {
+            const urlParams = new URLSearchParams(window.location.search);
+            userId = urlParams.get('user_id');
+        }
+        
+        // For testing purposes
+        if (!userId) {
+            userId = '8d93db2c-304c-45e1-94e0-53af23c9dbc2'; 
+            localStorage.setItem('user_id', userId); 
+            console.log('No user_id found, using default test ID:', userId);
+        }
+        
+        console.log('Final user_id:', userId);
+        
+        if (userId) {
+            const baseUrl = window.location.origin + window.location.pathname.replace(/[^\/]+$/, '');
+            const fullUrl = baseUrl + page + '?user_id=' + encodeURIComponent(userId);
+            console.log('Navigating to:', fullUrl);
+            window.location.href = fullUrl;
+        } else {
+            console.log('No user_id found, navigating without parameter');
+            window.location.href = page;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        if (!localStorage.getItem('user_id')) {
+            localStorage.setItem('user_id', '8d93db2c-304c-45e1-94e0-53af23c9dbc2');
+        }
+        
+        console.log('Current user_id:', localStorage.getItem('user_id'));
+        console.log('Current URL:', window.location.href);
+    });
+  </script>
 
   <script type="module">
     import { supabase } from './supabase.js';
@@ -212,7 +253,6 @@
     const urlParams = new URLSearchParams(window.location.search);
     const bookingId = urlParams.get('booking_id') || urlParams.get('session_id');
 
-    // Countdown and redirect functionality
     // Countdown and redirect functionality
     let countdownSeconds = 5;
     const countdownElement = document.getElementById('countdown');
@@ -223,13 +263,9 @@
 
       if (countdownSeconds <= 0) {
         clearInterval(countdownInterval);
-        window.location.href = `bookinghistory.html?user_id=${encodeURIComponent(userId)}`;
+        navigateTo('bookinghistory.html');
       }
     }, 1000);
-
-    // Set View My Bookings button href dynamically
-    document.getElementById('viewBookingsBtn').href = `bookinghistory.html?user_id=${encodeURIComponent(userId)}`;
-
 
     // Load booking details if we have a booking ID
     async function loadBookingDetails() {
@@ -347,7 +383,6 @@
       sendConfirmationNotification();
     } else {
       console.warn('No user ID found, redirecting to login');
-
     }
 
     document.addEventListener('click', () => {

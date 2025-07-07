@@ -4,310 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking History - BARK & STAY</title>
+    
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="bookinghistory.css">   
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-            padding-bottom: 80px;
-        }
-
-        .navbar {
-            background-color: #002244;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }
-
-        .app-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-        }
-
-        .app-header h1 {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .back-button {
-            color: white;
-            text-decoration: none;
-            font-size: 24px;
-            font-weight: bold;
-            padding: 5px 10px;
-        }
-
-        .settings-container {
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .page-title {
-            margin-top: 80px;
-            padding: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            text-align: center;
-            color: #002244;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-            font-size: 18px;
-        }
-
-        .fa-spinner {
-            margin-right: 10px;
-        }
-
-        .no-bookings {
-            text-align: center;
-            padding: 60px 20px;
-            color: #666;
-        }
-
-        .no-bookings i {
-            font-size: 64px;
-            margin-bottom: 20px;
-            color: #ccc;
-        }
-
-        .no-bookings h3 {
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .booking-card {
-            background: white;
-            margin: 15px 20px;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border-left: 4px solid #002244;
-        }
-
-        .booking-id {
-            font-size: 12px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .booking-hotel {
-            font-size: 20px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .booking-dates, .booking-details {
-            display: flex;
-            justify-content: space-between;
-            margin: 8px 0;
-            padding: 5px 0;
-        }
-
-        .date-label {
-            font-size: 12px;
-            color: #666;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .status-container {
-            margin: 15px 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        .status-button {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .status-ongoing { background-color: #28a745; color: white; }
-        .status-completed { background-color: #6c757d; color: white; }
-        .status-cancelled { background-color: #dc3545; color: white; }
-        .status-pending { background-color: #ffc107; color: #333; }
-        .status-refund-requested { background-color: #fd7e14; color: white; }
-
-        .booking-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .action-btn {
-            flex: 1;
-            min-width: 120px;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .chat-btn { background-color: #002244; color: white; }
-        .refund-btn { background-color: #fd7e14; color: white; }
-        .view-btn { background-color: #28a745; color: white; }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
         .modal {
             display: none;
             position: fixed;
-            z-index: 2000;
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
         }
-
+        
         .modal-content {
             background-color: white;
             padding: 20px;
             border-radius: 12px;
             width: 90%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
         }
-
-        .modal-content h3 {
-            margin-bottom: 15px;
+        
+        .refund-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .form-group label {
+            font-weight: bold;
             color: #333;
         }
-
-        .modal-content p {
-            margin-bottom: 20px;
-            color: #666;
-            line-height: 1.5;
+        
+        .form-group select,
+        .form-group textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
         }
-
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .refund-amount {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
         .modal-buttons {
             display: flex;
             gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
         }
-
+        
         .modal-btn {
-            flex: 1;
-            padding: 12px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
+            cursor: pointer;
             font-weight: bold;
-            cursor: pointer;
         }
-
-        .confirm-btn { background-color: #fd7e14; color: white; }
-        .cancel-modal-btn { background-color: #6c757d; color: white; }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
+        
+        .confirm-btn {
+            background-color: #ff6b6b;
+            color: white;
         }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 8px;
-            cursor: pointer;
-            color: #666;
-            transition: color 0.3s ease;
+        
+        .cancel-modal-btn {
+            background-color: #ccc;
+            color: #333;
         }
-
-        .nav-item:hover, .nav-item.active {
-            color: #8B4513;
-        }
-
-        .nav-item i {
-            font-size: 20px;
-            margin-bottom: 4px;
-        }
-
-        .nav-item span {
-            font-size: 12px;
-        }
-
-        .error-message {
-            color: #dc3545;
+        
+        .loading-spinner {
+            display: none;
             text-align: center;
             padding: 20px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            border-radius: 6px;
-            margin: 20px;
         }
-
-        @media (max-width: 480px) {
-            .booking-actions {
-                flex-direction: column;
-            }
-            
-            .action-btn {
-                min-width: auto;
-            }
+        
+        .error-message {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .success-message {
+            color: #4caf50;
+            font-size: 14px;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <div class="app-header">
-            <h1 onclick="window.location.href='home.html'" style="cursor: pointer;">BARK & STAY</h1>
-            <div class="settings-container" onclick="navigateTo('settings.html')">
-                <i class="fa fa-gear" href="settings.html" style="color:white"></i>
-            </div>
-        </div>
-        <a href="manage.html" class="back-button">←</a>
+    <div class="app-header">
+      <h1 onclick="window.location.href='home.html'" style="cursor: pointer;">BARK & STAY</h1>
+      <div class="settings-container" onclick="navigateTo('settings.html')">
+        <i class="fa fa-gear" style="color:white"></i>
+      </div>
     </div>
-    
+    </div>
+    <h1 style="margin-top: 15px;"> Booking History</h1>
     <div class="page-title">Booking History</div>
     
     <div id="loading" class="loading">
@@ -315,7 +132,6 @@
     </div>
     
     <div id="bookings-container">
-
     </div>
 
     <div id="no-bookings" class="no-bookings" style="display: none;">
@@ -327,13 +143,43 @@
         </button>
     </div>
     
-    <!-- Refund Modal -->
-    <div id="refundModal" class="modal" style="display: none;">
+    <!-- Enhanced Refund Modal -->
+    <div id="refundModal" class="modal">
         <div class="modal-content">
             <h3>Request Refund</h3>
-            <p>Would you like to request a refund for this booking? We'll process your request within 3-5 business days.</p>
+            <div class="refund-form">
+                <div class="refund-amount" id="refundAmount">
+                    Refund Amount: ₱0
+                </div>
+                
+                <div class="form-group">
+                    <label for="refundReason">Reason for Refund *</label>
+                    <select id="refundReason" required>
+                        <option value="">Select a reason</option>
+                        <option value="change_of_plans">Change of Plans</option>
+                        <option value="emergency">Emergency</option>
+                        <option value="hotel_issues">Hotel Issues</option>
+                        <option value="pet_health">Pet Health Issues</option>
+                        <option value="duplicate_booking">Duplicate Booking</option>
+                        <option value="unsatisfactory_service">Unsatisfactory Service</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="refundNotes">Additional Notes (Optional)</label>
+                    <textarea id="refundNotes" placeholder="Please provide any additional details about your refund request..."></textarea>
+                </div>
+                
+                <div id="refundMessage" class="error-message" style="display: none;"></div>
+                
+                <div class="loading-spinner" id="refundLoading">
+                    <i class="fas fa-spinner fa-spin"></i> Processing your refund request...
+                </div>
+            </div>
+            
             <div class="modal-buttons">
-                <button id="confirmRefund" class="modal-btn confirm-btn">Request Refund</button>
+                <button id="confirmRefund" class="modal-btn confirm-btn">Submit Refund Request</button>
                 <button id="refundModalClose" class="modal-btn cancel-modal-btn">Cancel</button>
             </div>
         </div>
@@ -368,23 +214,25 @@ function navigateTo(page) {
     window.location.href = page;
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const currentPage = window.location.pathname.split("/").pop();
-    const navItems = document.querySelectorAll(".nav-item");
-
-    navItems.forEach(item => {
-        const onclickAttr = item.getAttribute("onclick");
-        if (onclickAttr && onclickAttr.includes(currentPage)) {
-            item.classList.add("active");
-        } 
-    });
-});
-
 // Modal functionality
 let currentBookingId = null;
+let currentBookingData = null;
 
-function showRefundModal(bookingId) {
+function showRefundModal(bookingId, bookingData) {
     currentBookingId = bookingId;
+    currentBookingData = bookingData;
+    
+    // Set refund amount
+    const refundAmountElement = document.getElementById('refundAmount');
+    if (refundAmountElement && bookingData.total_amount) {
+        refundAmountElement.textContent = `Refund Amount: ₱${parseFloat(bookingData.total_amount).toLocaleString()}`;
+    }
+    
+    // Reset form
+    document.getElementById('refundReason').value = '';
+    document.getElementById('refundNotes').value = '';
+    document.getElementById('refundMessage').style.display = 'none';
+    
     const modal = document.getElementById('refundModal');
     if (modal) {
         modal.style.display = 'flex';
@@ -397,6 +245,14 @@ function closeRefundModal() {
         modal.style.display = 'none';
     }
     currentBookingId = null;
+    currentBookingData = null;
+}
+
+function showMessage(message, isError = false) {
+    const messageElement = document.getElementById('refundMessage');
+    messageElement.textContent = message;
+    messageElement.className = isError ? 'error-message' : 'success-message';
+    messageElement.style.display = 'block';
 }
 
 function openChat(hotelName, bookingId) {
@@ -496,6 +352,22 @@ async function loadBookings() {
             return;
         }
 
+        // Load refund requests to check status
+        const { data: refundRequests } = await supabase
+            .from('refund_requests')
+            .select('booking_id, status, admin_notes')
+            .eq('user_id', userId);
+
+        const refundStatusMap = {};
+            if (refundRequests) {
+                refundRequests.forEach(req => {
+                    refundStatusMap[req.booking_id] = {
+                        status: req.status,
+                        admin_notes: req.admin_notes
+                    };
+                });
+            }
+
         const bookingsContainer = document.getElementById('bookings-container');
         if (!bookingsContainer) {
             console.error('Bookings container not found');
@@ -519,7 +391,6 @@ async function loadBookings() {
                 year: 'numeric' 
             });
             
-            // Format booking date
             const bookingDate = new Date(booking.booking_date).toLocaleDateString('en-US', { 
                 day: 'numeric', 
                 month: 'long', 
@@ -528,8 +399,10 @@ async function loadBookings() {
                 minute: '2-digit'
             });
 
-            // Determine status class and actions
-            const statusInfo = getStatusInfo(booking.payment_status);
+            const refundData = refundStatusMap[booking.bookings_id];
+            const effectiveStatus = refundData ? `refund_${refundData.status}` : booking.payment_status;
+
+            const statusInfo = getStatusInfo(effectiveStatus);
             const hotelName = booking.hotel?.hotel_name || 'Hotel Name Not Available';
             const hotelAddress = booking.hotel?.address || 'Address Not Available';
 
@@ -568,11 +441,18 @@ async function loadBookings() {
                 <div class="status-container">
                     <button class="status-button ${statusInfo.class}">${statusInfo.text.toUpperCase()}</button>
                 </div>
+                ${refundData && refundData.admin_notes && (refundData.status === 'approved' || refundData.status === 'rejected') ? 
+                    `<div class="admin-notes">
+                        <div class="date-label">ADMIN NOTES:</div>
+                        <div style="padding: 10px; background-color: #f5f5f5; border-radius: 8px; margin-top: 5px; font-size: 14px;">
+                            ${refundData.admin_notes}
+                        </div>
+                    </div>` : ''}
                 <div class="booking-actions">
                     <button class="action-btn chat-btn" onclick="openChat('${hotelName.replace(/'/g, "\\'")}', '${booking.bookings_id}')">
                         <i class="fas fa-comments"></i> Contact Hotel
                     </button>
-                    ${getActionButtons(booking.payment_status, booking.bookings_id)}
+                    ${getActionButtons(effectiveStatus, booking)}
                 </div>
             `;
 
@@ -603,25 +483,30 @@ function getStatusInfo(status) {
         case 'pending':
             return { class: 'status-pending', text: 'Pending' };
         case 'refund_requested':
+        case 'refund_pending':
             return { class: 'status-refund-requested', text: 'Refund Requested' };
+        case 'refund_approved':
+            return { class: 'status-refund-approved', text: 'Refund Approved' };
+        case 'refund_rejected':
+            return { class: 'status-refund-rejected', text: 'Refund Rejected' };
         default:
             return { class: 'status-pending', text: status };
     }
 }
 
-function getActionButtons(status, bookingId) {
+function getActionButtons(status, booking) {
     let buttons = '';
     const statusLower = status.toLowerCase();
     
-    console.log('Getting action buttons for status:', statusLower, 'booking:', bookingId);
+    console.log('Getting action buttons for status:', statusLower, 'booking:', booking.bookings_id);
     
-    if (statusLower === 'paid') {
-        // Show refund button for completed bookings
-        buttons += `<button class="action-btn refund-btn" onclick="showRefundModal('${bookingId}')">
+    if (statusLower === 'paid' || statusLower === 'completed') {
+        // Show refund button for paid/completed bookings
+        const bookingDataJson = JSON.stringify(booking).replace(/"/g, '&quot;');
+        buttons += `<button class="action-btn refund-btn" onclick="showRefundModal('${booking.bookings_id}', ${bookingDataJson})">
             <i class="fas fa-undo"></i> Request Refund
         </button>`;
     }
-    // For cancelled or refund_requested, no additional buttons
     
     console.log('Generated buttons:', buttons);
     return buttons;
@@ -629,25 +514,66 @@ function getActionButtons(status, bookingId) {
 
 // Handle refund request
 async function handleRefundRequest() {
-    if (!currentBookingId) return;
+    if (!currentBookingId || !currentBookingData) return;
+
+    const reason = document.getElementById('refundReason').value;
+    const notes = document.getElementById('refundNotes').value;
+    
+    if (!reason) {
+        showMessage('Please select a reason for the refund request.', true);
+        return;
+    }
+
+    const loadingElement = document.getElementById('refundLoading');
+    const submitButton = document.getElementById('confirmRefund');
+    
+    loadingElement.style.display = 'block';
+    submitButton.disabled = true;
 
     try {
-        const { error } = await supabase
+        const userId = getUserId();
+        
+        // Insert refund request
+        const { error: refundError } = await supabase
+            .from('refund_requests')
+            .insert({
+                booking_id: currentBookingId,
+                user_id: userId,
+                reason: reason,
+                notes: notes,
+                refund_amount: currentBookingData.total_amount,
+                status: 'pending'
+            });
+
+        if (refundError) {
+            console.error('Error creating refund request:', refundError);
+            showMessage('Failed to submit refund request. Please try again.', true);
+            return;
+        }
+
+        // Update booking status
+        const { error: updateError } = await supabase
             .from('bookings')
             .update({ payment_status: 'refund_requested' })
             .eq('bookings_id', currentBookingId);
 
-        if (error) {
-            console.error('Error requesting refund:', error);
-            alert('Failed to request refund. Please try again.');
-        } else {
-            alert('Refund request submitted successfully! We will process your request within 3-5 business days.');
-            closeRefundModal();
-            loadBookings(); // Reload bookings
+        if (updateError) {
+            console.error('Error updating booking status:', updateError);
         }
+
+        showMessage('Refund request submitted successfully! We will process your request within 3-5 business days.', false);
+        
+        setTimeout(() => {
+            closeRefundModal();
+            loadBookings();
+        }, 2000);
+
     } catch (error) {
-        console.error('Error requesting refund:', error);
-        alert('Failed to request refund. Please try again.');
+        console.error('Error submitting refund request:', error);
+        showMessage('Failed to submit refund request. Please try again.', true);
+    } finally {
+        loadingElement.style.display = 'none';
+        submitButton.disabled = false;
     }
 }
 
@@ -664,7 +590,6 @@ document.addEventListener('DOMContentLoaded', function() {
     loadBookings();
 });
 
-// Make functions globally available
 window.showRefundModal = showRefundModal;
 window.openChat = openChat;
     </script>

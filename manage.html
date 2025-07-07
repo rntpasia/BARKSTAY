@@ -228,9 +228,6 @@
     }
 
     </style>
-
-    <script>
-    </script>
 </head>
 <body>
     <div class="phone-container">
@@ -287,7 +284,6 @@
         </div>
     </div>
         <script>
-        // ✅ Updated navigateTo function that includes user_id
         function navigateTo(page) {
             const userId = localStorage.getItem('user_id');
             console.log('navigateTo called with page:', page);
@@ -305,7 +301,6 @@
             }
         }
 
-        // ✅ Highlight current nav-item based on page
         document.addEventListener("DOMContentLoaded", function () {
 
             const currentPage = window.location.pathname.split("/").pop(); 
@@ -317,7 +312,6 @@
                 }
             });
 
-            // Log current user_id for debugging
             console.log('Current user_id:', localStorage.getItem('user_id'));
         });
 
@@ -333,7 +327,67 @@
             }
         }
         </script>
+<script>
+function navigateTo(page) {
+    console.log('navigateTo called with page:', page);
+    
+    let userId = localStorage.getItem('user_id');
+    
+    if (!userId) {
+        const urlParams = new URLSearchParams(window.location.search);
+        userId = urlParams.get('user_id');
+    }
+    
+    // For testing purposes
+    if (!userId) {
+        userId = '8d93db2c-304c-45e1-94e0-53af23c9dbc2'; 
+        localStorage.setItem('user_id', userId); 
+        console.log('No user_id found, using default test ID:', userId);
+    }
+    
+    console.log('Final user_id:', userId);
+    
+    if (userId) {
+        const baseUrl = window.location.origin + window.location.pathname.replace(/[^\/]+$/, '');
+        const fullUrl = baseUrl + page + '?user_id=' + encodeURIComponent(userId);
+        console.log('Navigating to:', fullUrl);
+        window.location.href = fullUrl;
+    } else {
+        console.log('No user_id found, navigating without parameter');
+        window.location.href = page;
+    }
+}
 
+document.addEventListener("DOMContentLoaded", function () {
+    if (!localStorage.getItem('user_id')) {
+        localStorage.setItem('user_id', '8d93db2c-304c-45e1-94e0-53af23c9dbc2');
+    }
+    
+    const currentPage = window.location.pathname.split("/").pop(); 
+    const navItems = document.querySelectorAll(".nav-item");
+
+    navItems.forEach(item => {
+        if (item.getAttribute("onclick") && item.getAttribute("onclick").includes(currentPage)) {
+            item.classList.add("active");
+        }
+    });
+
+    console.log('Current user_id:', localStorage.getItem('user_id'));
+    console.log('Current URL:', window.location.href);
+});
+
+// ✅ Function to update profile image preview
+function updateProfileImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("profileImage").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+</script>
         <script type="module" src="manage.js" defer></script>
 </body>
 </html>
