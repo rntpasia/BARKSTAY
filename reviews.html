@@ -18,13 +18,20 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
     <script src="chatbotscript.js" defer></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: white;
+            box-sizing: border-box;
         }
-        
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            padding-bottom: 80px; /* Space for fixed bottom nav */
+        }
+
+        /* Header Styling */
         header {
             background-color: #0f172a;
             color: white;
@@ -32,173 +39,354 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
+
         .profile {
             display: flex;
             align-items: center;
         }
+
         .profile img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             margin-right: 10px;
         }
-        
-        .dashboard, .reviews {
-            background-color: white;
-            color: white;
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background-color: #ccc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .user-info .text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-info .text .bold {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .user-info .text span {
+            font-size: 14px;
+        }
+
+        /* Hotel Selector */
+        .hotel-selector {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            background: white;
             padding: 20px;
-            margin: 20px;
             border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        
-        .dashboard h2, .reviews h2 {
+
+        .hotel-selector h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .hotel-selector select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: white;
+        }
+
+        /* Reviews Section */
+        .reviews {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: #333;
+        }
+
+        .label-container {
             text-align: center;
-        }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        
-        .card {
+            margin-bottom: 30px;
             background-color: #002244;
-            color: white;
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s ease;
+            color: white;
         }
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Card Icons */
-        .card-icon {
-            font-size: 28px;
+
+        .label-container h2 {
+            color: white;
+            font-size: 2.5em;
             margin-bottom: 10px;
         }
-        
-        /* Enlarged & Bold Text for Specific Words */
-        .card p strong {
-             font-size: 24px;
-             font-weight: bold;
+
+        .hotel-name {
+            color: #B0C4DE;
+            font-size: 1.2em;
+            font-style: italic;
         }
-        
+
+        /* Review Grid */
         .review-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 15px;
+            gap: 30px;
+            margin-bottom: 30px;
         }
-        
+
         .review-column {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .review-card {
-            background-color: #002244;
-            color: white;
-            padding: 15px;
+            background: #f9f9f9;
+            padding: 20px;
             border-radius: 10px;
-            text-align: center;
-            width: 90%;
-            min-height: 120px;
+            border: 2px solid #e0e0e0;
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
         }
-        
+
+        .review-card {
+            background: #002244;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 100%;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
         .review-profile {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             width: 100%;
         }
-        
+
         .review-profile img {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             margin-right: 10px;
+            background-color: #ddd;
         }
-        
+
         .review-profile span {
             font-weight: bold;
+            color: white;
             font-size: 14px;
         }
-        
+
         .review-text {
+            color: #E0E0E0;
+            line-height: 1.6;
+            margin-bottom: 15px;
             flex-grow: 1;
             display: flex;
             align-items: center;
+            text-align: center;
+        }
+
+        .review-rating {
+            display: flex;
+            align-items: center;
             justify-content: center;
+            gap: 5px;
         }
-        
-        /* Star color styling */
-        .fa-star, .fa-star-o {
+
+        .review-rating .fa-star {
             color: gold;
-            margin-left: 5px;
         }
-        
-        /* Review navigation buttons */
+
+        .review-rating .fa-star-o {
+            color: #666;
+        }
+
+        /* Review Navigation Buttons */
         .review-buttons {
             display: flex;
             justify-content: center;
-            margin-top: 10px;
+            margin-top: 15px;
+            gap: 10px;
         }
-        
+
         .review-buttons button {
-             background-color: #002244;
-             border: none;
-             color: white;
-             font-size: 24px;
-             cursor: pointer;
-             margin: 0 5px;
-             width: 40px;
-             height: 40px;
-             border-radius: 50%;
-             display: flex;
-             align-items: center;
-             justify-content: center;
+            background-color: #002244;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
         }
-        
+
+        .review-buttons button:hover {
+            background-color: #003366;
+        }
+
+        .review-buttons button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Add Review Button */
         .review-btn {
             display: block;
             margin: 20px auto;
-            background-color: #002244;
+            padding: 15px 30px;
+            background: #002244;
             color: white;
-            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .review-btn:hover {
+            background: #003366;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .modal-content h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .stars i {
+            font-size: 30px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .stars i:hover,
+        .stars i.active {
+            color: gold;
+        }
+
+        .username-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .addareview-text {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            min-height: 100px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .cancel-btn {
+            padding: 10px 20px;
+            background: gray;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
-        
-        .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: #0A192F;
-    padding: 15px 0;
-    color: white;
-    width: 100%;
-    position: fixed; /* Change from absolute to fixed */
-    bottom: 0;
-    left: 0;
-    z-index: 1000; /* Ensure it stays above other elements */
-}
 
-/* Add padding-bottom to .container to avoid content getting hidden */
-.container {
-    padding-bottom: 80px; /* Adjust based on nav height */
-    overflow-y: auto;
-}
+        .submit-btn {
+            padding: 10px 20px;
+            background: #002244;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .no-reviews {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            grid-column: 1 / -1;
+            padding: 40px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #0A192F;
+            padding: 15px 0;
+            color: white;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+        }
 
         .nav-item {
             text-align: center;
@@ -210,74 +398,68 @@
             flex-direction: column;
             align-items: center;
         }
+
         .nav-item i {
             font-size: 24px;
             margin-bottom: 5px;
         }
+
         .nav-item.active {
             background: #B0C4DE;
             color: #0A192F;
             border-radius: 5px;
         }
-        .chat-header {
-            background: #0A192F;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+
+        /* Dashboard Cards */
+        .dashboard {
+            background-color: white;
+            color: #333;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .header-content {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-       
-        .user-info .text {
-    display: flex;
-    flex-direction: column;
-}
 
-.user-info .text .bold {
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.user-info .text span {
-    font-size: 14px;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-}
-
-.user-avatar {
-    width: 35px;
-    height: 35px;
-    background-color: #ccc;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    text-align: center;
-    margin-right: 10px;
-}
-
-        .label-container {
+        .dashboard h2 {
             text-align: center;
-            background-color: #002244;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            color: #333;
+            margin-bottom: 20px;
         }
 
-        .loading {
-            color: #ccc;
-            font-style: italic;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .card {
+            background-color: #002244;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .card p strong {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .count-display {
+            font-size: 16px;
+            margin-top: 5px;
+            opacity: 0.8;
         }
 
         .refresh-btn {
@@ -303,107 +485,53 @@
             margin-top: 10px;
         }
 
-        .count-display {
-            font-size: 16px;
-            margin-top: 5px;
-            opacity: 0.8;
+        .loading {
+            color: #ccc;
+            font-style: italic;
         }
 
-.modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-        }
-        .stars {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-        .stars i {
-            font-size: 24px;
-            color: gray;
-            cursor: pointer;
-        }
-        .stars i.active {
-            color: gold;
-        }
-        .review-text {
-            width: 100%;
-            height: 80px;
-            margin-bottom: 10px;
-        }
-        .modal-buttons {
-            display: flex;
-            justify-content: space-between;
-        }
-        .modal-buttons button {
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-        }
-        .submit-btn {
-            background-color: #002244;
-            color: white;
-            border-radius: 5px;
-        }
-        .cancel-btn {
-            background-color: gray;
-            color: white;
-            border-radius: 5px;
-        }
-        .review-btn {
-            display: block;
-            margin: 20px auto;
-            background-color: #002244;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        
+        /* Responsive Design */
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                padding-bottom: 80px;
+            }
+
             header {
                 flex-direction: column;
                 text-align: center;
                 padding: 15px;
             }
-            
-            .grid, .review-grid {
+
+            .review-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .reviews {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .dashboard {
+                margin: 15px;
+                padding: 20px;
+            }
+
             .review-card, .card {
-                width: 90%;
+                width: 100%;
                 max-width: 400px;
                 padding: 20px;
                 margin: 10px auto;
                 border-radius: 12px;
                 box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
             }
-            
-            .dashboard, .reviews {
-                margin: 15px;
-                padding: 20px;
-            }
-            
+
             .review-btn {
                 display: block;
                 width: 90%;
@@ -414,23 +542,29 @@
                 text-align: center;
             }
         }
-        
+
         @media (max-width: 480px) {
-            .nav {
+            .bottom-nav {
                 padding: 15px 0;
             }
-            
-            .nav button {
-                font-size: 14px;
+
+            .nav-item i {
+                font-size: 20px;
             }
-            
+
             .dashboard, .reviews {
                 margin: 10px;
                 padding: 15px;
             }
-            
+
             .review-card, .card {
                 padding: 15px;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+                padding: 20px;
             }
         }
     </style>
@@ -643,97 +777,507 @@
 </body>
 </html>
 
-<!-- Reviews Section -->
-<section class="reviews">
-    <div class="label-container">
-        <h2>Reviews</h2>
+<div class="hotel-selector">
+        <h3>Select Pet Hotel to View Reviews</h3>
+        <select id="hotelSelect" onchange="loadHotelReviews()">
+            <option value="">Choose a pet hotel...</option>
+            <option value="adorafur-happy-stay">Adorafur Happy Stay</option>
+            <option value="laras-ark">Lara's Ark</option>
+            <option value="dluxe-pet-hotel">Dluxe Pet Hotel and Spa</option>
+            <option value="hailys-pet-boarding">Haily's Pet Boarding</option>
+            <option value="pet-starz">Pet Starz</option>
+            <option value="paw-house-ph">Paw House PH</option>
+            <option value="mr-paws-ph">Mr. Paws PH</option>
+            <option value="happy-paws">Happy Paws</option>
+            <option value="my-pet-space">My Pet Space</option>
+            <option value="the-golden-fur">The Golden Fur</option>
+            <option value="abbys-paws-play">Abby's Paws n' Play</option>
+            <option value="amazing-pets">Amazing Pets</option>
+            <option value="paws-fur-white-plains">Paws and Fur White Plains</option>
+            <option value="snow-angels-pet-hub">Snow Angels Pet Hub</option>
+            <option value="elite-paws">Elite Paws</option>
+            <option value="furmont-pet-hotel">Furmont Pet Hotel</option>
+            <option value="barkin-bubbles">Barkin Bubbles</option>
+        </select>
     </div>
 
-    <div class="review-grid">
-        <!-- Column 1 -->
-        <div class="review-column">
-            <div class="review-card" id="review1-1">
-                <div class="review-profile">
-                    <img src="images/profile.jpg" alt="User 1">
-                    <span>@dogmom23</span>
-                </div>
-                <div class="review-text">The service was excellent <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-            </div>
-            <div class="review-card" id="review1-2">
-                <div class="review-profile">
-                    <img src="images/profile.jpg" alt="User 2">
-                    <span>@petlover</span>
-                </div>
-                <div class="review-text">Staff was friendly <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-            </div>
-            <div class="review-buttons">
-                <button onclick="prevReview(1)"><i class="fa fa-chevron-left"></i></button>
-                <button onclick="nextReview(1)"><i class="fa fa-chevron-right"></i></button>
-            </div>
+    <section class="reviews">
+        <div class="label-container">
+            <h2>Reviews</h2>
+            <div class="hotel-name" id="selectedHotelName">Please select a pet hotel to view reviews</div>
         </div>
-        <!-- Column 2 -->
-        <div class="review-column">
-            <div class="review-card" id="review2-1">
-                <div class="review-profile">
-                    <img src="images/profile.jpg" alt="User 3">
-                    <span>@barkbuddy</span>
-                </div>
-                <div class="review-text">Seems like my dog enjoyed her stay <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-            </div>
-            <div class="review-card" id="review2-2">
-                <div class="review-profile">
-                    <img src="images/profile.jpg" alt="User 4">
-                    <span>@pawsitive</span>
-                </div>
-                <div class="review-text">Clean environment <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-            </div>
-            <div class="review-buttons">
-                <button onclick="prevReview(2)"><i class="fa fa-chevron-left"></i></button>
-                <button onclick="nextReview(2)"><i class="fa fa-chevron-right"></i></button>
-            </div>
-        </div>
-        <!-- Column 3 -->
-        <div class="review-column">
-            <div class="review-card" id="review3-1">
-                <div class="review-profile">
-                    <img src="images/profile.jpg" alt="User 5">
-                    <span>@woofworld</span>
-                </div>
-                <div class="review-text">Great hotel service <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-            </div>
-            <div class="review-card" id="review3-2">
-                <div class="review-profile">
-                    <img src="images/profile.jpg" alt="User 6">
-                    <span>@furmom</span>
-                </div>
-                <div class="review-text">Highly recommended <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></div>
-            </div>
-            <div class="review-buttons">
-                <button onclick="prevReview(3)"><i class="fa fa-chevron-left"></i></button>
-                <button onclick="nextReview(3)"><i class="fa fa-chevron-right"></i></button>
-            </div>
-        </div>
-    </div>
-    <button class="review-btn" onclick="openReviewModal()">Add A Review</button>
 
-<div id="reviewModal" class="modal">
-    <div class="modal-content">
-        <h3>Leave a Review</h3>
-        <div class="stars">
-            <i class="fa fa-star" data-rating="1"></i>
-            <i class="fa fa-star" data-rating="2"></i>
-            <i class="fa fa-star" data-rating="3"></i>
-            <i class="fa fa-star" data-rating="4"></i>
-            <i class="fa fa-star" data-rating="5"></i>
+        <div class="review-grid" id="reviewGrid">
+            <div class="no-reviews">
+                <i class="fa fa-hotel" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
+                <p>Select a pet hotel above to view its reviews</p>
+            </div>
         </div>
-        <textarea class="addareview-text" placeholder="Write your review..."></textarea>
-        <div class="modal-buttons">
-            <button class="cancel-btn" onclick="closeReviewModal()">Cancel</button>
-            <button class="submit-btn" onclick="submitReview()">Submit</button>
+        
+        <button class="review-btn" onclick="openReviewModal()" id="addReviewBtn" style="display: none;">
+            <i class="fa fa-plus"></i> Add A Review
+        </button>
+    </section>
+
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <h3>Leave a Review</h3>
+            <input type="text" class="username-input" id="reviewUsername" placeholder="Enter your username (e.g., @username)">
+            <div class="stars" id="starRating">
+                <i class="fa fa-star" data-rating="1"></i>
+                <i class="fa fa-star" data-rating="2"></i>
+                <i class="fa fa-star" data-rating="3"></i>
+                <i class="fa fa-star" data-rating="4"></i>
+                <i class="fa fa-star" data-rating="5"></i>
+            </div>
+            <textarea class="addareview-text" id="reviewText" placeholder="Write your review..."></textarea>
+            <div class="modal-buttons">
+                <button class="cancel-btn" onclick="closeReviewModal()">Cancel</button>
+                <button class="submit-btn" onclick="submitReview()">Submit</button>
+            </div>
         </div>
     </div>
-</div>
-</section>
+
+    <script>
+        // Sample review data for different pet hotels
+        const hotelReviews = {
+            'adorafur-happy-stay': {
+                name: 'Adorafur Happy Stay',
+                reviews: [
+                    { username: '@dogmom23', text: 'My golden retriever had the best time here! Staff was so caring and attentive.', rating: 5 },
+                    { username: '@petlover88', text: 'Clean facilities and loving care for my cat. Highly recommend!', rating: 4 },
+                    { username: '@barkbuddy', text: 'Great play areas and my dog came home happy and tired. Perfect!', rating: 5 },
+                    { username: '@pawsitive_vibes', text: 'Professional staff and excellent facilities. My pet felt at home.', rating: 4 },
+                    { username: '@furry_friend', text: 'Amazing service and my dog received lots of love and attention.', rating: 5 },
+                    { username: '@tail_wagger', text: 'Safe environment and great care. Will definitely come back!', rating: 4 }
+                ]
+            },
+            'laras-ark': {
+                name: 'Lara\'s Ark',
+                reviews: [
+                    { username: '@animal_lover', text: 'Lara and her team are absolute angels! My pets are always excited to go there.', rating: 5 },
+                    { username: '@rescue_parent', text: 'They handle rescue pets with such patience and care. Truly special place.', rating: 5 },
+                    { username: '@multi_pet_home', text: 'Great with multiple pets from the same family. Very accommodating.', rating: 4 },
+                    { username: '@senior_pet_care', text: 'Excellent care for older pets. They understand special needs.', rating: 5 },
+                    { username: '@anxious_pet_mom', text: 'Helped my anxious dog feel comfortable. Very understanding staff.', rating: 4 },
+                    { username: '@first_time_boarding', text: 'Made our first boarding experience stress-free. Highly recommend!', rating: 5 }
+                ]
+            },
+            'dluxe-pet-hotel': {
+                name: 'Dluxe Pet Hotel and Spa',
+                reviews: [
+                    { username: '@luxury_pet_parent', text: 'True luxury for pets! The spa services are incredible and my dog looks amazing.', rating: 5 },
+                    { username: '@pampered_poodle', text: 'My poodle received the royal treatment. Grooming was top-notch!', rating: 5 },
+                    { username: '@spa_day_pets', text: 'Love the spa packages. My pets come home relaxed and beautiful.', rating: 4 },
+                    { username: '@show_dog_owner', text: 'Perfect for show dogs. Professional grooming and excellent care.', rating: 5 },
+                    { username: '@wellness_focused', text: 'Great wellness programs for pets. Very health-conscious approach.', rating: 4 },
+                    { username: '@luxury_experience', text: 'Worth every penny for the premium experience. My pets love it here.', rating: 5 }
+                ]
+            },
+            'hailys-pet-boarding': {
+                name: 'Haily\'s Pet Boarding',
+                reviews: [
+                    { username: '@working_parent', text: 'Reliable and trustworthy. Perfect for working parents who need regular boarding.', rating: 4 },
+                    { username: '@frequent_traveler', text: 'My go-to place for business trips. Consistent quality care every time.', rating: 5 },
+                    { username: '@budget_conscious', text: 'Great value for money. Quality care at reasonable prices.', rating: 4 },
+                    { username: '@local_resident', text: 'Convenient location and flexible hours. Very accommodating schedule.', rating: 4 },
+                    { username: '@small_dog_parent', text: 'Excellent with small breeds. They understand their specific needs.', rating: 5 },
+                    { username: '@regular_customer', text: 'Been coming here for years. Always consistent and reliable service.', rating: 4 }
+                ]
+            },
+            'pet-starz': {
+                name: 'Pet Starz',
+                reviews: [
+                    { username: '@active_dog_parent', text: 'Amazing play programs! My high-energy dog is always perfectly exercised.', rating: 5 },
+                    { username: '@socialization_seeker', text: 'Great for socializing pets. My shy dog has become much more confident.', rating: 4 },
+                    { username: '@puppy_parent', text: 'Excellent puppy programs. Great for early socialization and training.', rating: 5 },
+                    { username: '@exercise_focused', text: 'Perfect for dogs that need lots of physical activity. Great facilities.', rating: 4 },
+                    { username: '@playful_pets', text: 'My dogs have so much fun here. They get excited when we arrive!', rating: 5 },
+                    { username: '@energy_outlet', text: 'Fantastic for burning off excess energy. My pets sleep so well after.', rating: 4 }
+                ]
+            },
+            'paw-house-ph': {
+                name: 'Paw House PH',
+                reviews: [
+                    { username: '@pinoy_pet_parent', text: 'Understanding of Filipino pet culture. Staff speaks multiple languages.', rating: 4 },
+                    { username: '@local_community', text: 'Great community feel. They know all the regular pets by name.', rating: 5 },
+                    { username: '@cultural_understanding', text: 'Respects our cultural practices around pets. Very accommodating.', rating: 4 },
+                    { username: '@neighborhood_favorite', text: 'Favorite spot in our neighborhood. Always busy but well-managed.', rating: 4 },
+                    { username: '@family_business', text: 'Feels like family. They truly care about each pet individually.', rating: 5 },
+                    { username: '@community_support', text: 'Supports local pet community events. Very involved and caring.', rating: 4 }
+                ]
+            },
+            'mr-paws-ph': {
+                name: 'Mr. Paws PH',
+                reviews: [
+                    { username: '@cat_specialist', text: 'Excellent with cats! Finally found a place that understands feline needs.', rating: 5 },
+                    { username: '@mixed_pets', text: 'Great with both dogs and cats. Handle multi-pet families very well.', rating: 4 },
+                    { username: '@behavioral_issues', text: 'Skilled with pets that have behavioral challenges. Very patient staff.', rating: 5 },
+                    { username: '@special_needs', text: 'Wonderful with special needs pets. They go above and beyond.', rating: 4 },
+                    { username: '@professional_care', text: 'Very professional approach to pet care. Detailed reports and updates.', rating: 5 },
+                    { username: '@peace_of_mind', text: 'Complete peace of mind when leaving my pets here. Trustworthy team.', rating: 4 }
+                ]
+            },
+            'happy-paws': {
+                name: 'Happy Paws',
+                reviews: [
+                    { username: '@joyful_experience', text: 'Lives up to its name! My pets are always genuinely happy here.', rating: 5 },
+                    { username: '@positive_energy', text: 'Such positive energy from all the staff. My pets love the atmosphere.', rating: 4 },
+                    { username: '@cheerful_staff', text: 'Friendliest staff ever! They make drop-off and pickup so pleasant.', rating: 5 },
+                    { username: '@happy_pets', text: 'My pets\' tails are always wagging when I pick them up. Says it all!', rating: 5 },
+                    { username: '@uplifting_environment', text: 'Creates such a happy environment. Even anxious pets feel comfortable.', rating: 4 },
+                    { username: '@mood_booster', text: 'Visiting this place always boosts my mood. Happy staff, happy pets!', rating: 5 }
+                ]
+            },
+            'my-pet-space': {
+                name: 'My Pet Space',
+                reviews: [
+                    { username: '@personalized_care', text: 'Truly personalized care for each pet. They remember preferences and needs.', rating: 5 },
+                    { username: '@individual_attention', text: 'Great individual attention. My pet gets one-on-one time with staff.', rating: 4 },
+                    { username: '@customized_service', text: 'Customized services based on my pet\'s personality. Very thoughtful.', rating: 5 },
+                    { username: '@intimate_setting', text: 'Smaller, more intimate setting. Perfect for pets who need extra attention.', rating: 4 },
+                    { username: '@detailed_care', text: 'Very detailed care plans for each pet. Nothing is overlooked.', rating: 5 },
+                    { username: '@personal_touch', text: 'Personal touch in everything they do. Feels like a home away from home.', rating: 4 }
+                ]
+            },
+            'the-golden-fur': {
+                name: 'The Golden Fur',
+                reviews: [
+                    { username: '@golden_retriever_mom', text: 'Perfect for golden retrievers! They understand the breed so well.', rating: 5 },
+                    { username: '@large_breed_specialist', text: 'Excellent with large breeds. Proper facilities and experienced staff.', rating: 4 },
+                    { username: '@breed_knowledge', text: 'Staff has great breed-specific knowledge. Very educational experience.', rating: 5 },
+                    { username: '@premium_service', text: 'Premium service that justifies the cost. High-quality care throughout.', rating: 4 },
+                    { username: '@experienced_handlers', text: 'Very experienced dog handlers. Professional and confident with all sizes.', rating: 5 },
+                    { username: '@breed_enthusiast', text: 'Clear breed enthusiasts who truly understand different dog personalities.', rating: 4 }
+                ]
+            },
+            'abbys-paws-play': {
+                name: 'Abby\'s Paws n\' Play',
+                reviews: [
+                    { username: '@playful_pups', text: 'Best play facilities! My dogs have endless fun in the play areas.', rating: 5 },
+                    { username: '@interactive_play', text: 'Great interactive play sessions. Staff actively engages with the pets.', rating: 4 },
+                    { username: '@socialization_expert', text: 'Excellent at pet socialization. My dog has made so many friends!', rating: 5 },
+                    { username: '@play_based_care', text: 'Love the play-based approach to pet care. Keeps pets mentally stimulated.', rating: 4 },
+                    { username: '@fun_atmosphere', text: 'Such a fun atmosphere! Even I enjoy dropping off my pets here.', rating: 5 },
+                    { username: '@active_environment', text: 'Perfect for active dogs. They have structured play times and activities.', rating: 4 }
+                ]
+            },
+            'amazing-pets': {
+                name: 'Amazing Pets',
+                reviews: [
+                    { username: '@exceeded_expectations', text: 'Truly amazing service that exceeded all my expectations. Fantastic care!', rating: 5 },
+                    { username: '@comprehensive_care', text: 'Comprehensive pet care services. Everything you need in one place.', rating: 4 },
+                    { username: '@professional_team', text: 'Professional team that handles everything with expertise and care.', rating: 5 },
+                    { username: '@full_service', text: 'Full-service facility with boarding, grooming, and health services.', rating: 4 },
+                    { username: '@quality_assurance', text: 'Consistent quality in all services. You can always count on them.', rating: 5 },
+                    { username: '@outstanding_service', text: 'Outstanding service from start to finish. Highly professional operation.', rating: 4 }
+                ]
+            },
+            'paws-fur-white-plains': {
+                name: 'Paws and Fur White Plains',
+                reviews: [
+                    { username: '@white_plains_resident', text: 'Convenient location in White Plains. Easy access and great parking.', rating: 4 },
+                    { username: '@local_favorite', text: 'Local favorite that delivers consistent quality. Part of the community.', rating: 5 },
+                    { username: '@accessible_location', text: 'Very accessible location with good facilities. Well-maintained premises.', rating: 4 },
+                    { username: '@community_focused', text: 'Focused on the local community needs. They understand the area well.', rating: 4 },
+                    { username: '@established_business', text: 'Well-established business with good reputation in White Plains.', rating: 5 },
+                    { username: '@neighborhood_gem', text: 'Hidden gem in the neighborhood. Glad to have discovered this place.', rating: 4 }
+                ]
+            },
+            'snow-angels-pet-hub': {
+                name: 'Snow Angels Pet Hub',
+                reviews: [
+                    { username: '@angelic_care', text: 'Angelic care for pets! Staff treats each animal like their own.', rating: 5 },
+                    { username: '@heavenly_service', text: 'Heavenly service that makes you feel blessed to have found them.', rating: 4 },
+                    { username: '@caring_angels', text: 'The staff are truly caring angels. So gentle and loving with pets.', rating: 5 },
+                    { username: '@divine_treatment', text: 'Divine treatment for pets. They receive love and care beyond expectations.', rating: 4 },
+                    { username: '@blessed_experience', text: 'Blessed to have found this place. My pets are in such good hands.', rating: 5 },
+                    { username: '@pure_love', text: 'Pure love and dedication to pet care. You can feel the genuine care.', rating: 4 }
+                ]
+            },
+            'elite-paws': {
+                name: 'Elite Paws',
+                reviews: [
+                    { username: '@elite_service', text: 'Elite service that justifies the premium. Top-tier care for my pets.', rating: 5 },
+                    { username: '@luxury_treatment', text: 'Luxury treatment for pets. High-end facilities and premium services.', rating: 4 },
+                    { username: '@exclusive_care', text: 'Exclusive care that makes my pets feel like VIPs. Exceptional service.', rating: 5 },
+                    { username: '@premium_experience', text: 'Premium experience from start to finish. Worth every penny spent.', rating: 4 },
+                    { username: '@first_class', text: 'First-class treatment for pets. The best facilities and care available.', rating: 5 },
+                    { username: '@top_tier', text: 'Top-tier service that sets the standard for pet care. Absolutely elite.', rating: 4 }
+                ]
+            },
+            'furmont-pet-hotel': {
+                name: 'Furmont Pet Hotel',
+                reviews: [
+                    { username: '@hotel_luxury', text: 'True hotel luxury for pets! Spacious suites and premium amenities.', rating: 5 },
+                    { username: '@hospitality_excellence', text: 'Hospitality excellence that rivals human hotels. Incredible service.', rating: 4 },
+                    { username: '@suite_life', text: 'Suite life for pets! My dogs love their comfortable accommodations.', rating: 5 },
+                    { username: '@concierge_service', text: 'Concierge-level service for pets. They attend to every need and want.', rating: 4 },
+                    { username: '@resort_experience', text: 'Resort experience for pets. They vacation while I\'m away!', rating: 5 },
+                    { username: '@five_star', text: 'Five-star accommodations for pets. Luxury redefined for our furry friends.', rating: 4 }
+                ]
+            },
+            'barkin-bubbles': {
+                name: 'Barkin Bubbles',
+                reviews: [
+                    { username: '@bubble_bath_fun', text: 'Bubble baths are a hit! My dog actually enjoys bath time now.', rating: 5 },
+                    { username: '@grooming_specialist', text: 'Grooming specialists who make bath time fun. Creative and caring approach.', rating: 4 },
+                    { username: '@splash_zone', text: 'Love the splash zone! My water-loving dog has the best time here.', rating: 5 },
+                    { username: '@clean_and_fresh', text: 'Pets come home clean and fresh. Great attention to hygiene and grooming.', rating: 4 },
+                    { username: '@bubble_therapy', text: 'Bubble therapy for pets! Relaxing and fun experience for my anxious dog.', rating: 5 },
+                    { username: '@squeaky_clean', text: 'Squeaky clean results every time. Professional grooming with a fun twist.', rating: 4 }
+                ]
+            }
+        };
+
+        let currentHotel = '';
+        let currentReviewIndex = {};
+        let selectedRating = 0;
+
+        function loadHotelReviews() {
+            const hotelSelect = document.getElementById('hotelSelect');
+            const selectedHotel = hotelSelect.value;
+            const hotelNameElement = document.getElementById('selectedHotelName');
+            const reviewGrid = document.getElementById('reviewGrid');
+            const addReviewBtn = document.getElementById('addReviewBtn');
+
+            if (!selectedHotel) {
+                hotelNameElement.textContent = 'Please select a pet hotel to view reviews';
+                reviewGrid.innerHTML = `
+                    <div class="no-reviews">
+                        <i class="fa fa-hotel" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
+                        <p>Select a hotel above to view its reviews</p>
+                    </div>
+                `;
+                addReviewBtn.style.display = 'none';
+                return;
+            }
+
+            currentHotel = selectedHotel;
+            const hotelData = hotelReviews[selectedHotel];
+            
+            if (!hotelData) {
+                hotelNameElement.textContent = 'Pet Hotel not found';
+                reviewGrid.innerHTML = '<div class="no-reviews">No reviews found for this pet hotel</div>';
+                addReviewBtn.style.display = 'none';
+                return;
+            }
+
+            hotelNameElement.textContent = hotelData.name;
+            addReviewBtn.style.display = 'block';
+
+            // Initialize review indices
+            currentReviewIndex = { 1: 0, 2: 0, 3: 0 };
+
+            // Create review columns
+            const reviews = hotelData.reviews;
+            const reviewsPerColumn = Math.ceil(reviews.length / 3);
+            
+            let reviewHTML = '';
+            
+            for (let col = 1; col <= 3; col++) {
+                const startIndex = (col - 1) * reviewsPerColumn;
+                const endIndex = Math.min(startIndex + reviewsPerColumn, reviews.length);
+                const columnReviews = reviews.slice(startIndex, endIndex);
+                
+                if (columnReviews.length === 0) continue;
+                
+                reviewHTML += `
+                    <div class="review-column">
+                        <div class="review-card" id="review${col}-1">
+                            ${generateReviewCard(columnReviews[0])}
+                        </div>
+                        <div class="review-card" id="review${col}-2" style="display: ${columnReviews.length > 1 ? 'block' : 'none'};">
+                            ${columnReviews.length > 1 ? generateReviewCard(columnReviews[1]) : ''}
+                        </div>
+                        <div class="review-buttons">
+                            <button onclick="prevReview(${col})" ${columnReviews.length <= 2 ? 'disabled' : ''}>
+                                <i class="fa fa-chevron-left"></i>
+                            </button>
+                            <button onclick="nextReview(${col})" ${columnReviews.length <= 2 ? 'disabled' : ''}>
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            reviewGrid.innerHTML = reviewHTML;
+        }
+
+        function generateReviewCard(review) {
+            const stars = generateStars(review.rating);
+            return `
+                <div class="review-profile">
+                    <img src="https://via.placeholder.com/40x40/4CAF50/white?text=${review.username.charAt(1).toUpperCase()}" alt="${review.username}">
+                    <span>${review.username}</span>
+                </div>
+                <div class="review-text">${review.text}</div>
+                <div class="review-rating">${stars}</div>
+            `;
+        }
+
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<i class="fa fa-star"></i>';
+                } else {
+                    stars += '<i class="fa fa-star-o"></i>';
+                }
+            }
+            return stars;
+        }
+
+        function prevReview(column) {
+            if (!currentHotel) return;
+            
+            const reviews = hotelReviews[currentHotel].reviews;
+            const reviewsPerColumn = Math.ceil(reviews.length / 3);
+            const startIndex = (column - 1) * reviewsPerColumn;
+            const columnReviews = reviews.slice(startIndex, startIndex + reviewsPerColumn);
+            
+            if (columnReviews.length <= 2) return;
+            
+            currentReviewIndex[column] = currentReviewIndex[column] - 2;
+            if (currentReviewIndex[column] < 0) {
+                currentReviewIndex[column] = Math.max(0, columnReviews.length - 2);
+            }
+            
+            updateReviewColumn(column, columnReviews);
+        }
+
+        function nextReview(column) {
+            if (!currentHotel) return;
+            
+            const reviews = hotelReviews[currentHotel].reviews;
+            const reviewsPerColumn = Math.ceil(reviews.length / 3);
+            const startIndex = (column - 1) * reviewsPerColumn;
+            const columnReviews = reviews.slice(startIndex, startIndex + reviewsPerColumn);
+            
+            if (columnReviews.length <= 2) return;
+            
+            currentReviewIndex[column] = currentReviewIndex[column] + 2;
+            if (currentReviewIndex[column] >= columnReviews.length) {
+                currentReviewIndex[column] = 0;
+            }
+            
+            updateReviewColumn(column, columnReviews);
+        }
+
+        function updateReviewColumn(column, columnReviews) {
+            const card1 = document.getElementById(`review${column}-1`);
+            const card2 = document.getElementById(`review${column}-2`);
+            const index = currentReviewIndex[column];
+            
+            if (columnReviews[index]) {
+                card1.innerHTML = generateReviewCard(columnReviews[index]);
+                card1.style.display = 'block';
+            }
+            
+            if (columnReviews[index + 1]) {
+                card2.innerHTML = generateReviewCard(columnReviews[index + 1]);
+                card2.style.display = 'block';
+            } else {
+                card2.style.display = 'none';
+            }
+        }
+
+        function openReviewModal() {
+            if (!currentHotel) {
+                alert('Please select a pet hotel first');
+                return;
+            }
+            document.getElementById('reviewModal').style.display = 'block';
+            document.getElementById('reviewUsername').value = '';
+            document.getElementById('reviewText').value = '';
+            selectedRating = 0;
+            updateStarRating();
+        }
+
+        function closeReviewModal() {
+            document.getElementById('reviewModal').style.display = 'none';
+        }
+
+        function submitReview() {
+            const username = document.getElementById('reviewUsername').value.trim();
+            const reviewText = document.getElementById('reviewText').value.trim();
+            
+            if (!username || !reviewText || selectedRating === 0) {
+                alert('Please fill in all fields and select a rating');
+                return;
+            }
+
+            // Add @ symbol if not present
+            const formattedUsername = username.startsWith('@') ? username : '@' + username;
+            
+            // Add review to the current hotel
+            const newReview = {
+                username: formattedUsername,
+                text: reviewText,
+                rating: selectedRating
+            };
+            
+            hotelReviews[currentHotel].reviews.unshift(newReview);
+            
+            // Reload reviews to show the new one
+            loadHotelReviews();
+            closeReviewModal();
+            
+            alert('Review submitted successfully!');
+        }
+
+        // Star rating functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('#starRating i');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    selectedRating = parseInt(this.getAttribute('data-rating'));
+                    updateStarRating();
+                });
+                
+                star.addEventListener('mouseenter', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    highlightStars(rating);
+                });
+            });
+            
+            document.getElementById('starRating').addEventListener('mouseleave', function() {
+                updateStarRating();
+            });
+        });
+
+        function updateStarRating() {
+            const stars = document.querySelectorAll('#starRating i');
+            stars.forEach((star, index) => {
+                if (index < selectedRating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function highlightStars(rating) {
+            const stars = document.querySelectorAll('#starRating i');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('reviewModal');
+            if (event.target === modal) {
+                closeReviewModal();
+            }
+        }
+    </script>
 
 <!-- Chat Button -->
 <button class="chatbot-toggler">
