@@ -283,18 +283,16 @@
 </div>
 
         <script>
-        // ✅ Updated navigateTo function that includes user_id
         function navigateTo(page) {
             const userId = localStorage.getItem('user_id');
             console.log('navigateTo called with page:', page);
             console.log('user_id from localStorage:', userId);
             
             if (userId) {
-                const url = new URL(page, window.location.origin);
-                url.searchParams.set('user_id', userId);
-                const finalUrl = url.toString();
-                console.log('Final URL:', finalUrl);
-                window.location.href = finalUrl;
+                // Fix: Use relative path instead of absolute URL construction
+                const url = `${page}?user_id=${userId}`;
+                console.log('Final URL:', url);
+                window.location.href = url;
             } else {
                 console.log('No user_id found, navigating without parameter');
                 window.location.href = page;
